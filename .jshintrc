@@ -1,0 +1,31 @@
+{
+    // == JSLint Legacy ===================================================
+    //
+    // These options are legacy from JSLint. Aside from bug fixes they will
+    // not be improved in any way and might be removed at any point.
+
+    "white": false,    // Check against strict whitespace and indentation rules.
+
+
+    // == Environments ====================================================
+    //
+    // These options pre-define global variables that are exposed by
+    // popular JavaScript libraries and runtime environments—such as
+    // browser or node.js.
+
+    "browser": true,     // Standard browser globals e.g. `window`, `document`.
+    "node"   : true,     // Enable globals available when code is running inside of the NodeJS runtime environment.
+
+
+    // == Undocumented Options ============================================
+    //
+    // While I've found these options in [example1][2] and [example2][3]
+    // they are not described in the [JSHint Options documentation][4].
+    //
+    // [4]: http://www.jshint.com/options/
+    "predef": [
+        "require",     // AMD
+        "define",      // AMD
+        "confirm"      // window.confirm();
+    ]
+}

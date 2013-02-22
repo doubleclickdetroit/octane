@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hello World</title>
+
+    <meta charset="utf-8">
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
+
+    <link rel="stylesheet" type="text/css" href="css/themes/default/jquery.mobile-1.2.0.css" />
+    <link rel="stylesheet" type="text/css" href="css/ui-app.css" />
+
+    <script type="text/javascript" src="js/libs/require/require.js" data-main="js/main"></script>
+</head>
+<body class="ui-hidden">
+
+    <!-- main menu page -->
+    <div data-role="page" id="menu">
+        <div data-theme="b" data-role="header" data-position="fixed" data-tap-toggle="false" class="uitextheader">
+            <h3>Octane</h3>
+        </div>
+        <div data-role="content" class="menuiconbox menutextbox">
+            <ul data-theme="c" data-role="listview" data-inset="true" >
+                <li><a href="#">New Search</a></li>
+                <li><a href="#">Fuel Sites </a></li>
+                <li><a href="#" data-forecast-entrypoint>Forecast</a></li>
+                <li><a href="#favorites">Saved Searches</a></li>
+                <li><a href="#settings/share">Share</a></li>
+                <li><a href="#settings">Settings</a></li>
+            </ul>
+        </div>
+    </div>
+    <!-- main menu page -->
+
+    <!-- settings menu page -->
+    <div data-role="page"  id="settings">
+        <div data-theme="b" data-role="header" data-position="fixed" data-tap-toggle="false" class="marginbutton_top button_textalign uitextheader">
+            <h3>Settings</h3>
+            <a data-role="button" href="#menu" class="menubutton_back ui-btn-left"> Menu </a>
+        </div>
+        <div data-role="content" class="menuiconbox menutextbox">
+            <ul data-theme="c" data-role="listview" data-inset="true" >
+                <li>
+                    <a  href="#feedback" id="feedbackView">Feedback</a>
+                </li>
+                <li>
+                    <a href="#info">Information</a>
+                </li>
+                <li>
+                    <a href="#alerts">
+                        <span>Alerts</span>
+                        <p class="ui-li-aside ui-li-desc">
+                            <span id="alerts-menu-item" class="menustatus">Off</span>
+                        </p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- settings menu page -->
+
+    <!-- forecast -->
+    <div data-role="page" id="forecast">
+        <div data-theme="b" data-role="header" data-position="fixed" data-tap-toggle="false" class=" marginbutton_top button_textalign uitextheader">
+            <h3>Forecast</h3>
+            <a href="#menu" data-role="button" data-rel="back" class="menubutton_back" >Back</a>
+        </div>
+
+        <div data-role="content" class="page-content">
+            <div class="margin-bottom" id="forecastIndicator" data-indicator="empty"></div>
+
+            <form id="forecastForm">
+                <div class="ui-grid-a search_drop_grid margin-bottom">
+                    <div class="ui-block-a">
+                        <span class="widthmax label-for-text-field">
+                            <strong class="text-normal">Location:</strong>
+                        </span>
+                    </div>
+                    <div class="ui-block-b searchfieldtable">
+                        <div class="select-drop drop_lable">
+                            <input name="forecastLocation" id="forecastLocation" type="text" class="text-input-box" value="04101" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ui-grid-a search_drop_grid margin-bottom">
+                    <div class="ui-block-a">
+                        <span class="widthmax">
+                            <strong class="text-normal">Fuel Type:</strong>
+                        </span>
+                    </div>
+                    <div class="ui-block-b searchfieldtable">
+                        <div class="select-drop drop_lable">
+                            <select name="forecastFuelType" id="forecastFuelType">
+                                <option value="Gasoline">Gasoline</option>
+                                <option value="Diesel">Diesel</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="margin-bottom-extra">
+                    <div class="button_conntainer_sub">
+                        <div class="button_conntainer_sub_btn">
+                            <button type="button" data-role="button" data-theme="a">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <div class="ui-body ui-body-b text-center">
+                <small>Lorem ipsum dolor sit amet, consectetur adispisicing elit.</small>
+            </div>
+        </div>
+    </div>
+    <!-- End-forecast -->
+
+    <!-- alerts -->
+    <div data-role="page" id="alerts">
+        <div data-theme="b" data-role="header" data-position="fixed" data-tap-toggle="false" class=" marginbutton_top button_textalign uitextheader">
+            <a data-role="button" href="#settings" class="ui-btn-left" id="alertCancelButton"> Cancel </a>
+            <h3>Alerts</h3>
+            <a data-role="button" href="#settings" class="ui-btn-right" id="alertDoneButton"> Done </a>
+        </div>
+
+        <div data-role="content" class="page-content">
+
+            <h1>Forecast Alerts</h1>
+
+            <div class="ui-corner-feedback margintop5 marginbottom3 minheight Yes-NO">
+                <div class="floatleft margin-set-default"><strong>Notifications:</strong></div>
+                <div class="floatright">
+                    <select name="forecastAlertSlider" id="forecastAlertSlider" data-role="slider">
+                        <option value="Off">OFF</option>
+                        <option value="On">ON</option>
+                    </select>
+                </div>
+            </div>
+
+            <form action="#alerts" id="alerts-form">
+                <div class="ui-grid-a search_drop_grid margin-bottom">
+                    <div class="ui-block-a">
+                        <span class="widthmax label-for-text-field">
+                            <strong class="text-normal">Location:</strong>
+                        </span>
+                    </div>
+                    <div class="ui-block-b searchfieldtable">
+                        <div class="select-drop drop_lable">
+                            <input name="alertLocation" id="alertLocation" type="text" class="text-input-box" value="" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ui-grid-a search_drop_grid margin-bottom">
+                    <div class="ui-block-a">
+                        <span class="widthmax">
+                            <strong class="text-normal">Fuel Type:</strong>
+                        </span>
+                    </div>
+                    <div class="ui-block-b searchfieldtable">
+                        <div class="select-drop drop_lable">
+                            <select name="alertFuelType" id="alertFuelType">
+                                <option value="Gasoline">Gasoline</option>
+                                <option value="Diesel">Diesel</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ui-grid-a search_drop_grid margin-bottom-extra">
+                    <div class="ui-block-a">
+                        <span class="widthmax">
+                            <strong class="text-normal">Forecast Change:</strong>
+                        </span>
+                    </div>
+                    <div class="ui-block-b searchfieldtable">
+                        <div class="select-drop drop_lable">
+                            <select name="alertForecastChange" id="alertForecastChange">
+                                <option value="Strongly">Strongly Up or Down</option>
+                                <option value="Slightly">Slightly Up or Down</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+    <!-- End alerts -->
+
+</body>
+</html>
