@@ -53,9 +53,15 @@ function($, Backbone, globals) {
      * @param - updateHash: (Boolean) Decides if the hash in the location bar should be updated
     */
     utils.changePage = function(viewID, effect, direction, updateHash) {
-        if (effect === undefined)     effect = globals.DEFAULT.PAGE_TRANSITION;
-        if (direction === undefined)  direction = false;
-        if (updateHash === undefined) updateHash = false;
+        if (effect === undefined || effect === null) {
+            effect = globals.DEFAULT.PAGE_TRANSITION;
+        }
+        if (direction === undefined || direction === null) {
+            direction = false;
+        }
+        if (updateHash === undefined) {
+            updateHash = false;
+        }
 
         $(function() {
 

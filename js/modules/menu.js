@@ -1,11 +1,21 @@
-define([ 'facade', 'utils' ],
-function(facade, utils) {
+define([ 'utils', 'views/menu' ],
+function(utils, menuView) {
 
     'use strict';
 
 
-    facade.subscribe('menu', 'navigate', function(updateHash) {
-        console.log('menu navigate');
-        utils.changePage('#menu');
-    });
+    var menuModule;
+    menuModule = (function() {
+
+        function navigate() {
+            utils.changePage('#menu', null, true);
+        }
+
+        return {
+            navigate: navigate
+        };
+    })();
+
+
+    return menuModule;
 });

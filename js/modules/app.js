@@ -1,11 +1,22 @@
-define([ 'facade', 'routers/app', 'views/app' ],
-function(facade, appRouter, appView) {
+define([ 'routers/app', 'views/app' ],
+function(appRouter, appView) {
 
     'use strict';
 
 
-    facade.subscribe('app', 'init', function() {
-        appView.render();
-        appRouter.start();
-    });
+    var appModule;
+    appModule = (function() {
+
+        function ready() {
+            appRouter.start();
+            appView.render();
+        }
+
+        return {
+            ready: ready
+        };
+    })();
+
+
+    return appModule;
 });

@@ -33,11 +33,11 @@ require.config({
 });
 
 
-require([ 'facade', 'modules/main', 'jquery-mobile', 'cordova' ],
+require([ 'facade', 'subscribers/main', 'jquery-mobile', 'cordova' ],
 function(facade) {
 
     function onAppReady() {
-        facade.publish('app', 'init');
+        facade.publish('app', 'ready');
     }
 
     if (document.location.protocol === 'file:') {
