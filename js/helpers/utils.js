@@ -7,17 +7,27 @@ function($, Backbone, globals) {
     var utils = {};
 
     /*
-     *
+     * jQuery convenience method
+    */
+    utils.$ = $;
+
+    /*
+     * Backbone convenience method
+    */
+    utils.Backbone = Backbone;
+
+    /*
+     * Array Slice convenience method
     */
     utils.__slice = [].slice;
 
     /*
-     *
+     * Object Has Property convenience method
     */
     utils.__hasProp = {}.hasOwnProperty;
 
     /*
-     *
+     * Extend Classes
     */
     utils.extend = function(child, parent) {
         for (var key in parent) {
@@ -38,10 +48,17 @@ function($, Backbone, globals) {
     };
 
     /*
-     *
+     * Backbone.history() convenience method
     */
-    utils.navigate = function(viewID) {
-        Backbone.history.navigate(viewID, true);
+    utils.navigate = function(viewId) {
+        Backbone.history.navigate(viewId, true);
+    },
+
+    /*
+     * Get globals Page Definition (for templates)
+    */
+    utils.getPageDefinition = function(pageId) {
+        return globals[pageId] && globals[pageId]['definitions'] || {};
     },
 
     /*

@@ -17,10 +17,16 @@ require.config({
 
         // Helpers
         'utils' : 'helpers/utils',
-        'facade': 'helpers/facade'
+        'facade': 'helpers/facade',
+
+        // Direcotries
+        'tmpl': 'templates/'
     },
 
     shim: {
+        'handlebars' : {
+            'exports': 'Handlebars'
+        },
         'underscore' : {
             'exports': '_'
         },

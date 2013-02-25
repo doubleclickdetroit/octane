@@ -9,6 +9,7 @@ function(utils, facade, Backbone) {
 
         routes: {
             'settings(/)(:id)': 'renderSettings',
+            'alerts'          : 'renderAlerts',
             'menu'            : 'renderMenu',
             ''                : 'root'
         },
@@ -17,12 +18,16 @@ function(utils, facade, Backbone) {
             facade.publish('settings', 'navigate', id || null);
         },
 
+        renderAlerts: function() {
+            facade.publish('alerts', 'navigate');
+        },
+
         renderMenu: function() {
             facade.publish('menu', 'navigate');
         },
 
         root: function() {
-            facade.publish('menu', 'navigate');
+            this.renderMenu();
         },
 
         start: function() {

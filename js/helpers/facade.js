@@ -12,6 +12,12 @@ function(utils, mediator, permissions) {
         }
     };
 
+    facade.subscribeTo = function(channel) {
+        return function(subscription, callback, condition) {
+            facade.subscribe(channel, subscription, callback, condition);
+        };
+    }
+
     facade.publish = function() {
         var args, channel, subscriber;
         channel    = arguments[0],

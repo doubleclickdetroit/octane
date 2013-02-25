@@ -1,8 +1,8 @@
-define([ 'facade', 'modules/menu' ],
-function(facade, menuModule) {
+define([ 'facade', 'controllers/menu' ],
+function(facade, controller) {
 
     'use strict';
 
 
-    facade.subscribe('menu', 'navigate', menuModule.navigate);
+    facade.subscribe('menu', 'navigate', controller.navigate);
 });

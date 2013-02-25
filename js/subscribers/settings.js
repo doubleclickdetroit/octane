@@ -1,5 +1,5 @@
-define([ 'facade', 'modules/settings' ],
-function(facade, settingsModule) {
+define([ 'facade', 'controllers/settings' ],
+function(facade, controller) {
 
     'use strict';
 
@@ -9,5 +9,5 @@ function(facade, settingsModule) {
     }
 
     //
-    subscribe('navigate', settingsModule.navigate, settingsModule.navigateCondition);
+    subscribe('navigate', controller.navigate, controller.navigateCondition);
 });

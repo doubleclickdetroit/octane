@@ -6,4 +6,5 @@ define(function(require) {
     require('./app');
     require('./menu');
     require('./settings');
+    require('./alerts');
 });
