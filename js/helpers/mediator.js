@@ -3,8 +3,7 @@ define(function () {
     'use strict';
 
 
-    var channels;
-    channels = {};
+    var channels = {};
 
     function subscribe(channel, subscription, callback, condition) {
         if ( !channels[channel] ) {
@@ -20,7 +19,6 @@ define(function () {
         }
 
         channels[channel][subscription].push({
-            context  : this,
             callback : callback,
             condition: condition
         });
@@ -41,8 +39,8 @@ define(function () {
             var subscriber = channels[channel][subscription][i],
                 condition    = subscriber.condition;
 
-            if (condition.apply( subscriber.context, args ) === true) {
-                subscriber.callback.apply(subscriber.context, args);
+            if (condition.apply(null, args) === true) {
+                subscriber.callback.apply(null, args);
             }
         }
 

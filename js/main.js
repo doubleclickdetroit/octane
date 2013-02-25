@@ -9,29 +9,27 @@ require.config({
 
         // Frameworks
         'cordova': 'libs/cordova-2.4.0',
+        'mustache': 'libs/mustache/mustache',
         'backbone'  : 'libs/backbone/backbone',
         'underscore': 'libs/underscore/underscore',
-        'handlebars': 'libs/handlebars/handlebars',
         'jquery'       : 'libs/jquery/jquery',
         'jquery-mobile': 'libs/jquery/jquery.mobile',
 
         // Helpers
-        'utils' : 'helpers/utils',
-        'facade': 'helpers/facade',
+        'utils'  : 'helpers/utils',
+        'facade' : 'helpers/facade',
+        'handler': 'database_handlers',
 
         // Direcotries
-        'tmpl': 'templates/'
+        'tmpl': 'templates/',
     },
 
     shim: {
-        'handlebars' : {
-            'exports': 'Handlebars'
-        },
         'underscore' : {
             'exports': '_'
         },
         'backbone': {
-            'deps'   : [ 'underscore', 'jquery', 'handlebars' ],
+            'deps'   : [ 'underscore', 'jquery', 'mustache' ],
             'exports': 'Backbone'
         },
         'jquery-mobile': [ 'jquery', 'libs/jquery/jquery.mobile.config' ]

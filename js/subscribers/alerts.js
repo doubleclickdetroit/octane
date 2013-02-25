@@ -1,4 +1,4 @@
-define([ 'facade', 'controllers/alerts' ],
+define([ 'facade', 'controllers/AlertsController' ],
 function(facade, controller) {
 
     'use strict';
@@ -18,4 +18,8 @@ function(facade, controller) {
 
     //
     subscribe('updateForecast', controller.updateForecast);
+
+
+    // Initialize the controller
+    controller.init();
 });

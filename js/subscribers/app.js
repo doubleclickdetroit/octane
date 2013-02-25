@@ -1,8 +1,16 @@
-define([ 'facade', 'controllers/app' ],
+define([ 'facade', 'controllers/AppController' ],
 function(facade, controller) {
 
     'use strict';
 
 
-    facade.subscribe('app', 'ready', controller.ready);
+    var subscribe;
+    subscribe = facade.subscribeTo('app');
+
+    //
+    subscribe('ready', controller.ready);
+
+
+    // Initialize the controller
+    controller.init();
 });

@@ -5,7 +5,7 @@ function(utils, facade, Backbone) {
 
 
     var AppRouter;
-    AppRouter = new (Backbone.Router.extend({
+    AppRouter = Backbone.Router.extend({
 
         routes: {
             'settings(/)(:id)': 'renderSettings',
@@ -33,7 +33,7 @@ function(utils, facade, Backbone) {
         start: function() {
             Backbone.history.start();
         }
-    }))();
+    });
 
 
     return AppRouter;

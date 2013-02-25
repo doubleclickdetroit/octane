@@ -22,6 +22,17 @@ define(function(require) {
     };
 
     /*
+     * Database
+    */
+    globals.Database = {
+        'DATABASE_NAME'        : 'Database',
+        'DATABASE_VERSION'     : '1.0',
+        'DATABASE_DISPLAY_NAME': 'octane',
+        'TIMEOUT'              : 200000,
+        'SUCCESS'              : 'Database operation successful.'
+    };
+
+    /*
      * Page :: Alerts
     */
     globals.alerts = {};
@@ -32,7 +43,7 @@ define(function(require) {
         'ALERT_ENABLED'          : 'On',
         'ALERT_DISABLED'         : 'Off'
     };
-    globals.alerts.definitions = {
+    globals.alerts.configuration = {
         'notifications': [
             {
                 'label': 'OFF',

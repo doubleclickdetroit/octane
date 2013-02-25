@@ -55,13 +55,6 @@ function($, Backbone, globals) {
     },
 
     /*
-     * Get globals Page Definition (for templates)
-    */
-    utils.getPageDefinition = function(pageId) {
-        return globals[pageId] && globals[pageId]['definitions'] || {};
-    },
-
-    /*
      * Convenience method for accessing $mobile.changePage(), included in case any other actions are required in the same step.
      *
      * @param - changeTo  : (String) Absolute or relative URL. In this app references to '#index', '#search' etc.

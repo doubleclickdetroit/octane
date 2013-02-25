@@ -1,8 +1,16 @@
-define([ 'facade', 'controllers/menu' ],
+define([ 'facade', 'controllers/MenuController' ],
 function(facade, controller) {
 
     'use strict';
 
 
-    facade.subscribe('menu', 'navigate', controller.navigate);
+    var subscribe;
+    subscribe = facade.subscribeTo('menu');
+
+    //
+    subscribe('navigate', controller.navigate);
+
+
+    // Initialize the controller
+    controller.init();
 });

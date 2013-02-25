@@ -3,8 +3,7 @@ define(function() {
     'use strict';
 
 
-    var permissions;
-    permissions = {};
+    var permissions = {};
 
     function doesExist(channel) {
         return typeof permissions[channel] !== 'undefined';
