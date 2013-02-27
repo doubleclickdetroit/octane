@@ -21,7 +21,10 @@ function($, _, globals, facade, Backbone, Mustache, tmpl) {
             _.bindAll(this, 'render', 'pageHide');
 
             // model event listeners
-            this.model.on('change:notifications', this.render);
+            this.model.on('change:notifications', function() {
+                this.render();
+                facade.publish('alerts', 'notificationsChange', this.model.get('notifications'));
+            }, this);
 
             // jQM event listeners
             this.$el.on('pageshow', this.render);

@@ -11,7 +11,7 @@ function(utils, AlertsView, AlertModel) {
             var alertsView, alertModel;
 
             // create model
-            window.alertModel = alertModel = new AlertModel();
+            alertModel = new AlertModel();
 
             // create view
             alertsView = new AlertsView({
