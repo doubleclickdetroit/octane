@@ -22,7 +22,6 @@ function($, _, globals, facade, Backbone, Mustache, tmpl) {
 
             // model event listeners
             this.model.on('change:notifications', this.render);
-            this.model.on('destroy', function() { console.log('*** model destroyed'); });
 
             // jQM event listeners
             this.$el.on('pageshow', this.render);
