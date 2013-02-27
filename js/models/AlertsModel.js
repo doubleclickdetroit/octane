@@ -44,9 +44,9 @@ function(Backbone, globals, handler) {
         */
         updateAttribute: function(key, val) {
             switch(key) {
-                case 'forecastAlertSlider': key = 'notifications'; break;
-                case 'alertLocation'      : key = 'location'; break;
-                case 'alertFuelType'      : key = 'fuelType'; break;
+                case 'forecastAlertSlider': key = 'notifications';  break;
+                case 'alertLocation'      : key = 'location';       break;
+                case 'alertFuelType'      : key = 'fuelType';       break;
                 case 'alertForecastChange': key = 'forecastChange'; break;
             }
 
