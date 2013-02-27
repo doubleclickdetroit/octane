@@ -7,7 +7,11 @@ function($, facade, Backbone) {
     var SettingsView;
     SettingsView = Backbone.View.extend({
 
-        el: $('#settings')
+        el: $('#settings'),
+
+        initialize: function() {
+            console.log('SettingsView', this);
+        }
     });
 
 

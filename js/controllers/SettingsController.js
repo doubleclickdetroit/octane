@@ -1,5 +1,5 @@
 define([ 'utils', 'views/SettingsView' ],
-function(utils, settingsView) {
+function(utils, SettingsView) {
 
     'use strict';
 
@@ -7,32 +7,21 @@ function(utils, settingsView) {
     var SettingsController;
     SettingsController = (function() {
 
-        function SettingsController() {}
-
-        SettingsController.prototype.init = function(id) {
-            //
+        function init() {
+            var settingsView;
+            settingsView = new SettingsView();
         };
 
-        SettingsController.prototype.navigate = function(id) {
-            console.log('settings.navigate ' + (id || ''));
-            utils.changePage('#settings', null, null, false);
+        function navigate() {
+            utils.changePage('#settings');
         };
 
-        SettingsController.prototype.navigateCondition = function(id) {
-            if (id === 'share') {
-                if (confirm('Are you sure you want to?') === false) {
-                    utils.navigate('#menu');
-                    return false;
-                }
-            }
-
-            return true;
-        };
-
-        return SettingsController;
-
+        return {
+            init    : init,
+            navigate: navigate
+        }
     })();
 
 
-    return new SettingsController();
+    return SettingsController;
 });
