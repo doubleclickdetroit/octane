@@ -7,6 +7,13 @@ function(DatabaseManager) {
     var database, handlers = {};
     database = DatabaseManager.getInstance();
 
+    handlers.dropForecastAlertTable = function() {
+        var db = database.openDatabase();
+        db.transaction(function deleteFuelTypes(tx) {
+            tx.executeSql('DELETE FROM ForecastAlert');
+        }, database.error, function() { console.log('** dropForecastAlertTable'); });
+    };
+
 
     /*
      * Get the Forecast Alert settings
@@ -45,8 +52,9 @@ function(DatabaseManager) {
 
                 // If there's already a ForecastAlert record, update it
                 if (results.rows.length > 0) {
-                    sql = 'UPDATE Forecast_Alert SET FuelType = ?, Location = ?, ForecastChange = ?';
+                    sql = 'UPDATE ForecastAlert SET FuelType = ?, Location = ?, ForecastChange = ?';
                     db.transaction(function (transaction) {
+                        console.log('setForecastAlert UPDATE ' + data.fuelType + ' ' + data.location + ' ' + data.forecastChange);
                         transaction.executeSql(sql, [data.fuelType, data.location, data.forecastChange]);
                     }, database.onError, callback);
                 }
@@ -55,6 +63,7 @@ function(DatabaseManager) {
                 else {
                     sql = 'INSERT INTO ForecastAlert (FuelType, Location, ForecastChange) VALUES (?, ?, ?)';
                     db.transaction(function (transaction) {
+                        console.log('setForecastAlert INSERT ' + data.fuelType + ' ' + data.location + ' ' + data.forecastChange);
                         transaction.executeSql(sql, [data.fuelType, data.location, data.forecastChange]);
                     }, database.onError, callback);
                 }

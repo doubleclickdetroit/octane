@@ -17,7 +17,13 @@ function(facade, controller) {
     subscribe('renderView', controller.renderView);
 
     //
-    subscribe('updateForecast', controller.updateForecast);
+    subscribe('saveAttributes', controller.saveAttributes);
+
+    //
+    subscribe('updateAttribute', controller.updateAttribute);
+
+    //
+    subscribe('destroyAttributes', controller.destroyAttributes);
 
 
     // Initialize the controller

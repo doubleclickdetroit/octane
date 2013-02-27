@@ -14,7 +14,7 @@ function($, globals, utils, AlertsView, AlertModel) {
             var alertsView, alertModel;
 
             // create model
-            alertModel = window.AlertModel = new AlertModel();
+            alertModel = new AlertModel();
 
             // create view
             alertsView = new AlertsView({
@@ -63,17 +63,28 @@ function($, globals, utils, AlertsView, AlertModel) {
                 .toggleClass('ui-disabled', !isEnabled);
         }
 
-        function updateForecast(context, evt) {
-            var val = $(evt.target).val();
-            context.model.set('notifications', val);
+        function updateAttribute(context, evt) {
+            var target = evt.target,
+                val    = $(target).val();
+            context.model.updateAttribute(target.id, val);
+        }
+
+        function saveAttributes(context, callback) {
+            context.model.save(context.model.toJSON(), {callback:callback});
+        }
+
+        function destroyAttributes(context, callback) {
+            context.model.destroy({success:callback});
         }
 
         return {
-            init          : init,
-            createPage    : createPage,
-            navigate      : navigate,
-            renderView    : renderView,
-            updateForecast: updateForecast
+            init             : init,
+            createPage       : createPage,
+            navigate         : navigate,
+            renderView       : renderView,
+            saveAttributes   : saveAttributes,
+            updateAttribute  : updateAttribute,
+            destroyAttributes: destroyAttributes
         };
     })();
 

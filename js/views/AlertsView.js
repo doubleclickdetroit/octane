@@ -10,16 +10,16 @@ function($, _, facade, Backbone, Mustache, tmpl) {
         template: Mustache.compile(tmpl),
 
         events: {
-            'change #forecastAlertSlider': 'handleForecastChange',
+            'change :input': 'delegateUpdatedAttribute',
             'click #alertCancelButton': 'handleCancelButtonClick',
-            'click #alertDoneButton': 'handleDoneButtonClick'
+            'click #alertDoneButton'  : 'handleDoneButtonClick'
         },
 
         initialize: function() {
             _.bindAll(this, 'render');
 
             // model event listeners
-            this.model.on('change', this.render);
+            this.model.on('change:notifications', this.render);
 
             // jQM event listeners
             this.$el.on('pageshow', this.render);
@@ -29,22 +29,24 @@ function($, _, facade, Backbone, Mustache, tmpl) {
         },
 
         render: function() {
-            console.log('render', this);
             facade.publish('alerts', 'renderView', this);
         },
 
         /*
          * Event Handlers
         */
-        handleForecastChange: function(evt) {
-            facade.publish('alerts', 'updateForecast', this, evt);
+        delegateUpdatedAttribute: function(evt) {
+            facade.publish('alerts', 'updateAttribute', this, evt);
         },
-        handleCancelButtonClick: function() {
-            //
+        handleCancelButtonClick: function(evt) {
+            facade.publish('alerts', 'destroyAttributes', this, function() {
+                console.log('callback: destroyed');
+            });
         },
         handleDoneButtonClick: function(evt) {
-            evt.preventDefault();
-            console.log('handleDoneButtonClick', this, evt);
+            facade.publish('alerts', 'saveAttributes', this, function() {
+                console.log('callback: saved');
+            });
         }
 
     });
