@@ -71,10 +71,10 @@ function($, _, globals, facade, Backbone, Mustache, tmpl) {
                 val    = $(target).val();
             facade.publish('alerts', 'updateAttribute', this, target.id, val);
         },
-        handleCancelButtonClick: function(evt) {
+        handleCancelButtonClick: function() {
             facade.publish('alerts', 'resetAttributes', this);
         },
-        handleDoneButtonClick: function(evt) {
+        handleDoneButtonClick: function() {
             facade.publish('alerts', 'saveAttributes', this);
         }
 

@@ -35,13 +35,6 @@ function(utils, AlertsView, AlertModel) {
             context.model.resetAttributes();
         }
 
-        function destroyAttributes(context) {
-            function reloadAttributes() {
-                context.model.reloadAttributes.call(context.model);
-            }
-            context.model.destroy({callback: reloadAttributes});
-        }
-
         return {
             init           : init,
             navigate       : navigate,

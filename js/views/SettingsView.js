@@ -1,4 +1,12 @@
-define(function() {
+define([ 'jquery', 'facade', 'backbone' ],
+function($, facade, Backbone) {
 
-    return {}
+    'use strict';
+
+
+    var SettingsView;
+    SettingsView = Backbone.View.extend({
+
+        el: $('#settings')
+    })
 });
