@@ -8,5 +8,8 @@ function($, facade, Backbone) {
     SettingsView = Backbone.View.extend({
 
         el: $('#settings')
-    })
+    });
+
+
+    return SettingsView;
 });

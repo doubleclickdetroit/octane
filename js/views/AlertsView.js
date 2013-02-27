@@ -18,7 +18,7 @@ function($, _, globals, facade, Backbone, Mustache, tmpl) {
         },
 
         initialize: function() {
-            _.bindAll(this, 'render');
+            _.bindAll(this, 'render', 'pageHide');
 
             // model event listeners
             this.model.on('change:notifications', this.render);
@@ -26,14 +26,19 @@ function($, _, globals, facade, Backbone, Mustache, tmpl) {
 
             // jQM event listeners
             this.$el.on('pageshow', this.render);
+            this.$el.on('pagehide', this.pageHide);
 
             // create the page
-            this.createPage();
+            this.pageCreate();
         },
 
-        createPage: function() {
+        pageCreate: function() {
             var $el = this.$el.find(':jqmData(role=content)');
             $el.html(this.template(globals.alerts.configuration));
+        },
+
+        pageHide: function() {
+            this.$('#alertDoneButton').addClass('ui-disabled');
         },
 
         render: function() {
@@ -59,8 +64,9 @@ function($, _, globals, facade, Backbone, Mustache, tmpl) {
                 .val(data.forecastChange)
                 .selectmenu(uiState).selectmenu('refresh');
 
-            this.$('#alertDoneButton')
-                .toggleClass('ui-disabled', !isEnabled);
+            if (isEnabled) {
+                this.$('#alertDoneButton').removeClass('ui-disabled');
+            }
         },
 
         /*

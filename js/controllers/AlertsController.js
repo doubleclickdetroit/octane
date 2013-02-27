@@ -11,7 +11,7 @@ function(utils, AlertsView, AlertModel) {
             var alertsView, alertModel;
 
             // create model
-            alertModel = new AlertModel();
+            window.alertModel = alertModel = new AlertModel();
 
             // create view
             alertsView = new AlertsView({
@@ -28,7 +28,7 @@ function(utils, AlertsView, AlertModel) {
         }
 
         function saveAttributes(context) {
-            context.model.save(context.model.toJSON());
+            context.model.saveAttributes();
         }
 
         function resetAttributes(context) {

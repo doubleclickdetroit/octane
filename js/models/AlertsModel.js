@@ -54,17 +54,23 @@ function(Backbone, globals, handler) {
         },
 
         resetAttributes: function() {
+            this._loadAttributes();
+        },
+
+        saveAttributes: function() {
             var self = this;
 
             // if the notification is enabled, save the settings
             if (this.get('notifications') === globals.alerts.constants.ALERT_ENABLED) {
-                return this._loadAttributes();
+                this.save();
             }
 
             // otherwise it was initially enabled but now disabled, delete the settings
-            this.destroy({
-                callback: function() { self.set(self.defaults); }
-            });
+            else {
+                this.destroy({
+                    callback: function() { self.set(self.defaults); }
+                });
+            }
         },
 
         /*
@@ -102,7 +108,7 @@ function(Backbone, globals, handler) {
 
             // get the stored Forecast Alert settings, if any
             this.fetch({callback: handleLoadedData});
-        },
+        }
     });
 
 
