@@ -18,7 +18,7 @@ define(function(require) {
      * Defaults
     */
     globals.DEFAULT = {
-        'PAGE_TRANSITION': 'slide'
+        'PAGE_TRANSITION': 'none'
     };
 
     /*
