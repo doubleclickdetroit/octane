@@ -1,5 +1,5 @@
-define([ 'globals', 'backbone', 'handler' ],
-function(globals, Backbone, handler) {
+define([ 'backbone', 'globals', 'handler' ],
+function(Backbone, globals, handler) {
 
     'use strict';
 
@@ -15,36 +15,12 @@ function(globals, Backbone, handler) {
         },
 
         initialize: function() {
-            var self = this;
-
-            function bootstrapModelData(tx, results) {
-                console.log('AlertModel initialize results', results);
-
-                if (results.rows.length > 0) {
-                    console.log('AlertModel initialize has results');
-
-                    // set the member values with the record retrieved
-                    self.set({
-                        'notifications' : globals.alerts.constants.ALERT_ENABLED,
-                        'location'      : results.rows.item(0).Location,
-                        'fuelType'      : results.rows.item(0).FuelType,
-                        'forecastChange': results.rows.item(0).ForecastChange
-                    }, {silent: true});
-                }
-                else {
-                    console.log('AlertModel initialize no results');
-                    self.save(self.defaults);
-                }
-
-                self.set({ id:1 });
-            }
-
-            // get the stored Forecast Alert settings, if any
-            this.fetch({ callback:bootstrapModelData });
+            // initially bootstrap data, but silently
+            this._loadAttributes(true);
         },
 
         /*
-         * SYNC
+         * Handle CRUD operations using handler
         */
         sync: function (method, model, options) {
             options.callback = options.callback || null;
@@ -75,7 +51,58 @@ function(globals, Backbone, handler) {
             }
 
             this.set(key, val);
-        }
+        },
+
+        resetAttributes: function() {
+            var self = this;
+
+            // if the notification is enabled, save the settings
+            if (this.get('notifications') === globals.alerts.constants.ALERT_ENABLED) {
+                return this._loadAttributes();
+            }
+
+            // otherwise it was initially enabled but now disabled, delete the settings
+            this.destroy({
+                callback: function() { self.set(self.defaults); }
+            });
+        },
+
+        /*
+         * Internal Methods
+        */
+        _loadAttributes: function(isSilent) {
+            var self = this;
+
+            function handleLoadedData(tx, results) {
+                if (results.rows.length > 0) {
+
+                    // set the member values with the record retrieved
+                    self.set(
+                        {
+                            'notifications' : globals.alerts.constants.ALERT_ENABLED,
+                            'location'      : results.rows.item(0).Location,
+                            'fuelType'      : results.rows.item(0).FuelType,
+                            'forecastChange': results.rows.item(0).ForecastChange
+                        },
+                        {
+                            // don't broadcast this intial seeded data
+                            // Backbone will listen and try to render
+                            // and jQM views may not have been initialized yet
+                            silent: isSilent || false
+                        }
+                    );
+                }
+                else {
+                    self.set(self.defaults);
+                }
+
+                // assign an "id" so sync methods will be UPDATE/DELETE
+                self.set({ id:1 });
+            }
+
+            // get the stored Forecast Alert settings, if any
+            this.fetch({callback: handleLoadedData});
+        },
     });
 
 
