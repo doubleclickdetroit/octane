@@ -17,16 +17,16 @@ function(globals, facade) {
             db.transaction(createTables, handle_error, handle_success);
         }
 
-        function createTables(transaction) {
-            if (transaction) {
-                transaction.executeSql('CREATE TABLE IF NOT EXISTS FuelTypes (Id , FuelType)');
-                transaction.executeSql('CREATE TABLE IF NOT EXISTS Brands (Id , Name,ImagePath)');
-                transaction.executeSql('CREATE TABLE IF NOT EXISTS RadiusDetails (Id , RadiusValue)');
-                transaction.executeSql('CREATE TABLE IF NOT EXISTS Settings (Counter)');
-                transaction.executeSql('CREATE TABLE IF NOT EXISTS SearchDetails (Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,' +
+        function createTables(tx) {
+            if (tx) {
+                tx.executeSql('CREATE TABLE IF NOT EXISTS FuelTypes (Id , FuelType)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS Brands (Id , Name,ImagePath)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS RadiusDetails (Id , RadiusValue)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS Settings (Counter)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS SearchDetails (Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,' +
                                        'SearchBy, Location, Latitude, Longitude, Radius, FuelType, UpdatedResult, ' +
                                        'SortBy, Brand, ViewMode, LimitResult, FavoritesName)');
-                transaction.executeSql('CREATE TABLE IF NOT EXISTS ForecastAlert (FuelType, Location, ForecastChange)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS ForecastAlert (FuelType, Location, ForecastChange)');
             }
         }
 
@@ -36,7 +36,7 @@ function(globals, facade) {
 
         function handle_error(error) {
             if (error) {
-                navigator.notification.alert('Error processing SQL: ', null, 'Error' + error.message, 'OK');
+                navigator.notification.alert('Error' + error.message, null, 'Error processing SQL:', 'OK');
             }
         }
 
