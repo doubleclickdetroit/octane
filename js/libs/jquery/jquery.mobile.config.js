@@ -1,6 +1,8 @@
-define( ['jquery'], function($) {
+define( ['jquery'],
+function($) {
 
     'use strict';
+
 
     function init() {
         // Disable the longer hash-based URLs to PushState
