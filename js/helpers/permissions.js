@@ -1,26 +1,28 @@
-define(function() {
+define([ 'permissions' ],
+function(permissions) {
 
     'use strict';
 
 
-    var permissions = {};
-
     function doesExist(channel) {
-        return typeof permissions[channel] !== 'undefined';
+        return permissions[channel] !== undefined;
     }
 
-    function set(channel, subscription, val) {
-        if (doesExist(channel, subscription)) {
-            permissions[channel][subscription] = val;
+    function set(channel, subscription, bool) {
+        if (doesExist(channel)) {
+            bool = (bool !== undefined) ? bool : true;
+            permissions[channel][subscription] = bool;
         }
     }
 
     function validate(channel, subscription) {
-        if (doesExist(channel, subscription)) {
-            return permissions[channel][subscription];
+        if (doesExist(channel)) {
+            var permission = permissions[channel][subscription];
+            return permission === undefined ? true : permission;
         }
         return true;
     }
+
 
     return {
         set     : set,
