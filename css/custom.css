@@ -743,6 +743,48 @@ a.ui-btn-hover-b a.ui-link-inherit {
 
 
 /*********************************************
+ * Icons
+*********************************************/
+i[class*="icon-"] {
+    display: block;
+    position: absolute;
+    top: 5px;
+    left: 10px;
+    width: 32px;
+    height: 32px;
+    background-size: 32px 32px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+i.icon-search    { background-image: url(../img/search-icon.png);    }
+i.icon-results   { background-image: url(../img/results-icon.png);   }
+i.icon-forecast  { background-image: url(../img/forecast-icon.png);  }
+i.icon-favorites { background-image: url(../img/favorites-icon.png); }
+i.icon-share     { background-image: url(../img/share-icon.png);     }
+i.icon-settings  { background-image: url(../img/settings-icon.png);  }
+i.icon-menu-search   { background-image: url(../img/Menu_search_icon.png);   }
+i.icon-menu-forecast { background-image: url(../img/Menu_forecast_icon.png); }
+i.icon-menu-save     { background-image: url(../img/Menu_save_icon.png);     }
+i.icon-menu-sort     { background-image: url(../img/Menu_sort_icon.png);     }
+i.icon-menu-refresh  { background-image: url(../img/Menu_refresh_icon.png);  }
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5),
+       only screen and (min--moz-device-pixel-ratio: 1.5),
+       only screen and (min-resolution: 240dpi) {
+    i.icon-search    { background-image: url(../img/search-icon@2x.png);    }
+    i.icon-results   { background-image: url(../img/results-icon@2x.png);   }
+    i.icon-forecast  { background-image: url(../img/forecast-icon@2x.png);  }
+    i.icon-favorites { background-image: url(../img/favorites-icon@2x.png); }
+    i.icon-share     { background-image: url(../img/share-icon@2x.png);     }
+    i.icon-settings  { background-image: url(../img/settings-icon@2x.png);  }
+    i.icon-menu-search   { background-image: url(../img/Menu_search_icon@2x.png);   }
+    i.icon-menu-forecast { background-image: url(../img/Menu_forecast_icon@2x.png); }
+    i.icon-menu-save     { background-image: url(../img/Menu_save_icon@2x.png);     }
+    i.icon-menu-sort     { background-image: url(../img/Menu_sort_icon@2x.png);     }
+    i.icon-menu-refresh  { background-image: url(../img/Menu_refresh_icon@2x.png);  }
+}
+
+
+/*********************************************
  * Forecast - Page
 *********************************************/
 #forecast div[data-indicator] {
