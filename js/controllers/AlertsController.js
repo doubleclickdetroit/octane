@@ -7,8 +7,9 @@ function(utils, AlertsView, AlertModel) {
     var AlertsController;
     AlertsController = (function() {
 
+        var alertsView, alertModel;
+
         function init() {
-            var alertsView, alertModel;
 
             // create model
             alertModel = new AlertModel();
@@ -20,19 +21,19 @@ function(utils, AlertsView, AlertModel) {
         }
 
         function navigate() {
-            utils.changePage('#alerts');
+            utils.changePage(alertsView.$el);
         }
 
-        function updateAttribute(context, id, val) {
-            context.model.updateAttribute(id, val);
+        function updateAttribute(id, val) {
+            alertModel.updateAttribute(id, val);
         }
 
-        function saveAttributes(context) {
-            context.model.saveAttributes();
+        function saveAttributes() {
+            alertModel.saveAttributes();
         }
 
-        function resetAttributes(context) {
-            context.model.resetAttributes();
+        function resetAttributes() {
+            alertModel.resetAttributes();
         }
 
         return {

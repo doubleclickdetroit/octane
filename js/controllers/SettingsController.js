@@ -7,13 +7,14 @@ function(utils, SettingsView) {
     var SettingsController;
     SettingsController = (function() {
 
+        var settingsView;
+
         function init() {
-            var settingsView;
             settingsView = new SettingsView();
         };
 
         function navigate() {
-            utils.changePage('#settings');
+            utils.changePage(settingsView.$el);
         };
 
         return {

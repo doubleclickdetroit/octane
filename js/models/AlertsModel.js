@@ -15,8 +15,8 @@ function(Backbone, globals, handler) {
         },
 
         initialize: function() {
-            // initially bootstrap data, but silently
-            this._loadAttributes(true);
+            // initially bootstrap data
+            this._loadAttributes();
         },
 
         /*
@@ -76,7 +76,7 @@ function(Backbone, globals, handler) {
         /*
          * Internal Methods
         */
-        _loadAttributes: function(isSilent) {
+        _loadAttributes: function() {
             var self = this;
 
             function handleLoadedData(tx, results) {
@@ -89,12 +89,6 @@ function(Backbone, globals, handler) {
                             'location'      : results.rows.item(0).Location,
                             'fuelType'      : results.rows.item(0).FuelType,
                             'forecastChange': results.rows.item(0).ForecastChange
-                        },
-                        {
-                            // don't broadcast this intial seeded data
-                            // Backbone will listen and try to render
-                            // and jQM views may not have been initialized yet
-                            silent: isSilent || false
                         }
                     );
                 }

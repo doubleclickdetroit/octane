@@ -8,9 +8,10 @@ function(facade, controller) {
     subscribe = facade.subscribeTo('settings');
 
     //
-    subscribe('navigate', controller.navigate, controller.navigateCondition);
+    subscribe('navigate', controller.navigate);
 
 
-    // Initialize the controller
-    controller.init();
+    return {
+        init: controller.init
+    }
 });

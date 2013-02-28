@@ -9,9 +9,7 @@ function(AppRouter, AppView) {
 
         var appRouter, appView;
 
-        function AppController() {}
-
-        AppController.prototype.init = function() {
+        function init() {
             appRouter = new AppRouter();
 
             appView = new AppView({
@@ -19,14 +17,17 @@ function(AppRouter, AppView) {
             });
         }
 
-        AppController.prototype.ready = function() {
+        function ready() {
             appRouter.start();
             appView.render();
-        };
+        }
 
-        return AppController;
+        return {
+            init : init,
+            ready: ready
+        };
     })();
 
 
-    return new AppController();
+    return AppController;
 });

@@ -11,6 +11,7 @@ function(facade, controller) {
     subscribe('ready', controller.ready);
 
 
-    // Initialize the controller
-    controller.init();
+    return {
+        init: controller.init
+    }
 });

@@ -1,10 +1,12 @@
-define(function(require) {
+define([ './app', './menu', './settings', './alerts'],
+function(app, menu, settings, alerts) {
 
     'use strict';
 
 
-    require('./app');
-    require('./menu');
-    require('./settings');
-    require('./alerts');
+    // kick-off subscribers
+    app.init();
+    menu.init();
+    settings.init();
+    alerts.init();
 });

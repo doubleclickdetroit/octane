@@ -26,6 +26,7 @@ function(facade, controller) {
     subscribe('resetAttributes', controller.resetAttributes);
 
 
-    // Initialize the controller
-    controller.init();
+    return {
+        init: controller.init
+    }
 });

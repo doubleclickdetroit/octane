@@ -18,20 +18,19 @@ function($, _, globals, facade, Backbone, Mustache, tmpl) {
         },
 
         initialize: function() {
-            _.bindAll(this, 'render', 'pageHide');
-
-            // model event listeners
-            this.model.on('change:notifications', function() {
-                this.render();
-                facade.publish('alerts', 'notificationsChange', this.model.get('notifications'));
-            }, this);
+            _.bindAll(this, 'render', 'pageCreate', 'pageHide');
 
             // jQM event listeners
+            this.$el.on('pagecreate', this.pageCreate);
+            this.$el.on('pageinit', this.render);
             this.$el.on('pageshow', this.render);
             this.$el.on('pagehide', this.pageHide);
 
-            // create the page
-            this.pageCreate();
+            // broadcast change
+            this.model.on('change:notifications', function() {
+                if (this.$el.hasClass('ui-page')) this.render(); // only render after pageinit
+                facade.publish('alerts', 'notifications:change', this.model.get('notifications'));
+            }, this);
         },
 
         pageCreate: function() {
@@ -77,13 +76,13 @@ function($, _, globals, facade, Backbone, Mustache, tmpl) {
         handleUpdatingAttribute: function(evt) {
             var target = evt.target,
                 val    = $(target).val();
-            facade.publish('alerts', 'updateAttribute', this, target.id, val);
+            facade.publish('alerts', 'updateAttribute', target.id, val);
         },
         handleCancelButtonClick: function() {
-            facade.publish('alerts', 'resetAttributes', this);
+            facade.publish('alerts', 'resetAttributes');
         },
         handleDoneButtonClick: function() {
-            facade.publish('alerts', 'saveAttributes', this);
+            facade.publish('alerts', 'saveAttributes');
         }
 
     });
