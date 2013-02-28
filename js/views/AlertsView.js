@@ -21,7 +21,6 @@ function($, _, globals, facade, Backbone, Mustache, tmpl) {
             _.bindAll(this, 'render', 'pageCreate', 'pageHide');
 
             // jQM event listeners
-            this.$el.on('pagecreate', this.pageCreate);
             this.$el.on('pageinit', this.render);
             this.$el.on('pageshow', this.render);
             this.$el.on('pagehide', this.pageHide);
@@ -31,6 +30,9 @@ function($, _, globals, facade, Backbone, Mustache, tmpl) {
                 if (this.$el.hasClass('ui-page')) this.render(); // only render after pageinit
                 facade.publish('alerts', 'notifications:change', this.model.get('notifications'));
             }, this);
+
+            // create page
+            this.pageCreate();
         },
 
         pageCreate: function() {

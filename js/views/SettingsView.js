@@ -10,13 +10,11 @@ function($, _, facade, Backbone, Mustache, tmpl) {
         el: $('#settings'),
 
         initialize: function() {
-            _.bindAll(this, 'pageCreate');
-
-            // jQM event listeners
-            this.$el.on('pagecreate', this.pageCreate);
-
             // listen for broadcasting
             facade.subscribe('alerts', 'notifications:change', this.updateAlertsMenuItem);
+
+            // create page
+            this.pageCreate();
         },
 
         pageCreate: function() {
