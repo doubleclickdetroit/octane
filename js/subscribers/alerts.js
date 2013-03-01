@@ -11,12 +11,6 @@ function(facade, controller) {
     subscribe('navigate', controller.navigate);
 
     //
-    subscribe('createPage', controller.createPage);
-
-    //
-    subscribe('renderView', controller.renderView);
-
-    //
     subscribe('updateAttribute', controller.updateAttribute);
 
     //
