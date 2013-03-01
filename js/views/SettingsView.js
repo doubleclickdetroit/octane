@@ -1,4 +1,4 @@
-define([ 'jquery', 'underscore', 'facade', 'backbone', 'mustache', 'text!tmpl/settings/list' ],
+define([ 'jquery', 'underscore', 'facade', 'backbone', 'mustache', 'text!tmpl/settings/page' ],
 function($, _, facade, Backbone, Mustache, tmpl) {
 
     'use strict';
