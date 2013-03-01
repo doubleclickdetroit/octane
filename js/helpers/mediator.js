@@ -14,6 +14,11 @@ define(function () {
             channels[channel][subscription] = [];
         }
 
+        if (typeof callback !== 'function') {
+            window.console && window.console.error('Error: The argument "callback" is undefined for call to facade.subscribe('+channel+', '+subscription+').');
+            return this;
+        }
+
         if (typeof condition !== 'function') {
             condition = function() { return true; };
         }
@@ -37,7 +42,7 @@ define(function () {
 
         for (var i = 0, l = channels[channel][subscription].length; i < l; i++) {
             var subscriber = channels[channel][subscription][i],
-                condition    = subscriber.condition;
+                condition  = subscriber.condition;
 
             if (condition.apply(null, args) === true) {
                 subscriber.callback.apply(null, args);
