@@ -7,13 +7,6 @@ function(DatabaseManager) {
     var database, handlers = {};
     database = DatabaseManager.getInstance();
 
-    handlers.dropForecastAlertTable = function() {
-        var db = database.openDatabase();
-        db.transaction(function deleteFuelTypes(tx) {
-            tx.executeSql('DELETE FROM ForecastAlert');
-        }, database.error, function() { console.log('** dropForecastAlertTable'); });
-    };
-
 
     /*
      * Get the Forecast Alert settings
