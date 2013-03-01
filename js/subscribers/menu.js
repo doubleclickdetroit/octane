@@ -13,5 +13,5 @@ function(facade, controller) {
 
     return {
         init: controller.init
-    }
+    };
 });
