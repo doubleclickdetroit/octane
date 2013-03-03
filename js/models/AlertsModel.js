@@ -1,5 +1,5 @@
-define([ 'backbone', 'globals', 'handler' ],
-function(Backbone, globals, handler) {
+define([ 'backbone', 'globals', 'managers/ForecastDatabaseManager' ],
+function(Backbone, globals, ForecastDatabaseManager) {
 
     'use strict';
 
@@ -20,21 +20,22 @@ function(Backbone, globals, handler) {
         },
 
         /*
-         * Handle CRUD operations using handler
+         * Handle CRUD operations using forecastManager
         */
         sync: function (method, model, options) {
+            var manager = ForecastDatabaseManager.getInstance();
             options.callback = options.callback || null;
 
             switch(method) {
                 case 'create':
                 case 'update':
-                    handler.setForecastAlert(model.toJSON(), options.callback);
+                    manager.setForecastAlert(model.toJSON(), options.callback);
                     break;
                 case 'read':
-                    handler.getForecastAlert(options.callback);
+                    manager.getForecastAlert(options.callback);
                     break;
                 case 'delete':
-                    handler.deleteForecastAlert(options.callback);
+                    manager.deleteForecastAlert(options.callback);
                     break;
             }
         },
