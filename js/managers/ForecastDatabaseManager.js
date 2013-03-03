@@ -48,7 +48,6 @@ function(DatabaseManager) {
                     if (results.rows.length > 0) {
                         sql = 'UPDATE ForecastAlert SET FuelType = ?, Location = ?, ForecastChange = ?';
                         db.transaction(function (transaction) {
-                            console.log('setForecastAlert UPDATE ' + data.fuelType + ' ' + data.location + ' ' + data.forecastChange);
                             transaction.executeSql(sql, [data.fuelType, data.location, data.forecastChange]);
                         }, database.onError, callback);
                     }

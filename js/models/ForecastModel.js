@@ -44,24 +44,18 @@ function(utils, Backbone, globals, ForecastDatabaseManager) {
         }
 
         function sanitizeAttributes(attrs) {
-            switch(attrs.fuelType) {
-                case undefined:
-                case "Gasoline":
-                case "Unleaded Regular":
-                case "Unleaded Plus":
-                case "Unleaded Premium":
-                    attrs.fuelType = "Gasoline";
-                    break;
+            var GRADES   = globals.forecast.configuration.fuelType,
+                fuelType = false;
 
-                case "Diesel":
-                case "Diesel Regular":
-                case "Diesel Premium":
-                    attrs.fuelType = "Diesel";
-                    break;
+            // sanitize fuelType
+            utils._.each(GRADES, function(item) {
+                if (utils._.contains(item.grades, attrs.fuelType)) {
+                    fuelType = item.label;
+                }
+            });
 
-                default:
-                    attrs.fuelType = false;
-            }
+            // assign values
+            attrs.fuelType = fuelType;
 
             return attrs;
         }

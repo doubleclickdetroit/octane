@@ -20,7 +20,8 @@ define(function(require) {
     globals.DEFAULT = {
         'PAGE_TRANSITION': 'none',
         'LOCATION'       : '04101',
-        'FUEL_TYPE'      : 'Gasoline'
+        'FUEL_TYPE'      : 'Gasoline',
+        'UNDEFINED'      : undefined
     };
 
     /*
@@ -94,6 +95,8 @@ define(function(require) {
                 'label' : 'Gasoline',
                 'value' : globals.forecast.constants.DEFAULT_FUEL_TYPE,
                 'grades': [
+                    globals.DEFAULT.UNDEFINED,
+                    'Gasoline',
                     'Unleaded Regular',
                     'Unleaded Plus',
                     'Unleaded Premium'
@@ -103,6 +106,7 @@ define(function(require) {
                 'label' : 'Diesel',
                 'value' : 'Diesel',
                 'grades': [
+                    'Diesel',
                     'Diesel Regular',
                     'Diesel Premium'
                 ]
