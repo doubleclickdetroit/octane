@@ -76,6 +76,40 @@ define(function(require) {
         ]
     };
 
+    /*
+     * Page :: Forecast
+    */
+    globals.forecast = {};
+    globals.forecast.constants = {
+        'LOCATION'          : '04101',
+        'DEFAULT_FUEL_TYPE' : 'Gasoline',
+        'DATA_INDICATOR_KEY': 'data-indicator',
+        'DISCLAIMER_TEXT'   : 'Lorem ipsum dolor sit amet, consectetur adispisicing elit.'
+    };
+    globals.forecast.configuration = {
+        'fuelType': [
+            {
+                'label' : 'Gasoline',
+                'value' : globals.forecast.constants.DEFAULT_FUEL_TYPE,
+                'grades': [
+                    'Unleaded Regular',
+                    'Unleaded Plus',
+                    'Unleaded Premium'
+                ]
+            },
+            {
+                'label' : 'Diesel',
+                'value' : 'Diesel',
+                'grades': [
+                    'Diesel Regular',
+                    'Diesel Premium'
+                ]
+            }
+        ],
+        'disclaimer': globals.forecast.constants.DISCLAIMER_TEXT,
+        'dataIndicator': globals.forecast.constants.DATA_INDICATOR_KEY
+    };
+
 
     return globals;
 });

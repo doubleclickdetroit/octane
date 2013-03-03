@@ -7,15 +7,27 @@ function(utils, facade, Backbone) {
     var AppRouter;
     AppRouter = Backbone.Router.extend({
 
+        /*
+         * Route Definitions
+        */
         routes: {
-            'settings(/)(:id)': 'renderSettings',
-            'alerts'          : 'renderAlerts',
-            'menu'            : 'renderMenu',
-            ''                : 'root'
+            'forecast(/)(:view_id)': 'renderForecast',
+            'settings': 'renderSettings',
+            'alerts': 'renderAlerts',
+            'menu': 'renderMenu',
+
+            '': 'root'
         },
 
-        renderSettings: function(id) {
-            facade.publish('settings', 'navigate', id || null);
+        /*
+         * Route Handlers
+        */
+        renderForecast: function(view_id) {
+            facade.publish('forecast', 'navigate', view_id);
+        },
+
+        renderSettings: function() {
+            facade.publish('settings', 'navigate');
         },
 
         renderAlerts: function() {

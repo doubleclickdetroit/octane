@@ -1,5 +1,5 @@
-define([ './app', './menu', './settings', './alerts'],
-function(app, menu, settings, alerts) {
+define([ './app', './menu', './settings', './alerts', './forecast'],
+function(app, menu, settings, alerts, forecast) {
 
     'use strict';
 
@@ -9,4 +9,5 @@ function(app, menu, settings, alerts) {
     menu.init();
     settings.init();
     alerts.init();
+    forecast.init();
 });

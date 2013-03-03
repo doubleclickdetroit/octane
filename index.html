@@ -23,9 +23,9 @@
             <ul data-theme="c" data-role="listview" data-inset="true">
                 <li class="ui-li-has-icon"><a href="#"><i class="ul-li-icon icon-search"></i>New Search</a></li>
                 <li class="ui-li-has-icon"><a href="#"><i class="ul-li-icon icon-results"></i>Fuel Sites </a></li>
-                <li class="ui-li-has-icon"><a href="#" data-forecast-entrypoint><i class="ul-li-icon icon-forecast"></i>Forecast</a></li>
+                <li class="ui-li-has-icon"><a href="#forecast/database"><i class="ul-li-icon icon-forecast"></i>Forecast</a></li>
                 <li class="ui-li-has-icon"><a href="#favorites"><i class="ul-li-icon icon-favorites"></i>Saved Searches</a></li>
-                <li class="ui-li-has-icon"><a href="#settings/share"><i class="ul-li-icon icon-share"></i>Share</a></li>
+                <li class="ui-li-has-icon"><a href="#"><i class="ul-li-icon icon-share"></i>Share</a></li>
                 <li class="ui-li-has-icon"><a href="#settings"><i class="ul-li-icon icon-settings"></i>Settings</a></li>
             </ul>
         </div>
@@ -49,52 +49,7 @@
             <a href="#menu" data-role="button" data-rel="back" class="menubutton_back" >Back</a>
         </div>
 
-        <div data-role="content" class="page-content">
-            <div class="margin-bottom" id="forecastIndicator" data-indicator="empty"></div>
-
-            <form id="forecastForm">
-                <div class="ui-grid-a search_drop_grid margin-bottom">
-                    <div class="ui-block-a">
-                        <span class="widthmax label-for-text-field">
-                            <strong class="text-normal">Location:</strong>
-                        </span>
-                    </div>
-                    <div class="ui-block-b searchfieldtable">
-                        <div class="select-drop drop_lable">
-                            <input name="forecastLocation" id="forecastLocation" type="text" class="text-input-box" value="04101" />
-                        </div>
-                    </div>
-                </div>
-
-                <div class="ui-grid-a search_drop_grid margin-bottom">
-                    <div class="ui-block-a">
-                        <span class="widthmax">
-                            <strong class="text-normal">Fuel Type:</strong>
-                        </span>
-                    </div>
-                    <div class="ui-block-b searchfieldtable">
-                        <div class="select-drop drop_lable">
-                            <select name="forecastFuelType" id="forecastFuelType">
-                                <option value="Gasoline">Gasoline</option>
-                                <option value="Diesel">Diesel</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="margin-bottom-extra">
-                    <div class="button_conntainer_sub">
-                        <div class="button_conntainer_sub_btn">
-                            <button type="button" data-role="button" data-theme="a">Submit</button>
-                        </div>
-                    </div>
-                </div>
-            </form>
-
-            <div class="ui-body ui-body-b text-center">
-                <small>Lorem ipsum dolor sit amet, consectetur adispisicing elit.</small>
-            </div>
-        </div>
+        <div data-role="content" class="page-content"></div>
     </div>
     <!-- End-forecast -->
 

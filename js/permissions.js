@@ -43,6 +43,11 @@ define(function() {
     */
     permissions.alerts = {};
 
+    /*
+     * Forecast
+    */
+    permissions.forecast = {};
+
 
     return permissions;
 });

@@ -18,7 +18,6 @@ require.config({
         // Helpers
         'utils'  : 'helpers/utils',
         'facade' : 'helpers/facade',
-        'handler': 'database_handlers',
 
         // Direcotries
         'tmpl': 'templates/',
