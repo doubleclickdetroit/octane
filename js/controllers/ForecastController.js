@@ -24,31 +24,44 @@ function(utils, ForecastView, ForecastModel) {
          * Private Methods
         */
         function handleForecastEntryPoint() {
-            console.log('handleForecastEntryPoint');
-
-            if (forecastModel.acceptableFuelGrade()) {
+            if (forecastModel.validateAttributes()) {
                 utils.changePage(forecastView.$el);
             }
             else {
-                forecastView.displayNotification();
+                promptNotification();
             }
+        }
+
+        function promptNotification() {
+            navigator.notification.confirm(
+                'Forecasts are only available for Gasoline or Diesel fuel types.',    // message
+                function(id) { if (id == 1) { utils.changePage(forecastView.$el); }}, // callback to determine entry
+                ' ',                                                                  // title
+                'Continue,Cancel'                                                     // button labels
+            );
         }
 
         /*
          * Public Methods
         */
         function navigate(view_id) {
-            forecastModel.requestForecast(view_id, handleForecastEntryPoint);
+            forecastModel.loadAttributes(view_id, handleForecastEntryPoint);
         }
 
         function updateAttribute(id, val) {
             forecastModel.updateAttribute(id, val);
         }
 
+        function saveAttributes() {
+            var attrs = forecastModel.toJSON();
+            forecastModel.saveAttributes(attrs);
+        }
+
         return {
             init            : init,
             navigate        : navigate,
-            updateAttribute : updateAttribute
+            updateAttribute : updateAttribute,
+            saveAttributes  : saveAttributes
         };
     })();
 

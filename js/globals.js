@@ -18,7 +18,9 @@ define(function(require) {
      * Defaults
     */
     globals.DEFAULT = {
-        'PAGE_TRANSITION': 'none'
+        'PAGE_TRANSITION': 'none',
+        'LOCATION'       : '04101',
+        'FUEL_TYPE'      : 'Gasoline'
     };
 
     /*
@@ -37,8 +39,8 @@ define(function(require) {
     */
     globals.alerts = {};
     globals.alerts.constants = {
-        'LOCATION'               : '04101',
-        'DEFAULT_FUEL_TYPE'      : 'Gasoline',
+        'LOCATION'               : globals.DEFAULT.LOCATION,
+        'DEFAULT_FUEL_TYPE'      : globals.DEFAULT.FUEL_TYPE,
         'DEFAULT_FORECAST_CHANGE': 'Strongly',
         'ALERT_ENABLED'          : 'On',
         'ALERT_DISABLED'         : 'Off'
@@ -81,8 +83,8 @@ define(function(require) {
     */
     globals.forecast = {};
     globals.forecast.constants = {
-        'LOCATION'          : '04101',
-        'DEFAULT_FUEL_TYPE' : 'Gasoline',
+        'LOCATION'          : globals.DEFAULT.LOCATION,
+        'DEFAULT_FUEL_TYPE' : globals.DEFAULT.FUEL_TYPE,
         'DATA_INDICATOR_KEY': 'data-indicator',
         'DISCLAIMER_TEXT'   : 'Lorem ipsum dolor sit amet, consectetur adispisicing elit.'
     };

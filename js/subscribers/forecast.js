@@ -13,6 +13,9 @@ function(facade, controller) {
     //
     subscribe('updateAttribute', controller.updateAttribute);
 
+    //
+    subscribe('saveAttributes', controller.saveAttributes);
+
 
     return {
         init: controller.init

@@ -1,5 +1,5 @@
-define([ 'jquery', 'backbone', './globals' ],
-function($, Backbone, globals) {
+define([ 'jquery', 'underscore', 'backbone', './globals' ],
+function($, _, Backbone, globals) {
 
     'use strict';
 
@@ -10,6 +10,11 @@ function($, Backbone, globals) {
      * jQuery convenience method
     */
     utils.$ = $;
+
+    /*
+     * Underscore convenience method
+    */
+    utils._ = _;
 
     /*
      * Backbone convenience method

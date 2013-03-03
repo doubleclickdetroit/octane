@@ -13,7 +13,7 @@ function($, _, globals, facade, Backbone, Mustache, tmpl) {
 
         events: {
             'change :input': 'handleUpdatingAttribute',
-            'click button' : 'handleCriteriaSubmission'
+            'click button' : 'handleSavingAttributes'
         },
 
         initialize: function() {
@@ -31,23 +31,19 @@ function($, _, globals, facade, Backbone, Mustache, tmpl) {
             $el.html(this.template(globals.forecast.configuration));
         },
 
-        render: function(data, id) {
-            var ATTR, json;
-            ATTR = globals.forecast.constants.DATA_INDICATOR_KEY;
+        render: function(data) {
+            var attr, json;
+            attr = globals.forecast.constants.DATA_INDICATOR_KEY;
             json = data.toJSON();
-            console.log('ForecastView render', json);
-            this.$('#forecastIndicator').attr(ATTR, id);
-            this.$('#forecastLocation').val(json.location);
-            this.$('#forecastFuelType').val(json.fuelType).selectmenu('refresh');
-        },
 
-        displayNotification: function() {
-            navigator.notification.confirm(
-                'Forecasts are only available for Gasoline or Diesel fuel types.',               // message
-                function(id) { if (id == 1) { console.log('ForecastView displayNotification', id) }}, // callback to determine entry
-                ' ',                                                                             // title
-                'Continue,Cancel'                                                                // button labels
-            );
+            // toggle loading message
+            if (json.indicator === 'loading') setTimeout($.mobile.showPageLoadingMsg, 0);
+            else if (json.indicator !== '')   setTimeout($.mobile.hidePageLoadingMsg, 0);
+
+            // set values for controls
+            this.$('#forecastIndicator').attr(attr, json.indicator);
+            this.$('#forecastLocation').val(json.location);
+            this.$('#forecastFuelType').val(json.fuelType).selectmenu().selectmenu('refresh'); // init if not already, then refresh
         },
 
         /*
@@ -55,11 +51,11 @@ function($, _, globals, facade, Backbone, Mustache, tmpl) {
         */
         handleUpdatingAttribute: function(evt) {
             var target = evt.target,
-                val    = $(target).val();
+                val = $(target).val();
             facade.publish('forecast', 'updateAttribute', target.id, val);
         },
-        handleCriteriaSubmission: function() {
-            console.log('ForecastView handleCriteriaSubmission');
+        handleSavingAttributes: function() {
+            facade.publish('forecast', 'saveAttributes');
         }
     });
 

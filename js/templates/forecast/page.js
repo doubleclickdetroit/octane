@@ -1,4 +1,4 @@
-<div class="margin-bottom" id="forecastIndicator" {{dataIndicator}}="loading"></div>
+<div class="margin-bottom" id="forecastIndicator" {{dataIndicator}}="empty"></div>
 
 <div class="ui-grid-a search_drop_grid margin-bottom">
     <div class="ui-block-a">
