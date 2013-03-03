@@ -82,11 +82,16 @@ function(DatabaseManager) {
         };
 
 
-        // Constructor
+        /***********************************************************************
+         * Constructor
+        ***********************************************************************/
         function ForecastDatabaseManager() {
             database = DatabaseManager.getInstance();
         }
 
+        /*
+         * Public Methods
+        */
         ForecastDatabaseManager.prototype.getForecastAlert    = getForecastAlert;
         ForecastDatabaseManager.prototype.setForecastAlert    = setForecastAlert;
         ForecastDatabaseManager.prototype.deleteForecastAlert = deleteForecastAlert;
@@ -95,6 +100,7 @@ function(DatabaseManager) {
     })();
 
 
+    // return as Singleton
     return function() {
         var __instance = null;
 
