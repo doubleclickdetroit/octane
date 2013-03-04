@@ -57,7 +57,7 @@ function($, _, Backbone, globals) {
     */
     utils.navigate = function(viewId) {
         Backbone.history.navigate(viewId, true);
-    },
+    };
 
     /*
      * Convenience method for accessing $mobile.changePage(), included in case any other actions are required in the same step.
@@ -86,6 +86,20 @@ function($, _, Backbone, globals) {
                 changeHash: updateHash
             });
         });
+    };
+
+    /*
+     * Function to check the checkConnection
+     *
+     * @param  - none
+     * @return - connectivity type()
+    */
+    utils.checkConnection = function() {
+        var connectivity = globals.CONNECTIVITY;
+
+        return _.find(connectivity, function(value, key) {
+            return Connection[key] === navigator.connection.type;
+        }) || connectivity['NONE'];
     };
 
 

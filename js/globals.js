@@ -27,12 +27,25 @@ define(function(require) {
     /*
      * Database
     */
-    globals.Database = {
+    globals.DATABASE = {
         'DATABASE_NAME'        : 'Database',
         'DATABASE_VERSION'     : '1.0',
         'DATABASE_DISPLAY_NAME': 'octane',
         'TIMEOUT'              : 200000,
         'SUCCESS'              : 'Database operation successful.'
+    };
+
+    /*
+     * Connectivity
+    */
+    globals.CONNECTIVITY = {
+        'NONE'    : 'No network',
+        'UNKNOWN' : 'Unknown connection',
+        'ETHERNET': 'Ethernet connection',
+        'WIFI'    : 'WiFi connection',
+        'CELL_2G' : 'Cell 2G connection',
+        'CELL_3G' : 'Cell 3G connection',
+        'CELL_4G' : 'Cell 4G connection'
     };
 
     /*

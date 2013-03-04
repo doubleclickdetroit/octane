@@ -52,7 +52,7 @@ function(globals, facade) {
          * Public Methods
         */
         DatabaseManager.prototype.openDatabase = function() {
-            var definition = globals.Database;
+            var definition = globals.DATABASE;
 
             if (__database === null) {
                 __database = window.openDatabase(
