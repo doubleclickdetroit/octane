@@ -7,8 +7,6 @@ function(utils, Backbone, globals, ForecastDatabaseManager) {
     var ForecastModel;
     ForecastModel = (function(_super) {
 
-        utils.extend(ForecastModel, _super);
-
         /*
          * Private Methods
         */
@@ -16,23 +14,13 @@ function(utils, Backbone, globals, ForecastDatabaseManager) {
             var self = this;
 
             function response(tx, results) {
-                var args = [];
-
-                if (results.rows.length > 0) {
-                    args.push({
-                        'location': results.rows.item(0).Location,
-                        'fuelType': results.rows.item(0).FuelType
-                    });
-                }
-                else {
-                    args.push({
-                        'location': globals.forecast.constants.LOCATION,
-                        'fuelType': globals.forecast.constants.FUEL_TYPE
-                    });
-                }
+                var hasResults = results.rows.length > 0;
 
                 // resolve with context and args
-                deferred.resolveWith(self, args);
+                deferred.resolveWith(self, [{
+                    'location': hasResults ? results.rows.item(0).Location : globals.forecast.constants.LOCATION,
+                    'fuelType': hasResults ? results.rows.item(0).FuelType : globals.forecast.constants.FUEL_TYPE
+                }]);
             }
 
             // retrieve the data
@@ -71,23 +59,24 @@ function(utils, Backbone, globals, ForecastDatabaseManager) {
                 case "04104": value = "Slightly Down"; break;
                 case "04105": value = "Strongly Down"; break;
                 case "04101":
-                default:      value = "Neutral";
+                default     : value = "Neutral";
             }
 
             // simulate server response
             setTimeout(function() {
-                deferred.resolveWith(self, [{
-                    'indicator': value
-                }]);
+                deferred.resolveWith(self, [{'indicator': value}]);
             }, 2000);
         }
 
-        /*
+        /***********************************************************************
          * Constructor
-        */
+        ***********************************************************************/
+        utils.extend(ForecastModel, _super);
+
         function ForecastModel() {
             ForecastModel.__super__.constructor.apply(this, arguments);
         }
+
         ForecastModel.prototype.defaults = {
             'indicator': null,
             'location' : null,
@@ -126,8 +115,7 @@ function(utils, Backbone, globals, ForecastDatabaseManager) {
         };
 
         ForecastModel.prototype.validateAttributes = function() {
-            return true;
-            // return this.get('fuelType') === globals.forecast.constants.DEFAULT_FUEL_TYPE;
+            return this.get('fuelType') !== false;
         };
 
         ForecastModel.prototype.saveAttributes = function(attrs) {
