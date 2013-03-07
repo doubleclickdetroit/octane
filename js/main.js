@@ -4,8 +4,9 @@
 require.config({
     paths: {
         // RequireJS Plugins
-        'cs'  : 'libs/require/cs',
-        'text': 'libs/require/text',
+        'cs'   : 'libs/require/cs',
+        'text' : 'libs/require/text',
+        'async': 'libs/require/async',
 
         // Frameworks
         'cordova': 'libs/cordova-2.4.0',
@@ -16,8 +17,8 @@ require.config({
         'jquery-mobile': 'libs/jquery/jquery.mobile',
 
         // Helpers
-        'utils'  : 'helpers/utils',
-        'facade' : 'helpers/facade',
+        'utils' : 'helpers/utils',
+        'facade': 'helpers/facade',
 
         // Direcotries
         'tmpl': 'templates/',
