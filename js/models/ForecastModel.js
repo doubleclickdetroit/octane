@@ -1,5 +1,5 @@
-define([ 'utils', 'backbone', 'globals', 'managers/ForecastDatabaseManager' ],
-function(utils, Backbone, globals, ForecastDatabaseManager) {
+define([ 'utils', 'backbone', 'globals' ],
+function(utils, Backbone, globals) {
 
     'use strict';
 
@@ -10,27 +10,23 @@ function(utils, Backbone, globals, ForecastDatabaseManager) {
         /*
          * Private Methods
         */
-        function requestUsingForecastDatabaseManager(deferred) {
+        function requestUsingDefaultCriteria(deferred) {
+                     
             var self = this;
 
-            function response(tx, results) {
-                var hasResults = results.rows.length > 0;
-
-                // resolve with context and args
-                deferred.resolveWith(self, [{
-                    'location': hasResults ? results.rows.item(0).Location : globals.forecast.constants.LOCATION,
-                    'fuelType': hasResults ? results.rows.item(0).FuelType : globals.forecast.constants.FUEL_TYPE
-                }]);
-            }
-
-            // retrieve the data
-            ForecastDatabaseManager.getInstance().getForecastAlert(response);
+            // resolve with context and args
+            deferred.resolveWith(self, [{
+                'location': globals.forecast.constants.LOCATION,
+                'fuelType': globals.forecast.constants.FUEL_TYPE
+            }]);
         }
 
-        function requestUsingFuelsiteServiceManager(deferred) {
-            //
+        function requestUsingFuelSiteSearchCriteria(deferred) {
+        
+            // TODO
+        
         }
-
+         
         function sanitizeAttributes(attrs) {
             var GRADES   = globals.forecast.configuration.fuelType,
                 fuelType = false;
@@ -79,14 +75,15 @@ function(utils, Backbone, globals, ForecastDatabaseManager) {
 
         ForecastModel.prototype.defaults = {
             'indicator': null,
-            'location' : null,
-            'fuelType' : null
+            'location' : globals.forecast.constants.LOCATION,
+            'fuelType' : globals.forecast.constants.FUEL_TYPE
         };
 
         /*
          * Public Methods
         */
         ForecastModel.prototype.loadAttributes = function(id, callback) {
+
             var deferred = utils.$.Deferred();
 
             // respond to promisary-object
@@ -94,13 +91,13 @@ function(utils, Backbone, globals, ForecastDatabaseManager) {
              .then(this.saveAttributes)
              .done(callback);
 
-            // request data with the FuelsiteServiceManager
+            // request data using the Criteria for Searching for the Fuel Sites
             if (id === 'fuelsites') {
-                requestUsingFuelsiteServiceManager.call(this, deferred);
+                requestUsingFuelSiteSearchCriteria.call(this, deferred);
             }
-            // request data with the ForecastDatabaseManager
-            else if (id === 'database') {
-                requestUsingForecastDatabaseManager.call(this, deferred);
+            // request data with the defaults
+            else if (id === 'menu') {
+                requestUsingDefaultCriteria.call(this, deferred);
             }
         };
 

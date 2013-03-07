@@ -20,8 +20,8 @@ require.config({
         'utils' : 'helpers/utils',
         'facade': 'helpers/facade',
 
-        // Direcotries
-        'tmpl': 'templates/',
+        // Directories
+        'tmpl': 'templates',
     },
 
     shim: {
