@@ -9,9 +9,9 @@ function(utils, MenuView) {
 
         function MenuController() {}
 
-        MenuController.prototype.init = function() {
-            //
-        };
+        var database, fuelSitesModel, locationModel;
+
+        MenuController.prototype.init = function() {};
 
         MenuController.prototype.navigate = function() {
             utils.changePage('#menu', null, true);

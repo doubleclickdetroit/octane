@@ -12,8 +12,8 @@ function(DatabaseManager) {
         /*
          * Get the Forecast Alert settings
          *
-         * @parameter: contains success callback function
-         * @return   : none
+         * @param : contains success callback function
+         * @return: none
         */
         function getForecastAlert(callback) {
             var sql, db = database.openDatabase();
@@ -30,8 +30,8 @@ function(DatabaseManager) {
          * when a record does not yet exist, otherwise update the pre-existing record.
          * There should only be 1 record in the ForecastAlert table ever.
          *
-         * @parameter: contains alert data object
-         * @return   : none
+         * @param : contains alert data object
+         * @return: none
         */
         function setForecastAlert(data, callback) {
             var db = database.openDatabase();
@@ -67,8 +67,8 @@ function(DatabaseManager) {
         /*
          * Delete data from the ForecastAlert table
          *
-         * @parameter: contain SQLTransaction Object
-         * @return   : none
+         * @param : contain SQLTransaction Object
+         * @return: none
         */
         function deleteForecastAlert(callback) {
             var sql, db = database.openDatabase();

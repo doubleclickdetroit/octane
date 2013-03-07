@@ -21,6 +21,7 @@ define(function(require) {
         'PAGE_TRANSITION': 'none',
         'LOCATION'       : '04101',
         'FUEL_TYPE'      : 'Gasoline',
+        'FUEL_TYPE_GRADE': 'Unleaded Regular',
         'UNDEFINED'      : undefined
     };
 
@@ -33,6 +34,38 @@ define(function(require) {
         'DATABASE_DISPLAY_NAME': 'octane',
         'TIMEOUT'              : 200000,
         'SUCCESS'              : 'Database operation successful.'
+    };
+
+    /*
+     * Webservices
+    */
+    globals.WEBSERVICE = {};
+    globals.WEBSERVICE.FUEL_SITE = {
+        'URL'         : 'https://account.wexmobile.com/mobileweb/siteLocator/fuelSites',
+        'FUEL_SITES'  : '/fuelSites',
+        'LONGITUDE'   : '/longitude/',
+        'LATITUDE'    : '/latitude/',
+        'RADIUS'      : '/radius/' ,
+        'FUEL_TYPE'   : '/fuelType/',
+        'SORT_BY'     : '/sortBy/',
+        'FILTER_TODAY': '/filterToday/',
+        'PAGE_NUMBER' : '/pageNumber/',
+        'PAGE_SIZE'   : '/pageSize/',
+        'BRAND'       : '?brand='
+    };
+
+    /*
+     * FuelSites
+    */
+    globals.FUELSITES = {
+        'START_LOCATION' : 'currentLocation',
+        'RADIUS'         : '5.0',
+        'FUEL_TYPE'      : globals.DEFAULT.FUEL_TYPE_GRADE,
+        'SORT_BY'        : 'Price',
+        'FILTER_TODAY'   : 'no',
+        'PAGE_NUMBER'    : 0,
+        'PAGE_SIZE'      : 10,
+        'BRAND'          : 'All'
     };
 
     /*
