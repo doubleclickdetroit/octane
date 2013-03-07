@@ -22,7 +22,8 @@ define(function(require) {
         'LOCATION'       : '04101',
         'FUEL_TYPE'      : 'Gasoline',
         'FUEL_TYPE_GRADE': 'Unleaded Regular',
-        'UNDEFINED'      : undefined
+        'UNDEFINED'      : undefined,
+        'EMPTY_STRING'   : ''
     };
 
     /*
@@ -55,9 +56,9 @@ define(function(require) {
     };
 
     /*
-     * FuelSites
+     * Search Details
     */
-    globals.FUELSITES = {
+    globals.SEARCH_DETAILS = {
         'START_LOCATION' : 'currentLocation',
         'RADIUS'         : '5.0',
         'FUEL_TYPE'      : globals.DEFAULT.FUEL_TYPE_GRADE,
@@ -65,7 +66,11 @@ define(function(require) {
         'FILTER_TODAY'   : 'no',
         'PAGE_NUMBER'    : 0,
         'PAGE_SIZE'      : 10,
-        'BRAND'          : 'All'
+        'BRAND'          : 'All',
+        'UPDATED_RESULT' : globals.DEFAULT.EMPTY_STRING,
+        'LIMIT_RESULT'   : globals.DEFAULT.EMPTY_STRING,
+        'FAVORITES_NAME' : globals.DEFAULT.EMPTY_STRING,
+        'VIEW_MODE'      : 'default'
     };
 
     /*

@@ -12,6 +12,7 @@ function(utils, facade, Backbone) {
         */
         routes: {
             'forecast(/)(:view_id)': 'renderForecast',
+            'fuelsites': 'renderFuelSites',
             'settings': 'renderSettings',
             'alerts': 'renderAlerts',
             'menu': 'renderMenu',
@@ -24,6 +25,10 @@ function(utils, facade, Backbone) {
         */
         renderForecast: function(view_id) {
             facade.publish('forecast', 'navigate', view_id);
+        },
+
+        renderFuelSites: function() {
+            facade.publish('fuelsites', 'navigate');
         },
 
         renderSettings: function() {
