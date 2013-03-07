@@ -9,7 +9,7 @@ function(utils, MenuView) {
 
         function MenuController() {}
 
-        var database, fuelSitesModel, locationModel;
+        var database, searchDetailsModel, locationModel;
 
         MenuController.prototype.init = function() {};
 
