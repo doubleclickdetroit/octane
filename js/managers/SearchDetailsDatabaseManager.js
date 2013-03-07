@@ -15,7 +15,7 @@ function(DatabaseManager) {
          * @param : contain settings data-object
          * @return: none
         */
-        function insertSearchDetails(data) {
+        function insertSearchDetails(data, callback, context) {
             var sql, db = database.openDatabase();
             sql = 'INSERT INTO SearchDetails ('
                 + 'SearchBy, Location, Latitude, Longitude, Radius, FuelType, UpdatedResult, '
@@ -37,7 +37,11 @@ function(DatabaseManager) {
                         data.viewMode,
                         data.limitResult,
                         data.favoritesName
-                    ]);
+                    ], function() {
+                        if (callback) {
+                            callback.call(context || window);
+                        }
+                    });
                 }, database.error);
             }
         }
@@ -67,12 +71,12 @@ function(DatabaseManager) {
          * @param : none
          * @return: none
         */
-        function deleteDefaultSearchData(callback) {
+        function deleteDefaultSearchData(callback, context) {
             var sql, db = database.openDatabase();
             sql = "DELETE FROM SearchDetails WHERE ViewMode = 'default'";
             db.transaction(function(tx) {
                 tx.executeSql(sql, [], function() {
-                    callback();
+                    if (callback) { callback.call(context || window); }
                 }, database.error);
             }, database.error);
         }
