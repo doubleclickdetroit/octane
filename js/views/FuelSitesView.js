@@ -9,7 +9,16 @@ function($, _, facade, Backbone, Mustache, tmpl) {
 
         el: $('#settings'),
 
-        initialize: function() {
+        initialize: function(options) {
+            this.collection = options.collection;
+
+            this.collection.on('reset', function(collection) {
+                var sites = collection.map(function(fuelsite) {
+                    return fuelsite.get('name');
+                });
+                console.log(sites);
+            });
+
             // create page
             this.pageCreate();
         },

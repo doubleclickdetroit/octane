@@ -9,35 +9,23 @@ function(utils, FuelSitesView, FuelSitesCollection, SearchDetailsDatabaseManager
 
         function FuelSitesController() {}
 
-        var database, searchDetailsModel, locationModel;
+        var searchDetailsModel, fuelSitesCollection, fuelSitesView;
 
         FuelSitesController.prototype.init = function() {
-            database = SearchDetailsDatabaseManager.getInstance();
 
-            locationModel = new LocationModel();
-
+            // initialize classes
             searchDetailsModel = new SearchDetailsModel({
-                database: database
+                location: new LocationModel(),
+                database: SearchDetailsDatabaseManager.getInstance()
             });
 
-            locationModel.once('change', function(model) {
-                searchDetailsModel.fetch();
+            window.fuelSitesCollection = fuelSitesCollection = new FuelSitesCollection({
+                searchDetails: searchDetailsModel
             });
 
-            locationModel.on('change', function(model) {
-                searchDetailsModel.set(model.toJSON());
+            fuelSitesView = new FuelSitesView({
+                collection: fuelSitesCollection
             });
-
-            searchDetailsModel.on('change', function(model) {
-                console.log('searchDetailsModel changed', model.toJSON());
-            });
-
-            /*
-            setTimeout(function() {
-                console.log('searchDetailsModel save()');
-                searchDetailsModel.save();
-            }, 5000);
-            */
         };
 
         FuelSitesController.prototype.navigate = function() {

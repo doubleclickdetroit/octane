@@ -43,7 +43,18 @@ function(utils, globals, Backbone) {
         };
 
         SearchDetailsModel.prototype.initialize = function(options) {
+            this.location = options.location;
             this.database = options.database;
+
+            this.location
+
+                // initially fetch saved data
+                .once('change', this.fetch(), this)
+
+                // update location attributes
+                .on('change', function(model) {
+                    this.set(model.toJSON());
+                }, this);
         };
 
         SearchDetailsModel.prototype.updateAttributes = function(data) {
@@ -53,7 +64,7 @@ function(utils, globals, Backbone) {
                     'radius'       : data.item(0).Radius,
                     'fuelType'     : data.item(0).FuelType,
                     'sortBy'       : data.item(0).SortBy,
-                    'filterToday'  : data.item(0).LimitResult.toLowerCase(),
+                    'filterToday'  : data.item(0).LimitResult.toLowerCase() || globals.SEARCH_DETAILS.FILTER_TODAY,
                     'brand'        : data.item(0).Brand,
                     'limitResult'  : data.item(0).LimitResult,
                     'favoritesName': data.item(0).FavoritesName

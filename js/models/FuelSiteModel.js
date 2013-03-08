@@ -10,6 +10,8 @@ function(utils, globals, Backbone) {
         /***********************************************************************
          * Constructor
         ***********************************************************************/
+        utils.extend(FuelSiteModel, _super);
+
         function FuelSiteModel() {
             FuelSiteModel.__super__.constructor.apply(this, arguments);
         }
