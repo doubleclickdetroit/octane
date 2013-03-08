@@ -7,6 +7,8 @@ function(utils, globals, Backbone, FuelSiteModel) {
     var FuelSitesCollection;
     FuelSitesCollection = (function(_super) {
 
+        var _constants = globals.fuelsites.constants;
+
         /***********************************************************************
          * Constructor
         ***********************************************************************/
@@ -21,7 +23,7 @@ function(utils, globals, Backbone, FuelSiteModel) {
 
         // Build URL
         FuelSitesCollection.prototype.url = function() {
-            var key   = globals.WEBSERVICE.FUEL_SITE,
+            var key   = _constants.WEBSERVICE,
                 value = this.searchDetails.toJSON();
 
             return key.URL
@@ -38,6 +40,13 @@ function(utils, globals, Backbone, FuelSiteModel) {
         FuelSitesCollection.prototype.initialize = function(options) {
             // cache searchDetails
             this.searchDetails = options.searchDetails;
+
+            //
+            this.searchDetails.on('change', function(criteria) {
+                if (criteria.get('viewMode') === _constants.VIEW_MODE) {
+                    this.fetch();
+                }
+            }, this);
         };
 
         FuelSitesCollection.prototype.parse = function(results) {

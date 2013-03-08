@@ -167,6 +167,18 @@ define(function(require) {
         'dataIndicator': globals.forecast.constants.DATA_INDICATOR_KEY
     };
 
+    /*
+     * Page :: Fuelsites
+    */
+    globals.fuelsites = {};
+    globals.fuelsites.constants = {
+        'WEBSERVICE': globals.WEBSERVICE.FUEL_SITE,
+        'VIEW_MODE' : globals.SEARCH_DETAILS.VIEW_MODE // fuelsites is default view_mode for search details
+    };
+    globals.fuelsites.configuration = {
+        //
+    };
+
 
     return globals;
 });
