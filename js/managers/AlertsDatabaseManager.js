@@ -4,8 +4,8 @@ function(DatabaseManager) {
     'use strict';
 
 
-    var ForecastDatabaseManager;
-    ForecastDatabaseManager = (function() {
+    var AlertsDatabaseManager;
+    AlertsDatabaseManager = (function() {
 
         var database;
 
@@ -84,18 +84,18 @@ function(DatabaseManager) {
         /***********************************************************************
          * Constructor
         ***********************************************************************/
-        function ForecastDatabaseManager() {
+        function AlertsDatabaseManager() {
             database = DatabaseManager.getInstance();
         }
 
         /*
          * Public Methods
         */
-        ForecastDatabaseManager.prototype.getForecastAlert    = getForecastAlert;
-        ForecastDatabaseManager.prototype.setForecastAlert    = setForecastAlert;
-        ForecastDatabaseManager.prototype.deleteForecastAlert = deleteForecastAlert;
+        AlertsDatabaseManager.prototype.getForecastAlert    = getForecastAlert;
+        AlertsDatabaseManager.prototype.setForecastAlert    = setForecastAlert;
+        AlertsDatabaseManager.prototype.deleteForecastAlert = deleteForecastAlert;
 
-        return ForecastDatabaseManager;
+        return AlertsDatabaseManager;
     })();
 
 
@@ -106,7 +106,7 @@ function(DatabaseManager) {
         return {
             getInstance: function() {
                 if (__instance === null) {
-                    __instance = new ForecastDatabaseManager();
+                    __instance = new AlertsDatabaseManager();
                 }
                 return __instance;
             }

@@ -1,5 +1,5 @@
-define([ 'backbone', 'globals', 'managers/ForecastDatabaseManager' ],
-function(Backbone, globals, ForecastDatabaseManager) {
+define([ 'backbone', 'globals', 'managers/AlertsDatabaseManager' ],
+function(Backbone, globals, AlertsDatabaseManager) {
 
     'use strict';
 
@@ -23,7 +23,7 @@ function(Backbone, globals, ForecastDatabaseManager) {
          * Handle CRUD operations using forecastManager
         */
         sync: function (method, model, options) {
-            var manager = ForecastDatabaseManager.getInstance();
+            var manager = AlertsDatabaseManager.getInstance();
             options.callback = options.callback || null;
 
             switch(method) {
