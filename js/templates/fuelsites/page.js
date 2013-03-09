@@ -1,1 +1,1 @@
-<h1>Fuelsites content</h1>
+<ul id="fuelStationsList" class="listrowpadding" data-role="listview"></ul>

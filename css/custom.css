@@ -756,6 +756,12 @@ i[class*="icon-"] {
     background-repeat: no-repeat;
     background-position: center;
 }
+i[class*="icon-menu"] {
+    position: relative;
+    top : auto;
+    left: auto;
+    margin: 0 auto;
+}
 i.icon-search    { background-image: url(../img/search-icon.png);    }
 i.icon-results   { background-image: url(../img/results-icon.png);   }
 i.icon-forecast  { background-image: url(../img/forecast-icon.png);  }
@@ -783,6 +789,14 @@ i.icon-menu-refresh  { background-image: url(../img/Menu_refresh_icon.png);  }
     i.icon-menu-refresh  { background-image: url(../img/Menu_refresh_icon@2x.png);  }
 }
 
+
+/*********************************************
+ * Fuelsites - Page
+*********************************************/
+.ui-bar-c.ui-navbar li .ui-btn .ui-btn-inner {
+    padding-top   : 5px;
+    padding-bottom: 5px;
+}
 
 /*********************************************
  * Forecast - Page

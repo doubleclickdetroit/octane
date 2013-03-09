@@ -1,5 +1,5 @@
-define([ 'jquery', 'underscore', 'facade', 'backbone', 'mustache', 'text!tmpl/fuelsites/page' ],
-function($, _, facade, Backbone, Mustache, tmpl) {
+define([ 'jquery', 'underscore', 'facade', 'backbone', 'mustache', 'text!tmpl/fuelsites/header', 'text!tmpl/fuelsites/page' ],
+function($, _, facade, Backbone, Mustache, tmpl_header, tmpl_list) {
 
     'use strict';
 
@@ -7,7 +7,9 @@ function($, _, facade, Backbone, Mustache, tmpl) {
     var FuelSitesView;
     FuelSitesView = Backbone.View.extend({
 
-        el: $('#settings'),
+        el: $('#fuelsites'),
+
+        template: Mustache.compile(tmpl_list),
 
         initialize: function(options) {
             this.collection = options.collection;
@@ -24,8 +26,8 @@ function($, _, facade, Backbone, Mustache, tmpl) {
         },
 
         pageCreate: function() {
-            var $el = this.$el.find(':jqmData(role=content)');
-            $el.html(Mustache.render(tmpl));
+            var $el = this.$el.find(':jqmData(role=header)');
+            $el.append(Mustache.render(tmpl_header));
         }
     });
 
