@@ -705,8 +705,8 @@ a.ui-btn-hover-b a.ui-link-inherit {
     width: 0;
     height: 0;
     border-top   : 14px solid transparent;
-    border-right : 14px solid #e9b5c5;
-    border-bottom: 14px solid transparent;
+    border-right : 12px solid #e9b5c5;
+    border-bottom: 15px solid transparent;
 }
 .ui-header .menubutton_back .ui-btn-inner:before {
     content: "";
@@ -715,9 +715,9 @@ a.ui-btn-hover-b a.ui-link-inherit {
     top: 0;
     width: 0;
     height: 0;
-    border-top   : 13px solid transparent;
-    border-right : 12px solid #c9132e;
-    border-bottom: 11px solid transparent;
+    border-top   : 12px solid transparent;
+    border-right : 10px solid #c9132e;
+    border-bottom: 13px solid transparent;
 }
 .ui-header .menubutton_back .ui-btn-text {
     left: -3px;
