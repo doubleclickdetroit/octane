@@ -11,7 +11,7 @@ define(function(require) {
     */
     globals.APP = {
         'NAME'   : 'Octane',
-        'VERSION': '1.0'
+        'VERSION': '3.0'
     };
 
     /*

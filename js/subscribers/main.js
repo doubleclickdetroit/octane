@@ -1,5 +1,5 @@
-define([ './app', './menu', './fuelsites', './settings', './alerts', './forecast'],
-function(app, menu, fuelsites, settings, alerts, forecast) {
+define([ './app', './menu', './fuelsites', './settings', './info', './alerts', './forecast'],
+function (app, menu, fuelsites, settings, info, alerts, forecast) {
 
     'use strict';
 
@@ -9,6 +9,7 @@ function(app, menu, fuelsites, settings, alerts, forecast) {
     menu.init();
     fuelsites.init();
     settings.init();
+    info.init();
     alerts.init();
     forecast.init();
 });
