@@ -12,22 +12,27 @@ function($, _, facade, Backbone, Mustache, tmpl_header, tmpl_list) {
         template: Mustache.compile(tmpl_list),
 
         initialize: function(options) {
+            
+            // cache collection
             this.collection = options.collection;
 
-            this.collection.on('reset', function(collection) {
-                var sites = collection.map(function(fuelsite) {
-                    return fuelsite.get('name');
-                });
-                console.log(sites);
-            });
+            // render collection, on reset
+            this.collection.on('reset', this.render, this);
 
             // create page
             this.pageCreate();
         },
 
         pageCreate: function() {
-            var $el = this.$el.find(':jqmData(role=header)');
-            $el.append(Mustache.render(tmpl_header));
+            // append the header
+            this.$.find(':jqmData(role=header)').append(Mustache.render(tmpl_header));
+            
+            // append the list
+            this.$.find(':jqmData(role=content)').append(Mustache.render(tmpl_list));
+        },
+        
+        render: function(fuelsites) {
+            console.log('FuelSitesView render', fuelsites);
         }
     });
 
