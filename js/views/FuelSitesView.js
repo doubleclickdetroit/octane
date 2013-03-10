@@ -12,7 +12,7 @@ function($, _, facade, Backbone, Mustache, tmpl_header, tmpl_list) {
         template: Mustache.compile(tmpl_list),
 
         initialize: function(options) {
-            
+
             // cache collection
             this.collection = options.collection;
 
@@ -25,12 +25,12 @@ function($, _, facade, Backbone, Mustache, tmpl_header, tmpl_list) {
 
         pageCreate: function() {
             // append the header
-            this.$.find(':jqmData(role=header)').append(Mustache.render(tmpl_header));
-            
+            this.$el.find(':jqmData(role=header)').append(Mustache.render(tmpl_header));
+
             // append the list
-            this.$.find(':jqmData(role=content)').append(Mustache.render(tmpl_list));
+            this.$el.find(':jqmData(role=content)').append(Mustache.render(tmpl_list));
         },
-        
+
         render: function(fuelsites) {
             console.log('FuelSitesView render', fuelsites);
         }
