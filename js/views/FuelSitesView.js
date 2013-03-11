@@ -1,5 +1,5 @@
-define([ 'jquery', 'underscore', 'facade', 'backbone', 'mustache', 'text!tmpl/fuelsites/header', 'text!tmpl/fuelsites/page' ],
-function($, _, facade, Backbone, Mustache, tmpl_header, tmpl_list) {
+define([ 'jquery', 'underscore', 'facade', 'backbone', 'mustache', 'text!tmpl/fuelsites/header', 'text!tmpl/fuelsites/list', 'text!tmpl/fuelsites/list-item' ],
+function($, _, facade, Backbone, Mustache, tmpl_header, tmpl_list, tmpl_item) {
 
     'use strict';
 
@@ -9,7 +9,7 @@ function($, _, facade, Backbone, Mustache, tmpl_header, tmpl_list) {
 
         el: $('#fuelsites'),
 
-        template: Mustache.compile(tmpl_list),
+        template: Mustache.compile(tmpl_item),
 
         initialize: function(options) {
 
@@ -17,7 +17,10 @@ function($, _, facade, Backbone, Mustache, tmpl_header, tmpl_list) {
             this.collection = options.collection;
 
             // render collection, on reset
-            this.collection.on('reset', this.render, this);
+            this.collection
+                .on('reset', this.render, this)
+                .on('reset', $.mobile.hidePageLoadingMsg)
+                .on('fetch', $.mobile.showPageLoadingMsg);
 
             // create page
             this.pageCreate();
@@ -31,8 +34,11 @@ function($, _, facade, Backbone, Mustache, tmpl_header, tmpl_list) {
             this.$el.find(':jqmData(role=content)').append(Mustache.render(tmpl_list));
         },
 
-        render: function(fuelsites) {
-            console.log('FuelSitesView render', fuelsites);
+        render: function(collection) {
+            console.log(collection.toJSON());
+            this.$el.find('#fuelStationsList')
+                .html(this.template({fuelsites:collection.toJSON()}))
+                .listview('refresh');
         }
     });
 
