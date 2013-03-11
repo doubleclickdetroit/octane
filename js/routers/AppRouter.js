@@ -1,5 +1,5 @@
 define([ 'utils', 'facade', 'backbone' ],
-function(utils, facade, Backbone) {
+function (utils, facade, Backbone) {
 
     'use strict';
 
@@ -11,9 +11,10 @@ function(utils, facade, Backbone) {
          * Route Definitions
         */
         routes: {
-            'forecast(/)(:view_id)': 'renderForecast',
+            'forecast(/)(:viewId)': 'renderForecast',
             'fuelsites': 'renderFuelSites',
             'settings': 'renderSettings',
+            'info': 'renderInfo',
             'alerts': 'renderAlerts',
             'menu': 'renderMenu',
 
@@ -23,31 +24,35 @@ function(utils, facade, Backbone) {
         /*
          * Route Handlers
         */
-        renderForecast: function(view_id) {
-            facade.publish('forecast', 'navigate', view_id);
+        renderForecast: function (viewId) {
+            facade.publish('forecast', 'navigate', viewId);
         },
 
-        renderFuelSites: function() {
+        renderFuelSites: function () {
             facade.publish('fuelsites', 'navigate');
         },
 
-        renderSettings: function() {
+        renderSettings: function () {
             facade.publish('settings', 'navigate');
         },
+        
+        renderInfo: function () {
+            facade.publish('info', 'navigate');
+        },
 
-        renderAlerts: function() {
+        renderAlerts: function () {
             facade.publish('alerts', 'navigate');
         },
 
-        renderMenu: function() {
+        renderMenu: function () {
             facade.publish('menu', 'navigate');
         },
 
-        root: function() {
+        root: function () {
             this.renderMenu();
         },
 
-        start: function() {
+        start: function () {
             Backbone.history.start();
         }
     });
