@@ -14,7 +14,7 @@ function(utils, FuelSitesView, FuelSitesCollection, SearchDetailsDatabaseManager
         FuelSitesController.prototype.init = function() {
 
             // initialize classes
-            window.locationModel = locationModel = new LocationModel();
+            locationModel = new LocationModel();
 
             searchDetailsModel = new SearchDetailsModel({
                 location: locationModel,
