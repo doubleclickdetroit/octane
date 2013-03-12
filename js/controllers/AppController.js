@@ -9,25 +9,23 @@ function(AppRouter, AppView) {
 
         var appRouter, appView;
 
-        function init() {
-            appRouter = new AppRouter();
+        function AppController() {}
 
+        AppController.prototype.init = function() {
+            appRouter = new AppRouter();
             appView = new AppView({
                 el: document.body
             });
-        }
+        };
 
-        function ready() {
+        AppController.prototype.ready = function() {
             appRouter.start();
             appView.render();
-        }
-
-        return {
-            init : init,
-            ready: ready
         };
+
+        return AppController;
     })();
 
 
-    return AppController;
+    return new AppController();
 });
