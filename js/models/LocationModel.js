@@ -55,33 +55,48 @@ function(utils, globals, Backbone) {
 
         LocationModel.prototype.initialize = function() {
             // initially get & broadcast current location
-            this.locateFromCurrentLocation();
+            // this.locateFromCurrentLocation();
         };
 
         LocationModel.prototype.locateFromAddress = function(address) {
             var conf = {'address': address};
 
+            //
+            this.trigger('loadingstart');
+
             doGeocoding(conf, function(results) {
+                //
                 this.set({
                     'location' : results[0].formatted_address,
                     'latitude' : results[0].geometry.location.ib,
                     'longitude': results[0].geometry.location.jb
                 });
+
+                //
+                this.trigger('loadingend');
             }, this);
         };
 
         LocationModel.prototype.locateFromCurrentLocation = function() {
             var conf = {};
 
+            // trigger loading event
+            this.trigger('loadingstart');
+
+            // get current position
             getCurrentPosition(function(coords) {
                 conf.latLng = new google.maps.LatLng(coords.latitude, coords.longitude);
 
                 doGeocoding(conf, function(results) {
+                    // update attributes
                     this.set({
                         'location' : results[0].formatted_address,
                         'latitude' : results[0].geometry.location.ib,
                         'longitude': results[0].geometry.location.jb
                     });
+
+                    // trigger loading event
+                    this.trigger('loadingend');
                 }, this);
 
             }, this);

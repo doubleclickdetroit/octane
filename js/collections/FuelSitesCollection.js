@@ -41,12 +41,24 @@ function(utils, globals, Backbone, FuelSiteModel) {
             // cache searchDetails
             this.searchDetails = options.searchDetails;
 
-            //
-            this.searchDetails.on('change', function(criteria) {
-                if (criteria.get('viewMode') === _constants.VIEW_MODE) {
-                    this.fetch();
-                }
-            }, this);
+
+            this.searchDetails
+                //
+                .on('change', function(criteria) {
+                    if (criteria.get('viewMode') === _constants.VIEW_MODE) {
+                        this.fetch();
+                    }
+                }, this)
+
+                // propegate loading event
+                .on('loadingstart', function() {
+                    this.trigger('loadingstart');
+                }, this)
+
+                // propegate loading event
+                .on('loadingend', function() {
+                    this.trigger('loadingend');
+                }, this);
         };
 
         FuelSitesCollection.prototype.parse = function(results) {

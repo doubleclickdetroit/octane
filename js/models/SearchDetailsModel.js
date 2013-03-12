@@ -54,6 +54,16 @@ function(utils, globals, Backbone) {
                 // update location attributes
                 .on('change', function(model) {
                     this.set(model.toJSON());
+                }, this)
+
+                // propegate loading event
+                .on('loadingstart', function() {
+                    this.trigger('loadingstart');
+                }, this)
+
+                // propegate loading event
+                .on('loadingend', function() {
+                    this.trigger('loadingend');
                 }, this);
         };
 
