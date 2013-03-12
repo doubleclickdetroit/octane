@@ -7,9 +7,9 @@ function(utils, FuelSitesView, FuelSitesCollection, SearchDetailsDatabaseManager
     var FuelSitesController;
     FuelSitesController = (function() {
 
-        function FuelSitesController() {}
-
         var locationModel, searchDetailsModel, fuelSitesCollection, fuelSitesView;
+
+        function FuelSitesController() {}
 
         FuelSitesController.prototype.init = function() {
 
