@@ -7,7 +7,22 @@ function(utils, globals, Backbone, FuelSiteModel) {
     var FuelSitesCollection;
     FuelSitesCollection = (function(_super) {
 
-        var _constants = globals.fuelsites.constants;
+        /*
+         * Private Methods
+        */
+        function makeURL(params) {
+            var key = globals.fuelsites.constants.WEBSERVICE;
+
+            return key.URL
+                 + key.LONGITUDE    + params.longitude
+                 + key.LATITUDE     + params.latitude
+                 + key.RADIUS       + params.radius
+                 + key.FUEL_TYPE    + params.fuelType
+                 + key.SORT_BY      + params.sortBy
+                 + key.FILTER_TODAY + params.filterToday
+                 + key.PAGE_NUMBER  + params.pageNumber
+                 + key.PAGE_SIZE    + params.pageSize
+        }
 
         /***********************************************************************
          * Constructor
@@ -21,48 +36,14 @@ function(utils, globals, Backbone, FuelSiteModel) {
         // Define Model to use
         FuelSitesCollection.prototype.model = FuelSiteModel;
 
-        // Build URL
-        FuelSitesCollection.prototype.url = function() {
-            var key   = _constants.WEBSERVICE,
-                value = this.searchDetails.toJSON();
-
-            return key.URL
-                 + key.LONGITUDE    + value.longitude
-                 + key.LATITUDE     + value.latitude
-                 + key.RADIUS       + value.radius
-                 + key.FUEL_TYPE    + value.fuelType
-                 + key.SORT_BY      + value.sortBy
-                 + key.FILTER_TODAY + value.filterToday
-                 + key.PAGE_NUMBER  + value.pageNumber
-                 + key.PAGE_SIZE    + value.pageSize
-        };
-
-        FuelSitesCollection.prototype.initialize = function(options) {
-            // cache searchDetails
-            this.searchDetails = options.searchDetails;
-
-
-            this.searchDetails
-                //
-                .on('change', function(criteria) {
-                    if (criteria.get('viewMode') === _constants.VIEW_MODE) {
-                        this.fetch();
-                    }
-                }, this)
-
-                // propegate loading event
-                .on('loadingstart', function() {
-                    this.trigger('loadingstart');
-                }, this)
-
-                // propegate loading event
-                .on('loadingend', function() {
-                    this.trigger('loadingend');
-                }, this);
-        };
-
         FuelSitesCollection.prototype.parse = function(results) {
             return results.searchResults;
+        };
+
+        FuelSitesCollection.prototype.sync = function(method, model, options) {
+            // handle the read method
+            if (method === 'read') this.url = makeURL(options);
+            Backbone.sync.apply(this, arguments);
         };
 
         return FuelSitesCollection;
