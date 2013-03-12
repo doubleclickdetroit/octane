@@ -3,7 +3,7 @@ function(utils, mediator, permissions) {
 
     'use strict';
 
-window.permissions = permissions;
+
     function subscribe(channel, subscription, callback, condition) {
         if (permissions.validate(channel, subscription)) {
             mediator.subscribe(channel, subscription, callback, condition);
