@@ -9,23 +9,28 @@ function(utils, FuelSitesView, FuelSitesCollection, SearchDetailsDatabaseManager
 
         function FuelSitesController() {}
 
-        var searchDetailsModel, fuelSitesCollection, fuelSitesView;
+        var locationModel, searchDetailsModel, fuelSitesCollection, fuelSitesView;
 
         FuelSitesController.prototype.init = function() {
 
             // initialize classes
+            window.locationModel = locationModel = new LocationModel();
+
             searchDetailsModel = new SearchDetailsModel({
-                location: new LocationModel(),
+                location: locationModel,
                 database: SearchDetailsDatabaseManager.getInstance()
             });
 
-            window.fuelSitesCollection = fuelSitesCollection = new FuelSitesCollection({
+            fuelSitesCollection = new FuelSitesCollection({
                 searchDetails: searchDetailsModel
             });
 
             fuelSitesView = new FuelSitesView({
                 collection: fuelSitesCollection
             });
+
+            // kick-off the location
+            locationModel.locateFromCurrentLocation();
         };
 
         FuelSitesController.prototype.navigate = function() {
