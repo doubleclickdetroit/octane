@@ -68,8 +68,8 @@ function(utils, globals, Backbone) {
                 //
                 this.set({
                     'location' : results[0].formatted_address,
-                    'latitude' : results[0].geometry.location.ib,
-                    'longitude': results[0].geometry.location.jb
+                    'latitude' : results[0].geometry.location.lat(),
+                    'longitude': results[0].geometry.location.lng()
                 });
 
                 //
@@ -91,8 +91,8 @@ function(utils, globals, Backbone) {
                     // update attributes
                     this.set({
                         'location' : results[0].formatted_address,
-                        'latitude' : results[0].geometry.location.ib,
-                        'longitude': results[0].geometry.location.jb
+                        'latitude' : results[0].geometry.location.lat(),
+                        'longitude': results[0].geometry.location.lng()
                     });
 
                     // trigger loading event
