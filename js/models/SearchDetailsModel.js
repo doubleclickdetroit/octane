@@ -1,5 +1,5 @@
-define([ 'utils', 'globals', 'backbone' ],
-function(utils, globals, Backbone) {
+define([ 'utils', 'globals', 'backbone', 'managers/SearchDetailsDatabaseManager' ],
+function(utils, globals, Backbone, SearchDetailsDatabaseManager) {
 
     'use strict';
 
@@ -44,7 +44,6 @@ function(utils, globals, Backbone) {
 
         SearchDetailsModel.prototype.initialize = function(options) {
             this.location = options.location;
-            this.database = options.database;
 
             this.location
 
@@ -83,18 +82,20 @@ function(utils, globals, Backbone) {
         };
 
         SearchDetailsModel.prototype.sync = function(method, model, options) {
+            var database = SearchDetailsDatabaseManager.getInstance();
+
             switch(method) {
                 case "create":
                 case "update":
-                    this.database.insertSearchDetails(this.toJSON());
+                    database.insertSearchDetails(this.toJSON());
                     break;
 
                 case "read":
-                    this.database.getDefaultSearchValue(this.updateAttributes, this);
+                    database.getDefaultSearchValue(this.updateAttributes, this);
                     break;
 
                 case "delete":
-                    this.database.deleteDefaultSearchData();
+                    database.deleteDefaultSearchData();
                     break;
             }
         };

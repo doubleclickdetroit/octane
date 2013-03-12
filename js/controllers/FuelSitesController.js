@@ -1,5 +1,5 @@
-define([ 'utils', 'views/FuelSitesView', 'collections/FuelSitesCollection', 'managers/SearchDetailsDatabaseManager', 'models/LocationModel', 'models/SearchDetailsModel' ],
-function(utils, FuelSitesView, FuelSitesCollection, SearchDetailsDatabaseManager, LocationModel, SearchDetailsModel) {
+define([ 'utils', 'views/FuelSitesView', 'collections/FuelSitesCollection', 'models/LocationModel', 'models/SearchDetailsModel' ],
+function(utils, FuelSitesView, FuelSitesCollection, LocationModel, SearchDetailsModel) {
 
     'use strict';
 
@@ -17,8 +17,7 @@ function(utils, FuelSitesView, FuelSitesCollection, SearchDetailsDatabaseManager
             locationModel = new LocationModel();
 
             searchDetailsModel = new SearchDetailsModel({
-                location: locationModel,
-                database: SearchDetailsDatabaseManager.getInstance()
+                location: locationModel
             });
 
             fuelSitesCollection = new FuelSitesCollection({
