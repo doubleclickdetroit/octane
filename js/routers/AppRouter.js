@@ -35,7 +35,7 @@ function (utils, facade, Backbone) {
         renderSettings: function () {
             facade.publish('settings', 'navigate');
         },
-        
+
         renderInfo: function () {
             facade.publish('info', 'navigate');
         },
@@ -49,7 +49,7 @@ function (utils, facade, Backbone) {
         },
 
         root: function () {
-            this.renderMenu();
+            this.renderFuelSites();
         },
 
         start: function () {
