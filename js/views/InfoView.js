@@ -8,8 +8,11 @@ function ($, Backbone, Mustache, tmpl) {
     InfoView = Backbone.View.extend({
 
         el: $('#info'),
-        
+
         initialize: function () {
+            // call super
+            this.constructor.__super__.initialize.apply(this, arguments);
+
             // create page
             this.pageCreate();
         },

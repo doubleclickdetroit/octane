@@ -10,6 +10,9 @@ function($, _, facade, Backbone, Mustache, tmpl) {
         el: $('#settings'),
 
         initialize: function() {
+            // call super
+            this.constructor.__super__.initialize.apply(this, arguments);
+
             // listen for broadcasting
             facade.subscribe('alerts', 'notifications:change', this.updateAlertsMenuItem);
 

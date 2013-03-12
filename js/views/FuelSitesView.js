@@ -12,15 +12,20 @@ function($, _, facade, Backbone, Mustache, tmpl_header, tmpl_list, tmpl_item) {
         template: Mustache.compile(tmpl_item),
 
         initialize: function(options) {
+            // call super
+            this.constructor.__super__.initialize.apply(this, arguments);
 
             // cache collection
             this.collection = options.collection;
 
-            // render collection, on reset
             this.collection
+                // render collection on reset
                 .on('reset', this.render, this)
-                .on('reset', $.mobile.hidePageLoadingMsg)
-                .on('fetch', $.mobile.showPageLoadingMsg);
+
+                // listen for loading event
+                .on('loadingstart', function() {
+                    this.showLoadingIndicator(true);
+                }, this);
 
             // create page
             this.pageCreate();

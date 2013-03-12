@@ -17,10 +17,11 @@ function($, _, globals, facade, Backbone, Mustache, tmpl) {
         },
 
         initialize: function() {
-            _.bindAll(this, 'render');
+            // call super
+            this.constructor.__super__.initialize.apply(this, arguments);
 
             // model events
-            this.model.on('change:indicator', this.render);
+            this.model.on('change:indicator', this.render, this);
 
             // create page
             this.pageCreate();

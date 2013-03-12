@@ -18,7 +18,11 @@ function($, _, globals, facade, Backbone, Mustache, tmpl) {
         },
 
         initialize: function() {
-            _.bindAll(this, 'render', 'pageCreate', 'pageHide');
+            // call super
+            this.constructor.__super__.initialize.apply(this, arguments);
+
+            // set context for event listeners
+            _.bindAll(this, 'render', 'pageHide');
 
             // jQM event listeners
             this.$el.on('pageinit', this.render);

@@ -12,7 +12,7 @@ function($, _, Backbone, facade) {
 
         initialize: function(options) {
             this.render();
-            this.setupBackboneFetchEventListener();
+            this.setupBackboneLoadingIndicators();
         },
 
         render: function(display) {
@@ -20,26 +20,49 @@ function($, _, Backbone, facade) {
             return this.$el.toggleClass('ui-hidden', display);
         },
 
-        setupBackboneFetchEventListener: function() {
-            _.each(['Model', 'Collection'], function(key) {
-                var ctor, fetch;
+        setupBackboneLoadingIndicators: function() {
+            // cache initialize method
+            var init = Backbone.View.prototype.initialize;
 
-                // cache Backbone constructor
-                ctor = Backbone[key];
+            // handle toggling loading indicator
+            function handleLoader(toggle) {
+                // is this page visible?
+                if (this.$el.is($.mobile.activePage)) {
+                    this[(toggle ? 'show' : 'hide')+'LoadingIndicator']();
+                }
+            }
 
-                // cache original fetch
-                fetch = ctor.prototype.fetch;
+            // does event warrant loader?
+            function toggleLoader(evt) {
+                if (evt === 'request') handleLoader.call(this, true);
+                if (evt === 'reset')   handleLoader.call(this, false);
+            }
 
-                // override the fetch method to broadcast fetch event
-                ctor.prototype.fetch = function() {
+            // the initialize method inherited by subclasses
+            Backbone.View.prototype.initialize = function() {
+                if (this.model)      this.model.on('all', toggleLoader, this);
+                if (this.collection) this.collection.on('all', toggleLoader, this);
 
-                    // trigger the fetch event on the instance
-                    this.trigger('fetch');
+                return init.apply(this, arguments);
+            };
 
-                    // pass through to original fetch
-                    return fetch.apply(this, arguments);
-                };
-            });
+            // Backbone.View convenience methods
+            Backbone.View.prototype.showLoadingIndicator = function(checkView) {
+                if (checkView === true) {
+                    handleLoader.call(this, true);
+                }
+                else {
+                    $.mobile.showPageLoadingMsg();
+                }
+            };
+            Backbone.View.prototype.hideLoadingIndicator = function(checkView) {
+                if (checkView === true) {
+                    handleLoader.call(this, false);
+                }
+                else {
+                    $.mobile.hidePageLoadingMsg();
+                }
+            };
         },
 
         /*
