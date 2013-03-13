@@ -27,9 +27,6 @@ function(AppRouter, AppView, LocationModel, SearchDetailsModel) {
         AppController.prototype.ready = function() {
             appRouter.start();
             appView.render();
-
-            // kick-off initial position
-            locationModel.locateFromCurrentLocation();
         };
 
         AppController.prototype.locationModelDelegate = function(delegate) {
@@ -38,6 +35,14 @@ function(AppRouter, AppView, LocationModel, SearchDetailsModel) {
 
         AppController.prototype.searchDetailsModelDelegate = function(delegate) {
             searchDetailsModel.on('all', delegate);
+        };
+
+        AppController.prototype.locateFromAddress = function(address) {
+            locationModel.locateFromAddress(address);
+        };
+
+        AppController.prototype.locateFromCurrentLocation = function() {
+            locationModel.locateFromCurrentLocation();
         };
 
         return AppController;

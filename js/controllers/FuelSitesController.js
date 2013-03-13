@@ -7,15 +7,14 @@ function(globals, utils, FuelSitesView, FuelSitesCollection) {
     var FuelSitesController;
     FuelSitesController = (function() {
 
-        var _constants, locationModel, searchDetailsModel, fuelSitesCollection, fuelSitesView;
+        var fuelSitesCollection, fuelSitesView;
 
         function FuelSitesController() {}
 
         FuelSitesController.prototype.init = function() {
+            // cache & instantiate View and Collection
+            fuelSitesView       = new FuelSitesView();
             fuelSitesCollection = new FuelSitesCollection();
-            fuelSitesView = new FuelSitesView({
-                collection: fuelSitesCollection
-            });
         };
 
         FuelSitesController.prototype.navigate = function() {
@@ -24,6 +23,20 @@ function(globals, utils, FuelSitesView, FuelSitesCollection) {
 
         FuelSitesController.prototype.getFuelSites = function(criteria) {
             if (criteria.viewMode === globals.fuelsites.constants.VIEW_MODE) {
+
+                // listen for when collection receives the fuelsites
+                fuelSitesCollection.once('reset', function(collection) {
+                    // render search criteria & fuelsites
+                    fuelSitesView.render(criteria, collection.toJSON());
+
+                    // hide the loading indicator
+                    fuelSitesView.hideLoadingIndicator(false);
+                });
+
+                // display loading indicator
+                fuelSitesView.showLoadingIndicator(true);
+
+                // based on criteria, fetch new fuelsites
                 fuelSitesCollection.fetch(criteria);
             }
         };
