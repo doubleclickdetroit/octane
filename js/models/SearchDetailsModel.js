@@ -52,6 +52,8 @@ function(utils, globals, Backbone, SearchDetailsDatabaseManager) {
 
                 // update location attributes
                 .on('change', function(model) {
+                    console.log('SearchDetailsModel received new locationModel data!');
+                    this.set(this.defaults, {silent:true});
                     this.set(model.toJSON());
                 }, this)
 
