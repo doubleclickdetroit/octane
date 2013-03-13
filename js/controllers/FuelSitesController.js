@@ -1,5 +1,5 @@
-define([ 'utils', 'views/FuelSitesView', 'collections/FuelSitesCollection', 'models/LocationModel', 'models/SearchDetailsModel' ],
-function(utils, FuelSitesView, FuelSitesCollection, LocationModel, SearchDetailsModel) {
+define([ 'globals', 'utils', 'views/FuelSitesView', 'collections/FuelSitesCollection' ],
+function(globals, utils, FuelSitesView, FuelSitesCollection) {
 
     'use strict';
 
@@ -7,33 +7,33 @@ function(utils, FuelSitesView, FuelSitesCollection, LocationModel, SearchDetails
     var FuelSitesController;
     FuelSitesController = (function() {
 
-        var locationModel, searchDetailsModel, fuelSitesCollection, fuelSitesView;
+        var _constants, locationModel, searchDetailsModel, fuelSitesCollection, fuelSitesView;
 
         function FuelSitesController() {}
 
         FuelSitesController.prototype.init = function() {
-
-            // initialize classes
-            locationModel = new LocationModel();
-
-            searchDetailsModel = new SearchDetailsModel({
-                location: locationModel
-            });
-
-            fuelSitesCollection = new FuelSitesCollection({
-                searchDetails: searchDetailsModel
-            });
-
+            fuelSitesCollection = new FuelSitesCollection();
             fuelSitesView = new FuelSitesView({
                 collection: fuelSitesCollection
             });
-
-            // kick-off the location
-            locationModel.locateFromCurrentLocation();
         };
 
         FuelSitesController.prototype.navigate = function() {
             utils.changePage('#fuelsites', null, true);
+        };
+
+        FuelSitesController.prototype.getFuelSites = function(criteria) {
+            if (criteria.viewMode === globals.fuelsites.constants.VIEW_MODE) {
+                fuelSitesCollection.fetch(criteria);
+            }
+        };
+
+        FuelSitesController.prototype.loadingStart = function() {
+            fuelSitesView.showLoadingIndicator(true);
+        };
+
+        FuelSitesController.prototype.loadingEnd = function() {
+            fuelSitesView.hideLoadingIndicator(true);
         };
 
         return FuelSitesController;

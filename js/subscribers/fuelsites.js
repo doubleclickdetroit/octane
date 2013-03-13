@@ -4,11 +4,17 @@ function(facade, controller) {
     'use strict';
 
 
-    var subscribe;
-    subscribe = facade.subscribeTo('fuelsites');
+    /*
+     * FuelSites Subscribers
+    */
+    facade.subscribe('fuelsites', 'navigate', controller.navigate);
 
-    //
-    subscribe('navigate', controller.navigate);
+
+    /*
+     * Criteria Subscribers
+    */
+    facade.subscribe('criteria', 'update',       controller.getFuelSites);
+    facade.subscribe('criteria', 'loadingstart', controller.loadingStart);
 
 
     return {
