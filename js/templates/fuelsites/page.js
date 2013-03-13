@@ -1,1 +1,0 @@
-<ul id="fuelStationsList" class="listrowpadding" data-role="listview"></ul>
