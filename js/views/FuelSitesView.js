@@ -1,5 +1,5 @@
-define([ 'jquery', 'underscore', 'facade', 'backbone', 'mustache', 'text!tmpl/fuelsites/header', 'text!tmpl/fuelsites/list', 'text!tmpl/fuelsites/list-item' ],
-function($, _, facade, Backbone, Mustache, tmpl_header, tmpl_list, tmpl_item) {
+define([ 'jquery', 'underscore', 'facade', 'backbone', 'mustache', 'tmpl/fuelsites/mixin', 'text!tmpl/fuelsites/header', 'text!tmpl/fuelsites/list', 'text!tmpl/fuelsites/search-criteria', 'text!tmpl/fuelsites/list-item' ],
+function($, _, facade, Backbone, Mustache, tmpl_mixin, tmpl_header, tmpl_list, tmpl_criteria, tmpl_item) {
 
     'use strict';
 
@@ -9,23 +9,19 @@ function($, _, facade, Backbone, Mustache, tmpl_header, tmpl_list, tmpl_item) {
 
         el: $('#fuelsites'),
 
-        template: Mustache.compile(tmpl_item),
+        // cache templates
+        tmpl_criteria: Mustache.compile(tmpl_criteria),
+        tmpl_item    : Mustache.compile(tmpl_item),
 
-        initialize: function(options) {
+        initialize: function() {
             // call super
             this.constructor.__super__.initialize.apply(this, arguments);
 
-            // cache collection
-            this.collection = options.collection;
+            // set context for methods
+            _.bindAll(this, 'pageShow');
 
-            this.collection
-                // render collection on reset
-                .on('reset', this.render, this)
-
-                // listen for loading event
-                .on('loadingstart', function() {
-                    this.showLoadingIndicator(true);
-                }, this);
+            // jQM Events
+            this.$el.on('pageshow', this.pageShow);
 
             // create page
             this.pageCreate();
@@ -39,10 +35,24 @@ function($, _, facade, Backbone, Mustache, tmpl_header, tmpl_list, tmpl_item) {
             this.$el.find(':jqmData(role=content)').append(Mustache.render(tmpl_list));
         },
 
-        render: function(collection) {
-            console.log(collection.toJSON());
+        pageShow: function() {
+            // request current location
+            facade.publish('location', 'getCurrentLocation');
+        },
+
+        render: function(criteria, fuelsites) {
+            // render search criteria
+            this.$el.find('#searchCriteriaText')
+                .html(this.tmpl_criteria({
+                    criteria: criteria
+                }));
+
+            // render fuel sites list
             this.$el.find('#fuelStationsList')
-                .html(this.template({fuelsites:collection.toJSON()}))
+                .html(this.tmpl_item({
+                    mixin    : tmpl_mixin,
+                    fuelsites: fuelsites
+                }))
                 .listview('refresh');
         }
     });
