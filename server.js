@@ -2,6 +2,7 @@ var express = require('express'),
     server  = express();
 
 server.configure(function() {
+    server.use('/css', express.static(__dirname + '/css'));
     server.use(express.static(__dirname + '/'));
 });
 
