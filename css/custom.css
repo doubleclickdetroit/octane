@@ -320,7 +320,7 @@ a.bimbag{
 	vertical-align:middle;
 }
 .brandlogocolumn {
-	margin-top:3%;
+	margin-top: 10px;
 }
 
 .activereadmore .ui-btn-active {
@@ -748,12 +748,12 @@ a.ui-btn-hover-b a.ui-link-inherit {
 i[class*="icon-"] {
     display: block;
     position: absolute;
-    top: 5px;
+    top : 5px;
     left: 10px;
-    width: 32px;
+    width : 32px;
     height: 32px;
-    background-size: 32px 32px;
-    background-repeat: no-repeat;
+    background-size    : 32px 32px;
+    background-repeat  : no-repeat;
     background-position: center;
 }
 i[class*="icon-menu"] {
@@ -775,7 +775,8 @@ i.icon-menu-sort     { background-image: url(../img/Menu_sort_icon.png);     }
 i.icon-menu-refresh  { background-image: url(../img/Menu_refresh_icon.png);  }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5),
        only screen and (min--moz-device-pixel-ratio: 1.5),
-       only screen and (min-resolution: 240dpi) {
+       only screen and (min-resolution: 240dpi)
+{
     i.icon-search    { background-image: url(../img/search-icon@2x.png);    }
     i.icon-results   { background-image: url(../img/results-icon@2x.png);   }
     i.icon-forecast  { background-image: url(../img/forecast-icon@2x.png);  }
@@ -789,6 +790,104 @@ i.icon-menu-refresh  { background-image: url(../img/Menu_refresh_icon.png);  }
     i.icon-menu-refresh  { background-image: url(../img/Menu_refresh_icon@2x.png);  }
 }
 
+
+/*********************************************
+ * Brands
+*********************************************/
+i.ui-logo {
+    display: block;
+    width : 32px;
+    height: 32px;
+    text-indent: -999999px;
+    background-size    : 32px 32px;
+    background-repeat  : no-repeat;
+    background-position: center;
+
+    /* unbranded & general logo */
+    background-image: url(../img/brand_logo/generic.png);
+}
+i.ui-logo[data-brand='76']               { background-image: url(../img/brand_logo/76.png);            }
+i.ui-logo[data-brand='7-ELEVEN']         { background-image: url(../img/brand_logo/7ELEVCOL.png);      }
+i.ui-logo[data-brand='ALON']             { background-image: url(../img/brand_logo/Alon.png);          }
+i.ui-logo[data-brand='BP']               { background-image: url(../img/brand_logo/bp.png);            }
+i.ui-logo[data-brand='CASEYS']           { background-image: url(../img/brand_logo/CASEYSC.png);       }
+i.ui-logo[data-brand='CENEX']            { background-image: url(../img/brand_logo/CENEXC.png);        }
+i.ui-logo[data-brand='CHEVRON']          { background-image: url(../img/brand_logo/CHVCOL.png);        }
+i.ui-logo[data-brand='CIRCLE K']         { background-image: url(../img/brand_logo/CIRCKCOL.png);      }
+i.ui-logo[data-brand='CITGO']            { background-image: url(../img/brand_logo/CITGOCOL.png);      }
+i.ui-logo[data-brand='CONOCO']           { background-image: url(../img/brand_logo/CONOCOL.png);       }
+i.ui-logo[data-brand='DIAMOND SHAMROCK'] { background-image: url(../img/brand_logo/DIAMSHC.png);       }
+i.ui-logo[data-brand='ESSO']             { background-image: url(../img/brand_logo/ESSOC.png);         }
+i.ui-logo[data-brand='EXXON']            { background-image: url(../img/brand_logo/Exxon.png);         }
+i.ui-logo[data-brand='GATE']             { background-image: url(../img/brand_logo/gate.png);          }
+i.ui-logo[data-brand='GET GO']           { background-image: url(../img/brand_logo/GetGO.png);         }
+i.ui-logo[data-brand='GETTY']            { background-image: url(../img/brand_logo/GETTY.png);         }
+i.ui-logo[data-brand='GULF']             { background-image: url(../img/brand_logo/Gulf.png);          }
+i.ui-logo[data-brand='HESS']             { background-image: url(../img/brand_logo/HESSCOL.png);       }
+i.ui-logo[data-brand='HOLIDAY']          { background-image: url(../img/brand_logo/HOLIDAY.png);       }
+i.ui-logo[data-brand='IRVING']           { background-image: url(../img/brand_logo/IRVINGC.png);       }
+i.ui-logo[data-brand='LOVES']            { background-image: url(../img/brand_logo/loves.png);         }
+i.ui-logo[data-brand='LUKOIL']           { background-image: url(../img/brand_logo/lukoil.png);        }
+i.ui-logo[data-brand='MARATHON']         { background-image: url(../img/brand_logo/Marathon.png);      }
+i.ui-logo[data-brand='MOBIL']            { background-image: url(../img/brand_logo/Mobil.png);         }
+i.ui-logo[data-brand='MURPHY EXPRESS']   { background-image: url(../img/brand_logo/MurphyExpress.png); }
+i.ui-logo[data-brand='MURPHY USA']       { background-image: url(../img/brand_logo/MurphyUSAC.png);    }
+i.ui-logo[data-brand='PHILLIPS 66']      { background-image: url(../img/brand_logo/P66COL.png);        }
+i.ui-logo[data-brand='PILOT']            { background-image: url(../img/brand_logo/pilot.png);         }
+i.ui-logo[data-brand='QUIK TRIP']        { background-image: url(../img/brand_logo/QuikTripho.png);    }
+i.ui-logo[data-brand='SHEETZ']           { background-image: url(../img/brand_logo/sheetz.png);        }
+i.ui-logo[data-brand='SHELL']            { background-image: url(../img/brand_logo/Shell.png);         }
+i.ui-logo[data-brand='SINCLAIR']         { background-image: url(../img/brand_logo/SINCLAIR.png);      }
+i.ui-logo[data-brand='SUNOCO']           { background-image: url(../img/brand_logo/Sunoco.png);        }
+i.ui-logo[data-brand='SUPERAMERICA']     { background-image: url(../img/brand_logo/SUPAMCOL.png);      }
+i.ui-logo[data-brand='TESORO']           { background-image: url(../img/brand_logo/Tesoro.png);        }
+i.ui-logo[data-brand='TEXACO']           { background-image: url(../img/brand_logo/TEXACOC.png);       }
+i.ui-logo[data-brand='VALERO']           { background-image: url(../img/brand_logo/ValeroEnergy.png);  }
+i.ui-logo[data-brand='WAWA']             { background-image: url(../img/brand_logo/Wawa.png);          }
+
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5),
+       only screen and (min--moz-device-pixel-ratio: 1.5),
+       only screen and (min-resolution: 240dpi)
+{
+    i.ui-logo[data-brand='76']               { background-image: url(../img/brand_logo/76@2x.png);            }
+    i.ui-logo[data-brand='7-ELEVEN']         { background-image: url(../img/brand_logo/7ELEVCOL@2x.png);      }
+    i.ui-logo[data-brand='ALON']             { background-image: url(../img/brand_logo/Alon@2x.png);          }
+    i.ui-logo[data-brand='BP']               { background-image: url(../img/brand_logo/bp@2x.png);            }
+    i.ui-logo[data-brand='CASEYS']           { background-image: url(../img/brand_logo/CASEYSC@2x.png);       }
+    i.ui-logo[data-brand='CENEX']            { background-image: url(../img/brand_logo/CENEXC@2x.png);        }
+    i.ui-logo[data-brand='CHEVRON']          { background-image: url(../img/brand_logo/CHVCOL@2x.png);        }
+    i.ui-logo[data-brand='CIRCLE K']         { background-image: url(../img/brand_logo/CIRCKCOL@2x.png);      }
+    i.ui-logo[data-brand='CITGO']            { background-image: url(../img/brand_logo/CITGOCOL@2x.png);      }
+    i.ui-logo[data-brand='CONOCO']           { background-image: url(../img/brand_logo/CONOCOL@2x.png);       }
+    i.ui-logo[data-brand='DIAMOND SHAMROCK'] { background-image: url(../img/brand_logo/DIAMSHC@2x.png);       }
+    i.ui-logo[data-brand='ESSO']             { background-image: url(../img/brand_logo/ESSOC@2x.png);         }
+    i.ui-logo[data-brand='EXXON']            { background-image: url(../img/brand_logo/Exxon@2x.png);         }
+    i.ui-logo[data-brand='GATE']             { background-image: url(../img/brand_logo/gate@2x.png);          }
+    i.ui-logo[data-brand='GET GO']           { background-image: url(../img/brand_logo/GetGO@2x.png);         }
+    i.ui-logo[data-brand='GETTY']            { background-image: url(../img/brand_logo/GETTY@2x.png);         }
+    i.ui-logo[data-brand='GULF']             { background-image: url(../img/brand_logo/Gulf@2x.png);          }
+    i.ui-logo[data-brand='HESS']             { background-image: url(../img/brand_logo/HESSCOL@2x.png);       }
+    i.ui-logo[data-brand='HOLIDAY']          { background-image: url(../img/brand_logo/HOLIDAY@2x.png);       }
+    i.ui-logo[data-brand='IRVING']           { background-image: url(../img/brand_logo/IRVINGC@2x.png);       }
+    i.ui-logo[data-brand='LOVES']            { background-image: url(../img/brand_logo/loves@2x.png);         }
+    i.ui-logo[data-brand='LUKOIL']           { background-image: url(../img/brand_logo/lukoil@2x.png);        }
+    i.ui-logo[data-brand='MARATHON']         { background-image: url(../img/brand_logo/Marathon@2x.png);      }
+    i.ui-logo[data-brand='MOBIL']            { background-image: url(../img/brand_logo/Mobil@2x.png);         }
+    i.ui-logo[data-brand='MURPHY EXPRESS']   { background-image: url(../img/brand_logo/MurphyExpress@2x.png); }
+    i.ui-logo[data-brand='MURPHY USA']       { background-image: url(../img/brand_logo/MurphyUSAC@2x.png);    }
+    i.ui-logo[data-brand='PHILLIPS 66']      { background-image: url(../img/brand_logo/P66COL@2x.png);        }
+    i.ui-logo[data-brand='PILOT']            { background-image: url(../img/brand_logo/pilot@2x.png);         }
+    i.ui-logo[data-brand='QUIK TRIP']        { background-image: url(../img/brand_logo/QuikTripho@2x.png);    }
+    i.ui-logo[data-brand='SHEETZ']           { background-image: url(../img/brand_logo/sheetz@2x.png);        }
+    i.ui-logo[data-brand='SHELL']            { background-image: url(../img/brand_logo/Shell@2x.png);         }
+    i.ui-logo[data-brand='SINCLAIR']         { background-image: url(../img/brand_logo/SINCLAIR@2x.png);      }
+    i.ui-logo[data-brand='SUNOCO']           { background-image: url(../img/brand_logo/Sunoco@2x.png);        }
+    i.ui-logo[data-brand='SUPERAMERICA']     { background-image: url(../img/brand_logo/SUPAMCOL@2x.png);      }
+    i.ui-logo[data-brand='TESORO']           { background-image: url(../img/brand_logo/Tesoro@2x.png);        }
+    i.ui-logo[data-brand='TEXACO']           { background-image: url(../img/brand_logo/TEXACOC@2x.png);       }
+    i.ui-logo[data-brand='VALERO']           { background-image: url(../img/brand_logo/ValeroEnergy@2x.png);  }
+    i.ui-logo[data-brand='WAWA']             { background-image: url(../img/brand_logo/Wawa@2x.png);          }
+}
 
 /*********************************************
  * Fuelsites - Page
