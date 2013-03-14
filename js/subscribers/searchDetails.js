@@ -5,7 +5,7 @@ function(facade, controller) {
 
 
     //
-    facade.subscribe('location', 'update', controller.updateLocationAttributes);
+    facade.subscribe('location', 'change', controller.updateLocationAttributes);
 
 
     /*
@@ -20,7 +20,7 @@ function(facade, controller) {
                 facade.publish('criteria', 'loadingend');
                 break;
             case 'change':
-                facade.publish('criteria', 'update', model.toJSON());
+                facade.publish('criteria', 'change', model.toJSON());
                 break;
         }
     };

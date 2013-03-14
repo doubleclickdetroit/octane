@@ -19,7 +19,7 @@ function(facade, controller) {
     /*
      * Criteria Subscribers
     */
-    facade.subscribe('criteria', 'update',       controller.getFuelSites);
+    facade.subscribe('criteria', 'change',       controller.getFuelSites);
     facade.subscribe('criteria', 'loadingbegin', controller.loadingBegin);
 
 

@@ -23,7 +23,7 @@ function(facade, controller) {
                 facade.publish('location', 'loadingend');
                 break;
             case 'change':
-                facade.publish('location', 'update', model.toJSON());
+                facade.publish('location', 'change', model.toJSON());
                 break;
         }
     };
