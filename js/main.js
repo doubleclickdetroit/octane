@@ -22,6 +22,10 @@ require.config({
 
         // Directories
         'tmpl': 'templates',
+
+        // jQuery Plugins
+        'plugin-timeago': 'libs/jquery/jquery.timeago',
+        'plugin-dialog' : 'libs/jquery/jquery.mobile.simpledialog2',
     },
 
     shim: {

@@ -1,4 +1,4 @@
-define([ 'jquery', 'libs/jquery/jquery.timeago' ],
+define([ 'jquery', 'plugin-timeago' ],
 function($) {
 
     'use strict';
