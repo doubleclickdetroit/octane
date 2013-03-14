@@ -1,5 +1,5 @@
-define([ 'jquery', 'underscore', 'facade', 'backbone', 'mustache', 'tmpl/fuelsites/mixin', 'text!tmpl/fuelsites/header', 'text!tmpl/fuelsites/list', 'text!tmpl/fuelsites/search-criteria', 'text!tmpl/fuelsites/list-item', 'text!tmpl/fuelsites/dialog', 'plugin-dialog' ],
-function($, _, facade, Backbone, Mustache, tmpl_mixin, tmpl_header, tmpl_list, tmpl_criteria, tmpl_item, tmpl_dialog) {
+define([ 'jquery', 'underscore', 'globals', 'facade', 'backbone', 'mustache', 'tmpl/fuelsites/mixin', 'text!tmpl/fuelsites/header', 'text!tmpl/fuelsites/fuelsites', 'text!tmpl/fuelsites/search-criteria', 'text!tmpl/fuelsites/fuelsite', 'text!tmpl/fuelsites/dialog', 'plugin-dialog' ],
+function($, _, globals, facade, Backbone, Mustache, mixin, tmpl_header, tmpl_fuelsites, tmpl_criteria, tmpl_fuelsite, tmpl_dialog) {
 
     'use strict';
 
@@ -11,7 +11,7 @@ function($, _, facade, Backbone, Mustache, tmpl_mixin, tmpl_header, tmpl_list, t
 
         // cache templates
         tmpl_criteria: Mustache.compile(tmpl_criteria),
-        tmpl_item    : Mustache.compile(tmpl_item),
+        tmpl_fuelsite: Mustache.compile(tmpl_fuelsite),
         tmpl_dialog  : Mustache.compile(tmpl_dialog),
 
         events: {
@@ -24,10 +24,10 @@ function($, _, facade, Backbone, Mustache, tmpl_mixin, tmpl_header, tmpl_list, t
             this.constructor.__super__.initialize.apply(this, arguments);
 
             // set context for methods
-            _.bindAll(this, 'pageShow');
+            _.bindAll(this, 'pageInit');
 
             // jQM Events
-            this.$el.on('pageshow', this.pageShow);
+            this.$el.one('pageshow', this.pageInit); // initial pageshow
 
             // create page
             this.pageCreate();
@@ -38,7 +38,7 @@ function($, _, facade, Backbone, Mustache, tmpl_mixin, tmpl_header, tmpl_list, t
             this.$el.find(':jqmData(role=header)').append(Mustache.render(tmpl_header));
 
             // append the list
-            this.$el.find(':jqmData(role=content)').append(Mustache.render(tmpl_list));
+            this.$el.find(':jqmData(role=content)').append(Mustache.render(tmpl_fuelsites));
         },
 
         render: function(criteria, fuelsites) {
@@ -50,8 +50,8 @@ function($, _, facade, Backbone, Mustache, tmpl_mixin, tmpl_header, tmpl_list, t
 
             // render fuel sites list
             this.$el.find('#fuelStationsList')
-                .html(this.tmpl_item({
-                    mixin    : tmpl_mixin,
+                .html(this.tmpl_fuelsite({
+                    mixin    : mixin,
                     fuelsites: fuelsites
                 }))
                 .listview('refresh');
@@ -60,7 +60,7 @@ function($, _, facade, Backbone, Mustache, tmpl_mixin, tmpl_header, tmpl_list, t
         /*
          * jQM Page Events
         */
-        pageShow: function() {
+        pageInit: function() {
             // request current location
             facade.publish('location', 'getCurrentLocation');
         },
@@ -69,22 +69,53 @@ function($, _, facade, Backbone, Mustache, tmpl_mixin, tmpl_header, tmpl_list, t
          * Event Handlers
         */
         displaySaveDialog: function() {
-            console.log('displaySaveDialog');
-        },
-
-        displaySortDialog: function() {
-            var $tmpl = $(this.tmpl_dialog({}));
+            var $tmpl = $(this.tmpl_dialog(
+                globals.fuelsites.configuration.save
+            ));
 
             $('<div>').simpledialog2({
                 mode        : 'blank',
-                headerText  : 'Sort by',
+                headerText  : globals.fuelsites.configuration.save.title,
                 themeHeader : 'b',
                 headerClose : false,
                 blankContent: $tmpl
             });
 
-            $tmpl.one('click', 'a', function() {
-                facade.publish('criteria', 'update', {sortBy:$(this).text()});
+            $tmpl.on('click', ':submit', function(evt) {
+                var val = $tmpl.find(':text').val();
+
+                // validate presence of value
+                if (val === '') {
+                    return alert(globals.fuelsites.configuration.save.error);
+                }
+
+                // unbind all events
+                $tmpl.off();
+
+                // broadcast save event and value
+                facade.publish('criteria', 'save', val);
+
+                // close the dialog
+                $(document).trigger('simpledialog', {method:'close'});
+            });
+        },
+
+        displaySortDialog: function() {
+            var $tmpl = $(this.tmpl_dialog(
+                globals.fuelsites.configuration.sortBy
+            ));
+
+            $('<div>').simpledialog2({
+                mode        : 'blank',
+                headerText  : globals.fuelsites.configuration.sortBy.title,
+                themeHeader : 'b',
+                headerClose : false,
+                blankContent: $tmpl
+            });
+
+            $tmpl.one('click', ':input', function() {
+                // broadcast updated criteria sortBy value
+                facade.publish('criteria', 'update', {sortBy:$(this).val()});
             });
         }
     });
