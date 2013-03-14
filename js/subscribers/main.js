@@ -1,19 +1,19 @@
-define([ './app', './location', './searchDetails', './menu', './fuelsites', './settings', './info', './alerts', './forecast'],
-function (app, location, searchDetails, menu, fuelsites, settings, info, alerts, forecast) {
+define([],
+function(require) {
 
     'use strict';
 
 
     // app
-    app.init();
-    location.init();
-    searchDetails.init();
+    require('./app').init();
+    require('./location').init();
+    require('./searchDetails').init();
 
     // views
-    menu.init();
-    fuelsites.init();
-    settings.init();
-    info.init();
-    alerts.init();
-    forecast.init();
+    require('./menu').init();
+    require('./fuelsites').init();
+    require('./settings').init();
+    require('./info').init();
+    require('./alerts').init();
+    require('./forecast').init();
 });
