@@ -1,5 +1,5 @@
-define([ 'jquery', 'underscore', 'facade', 'backbone', 'mustache', 'tmpl/fuelsites/mixin', 'text!tmpl/fuelsites/header', 'text!tmpl/fuelsites/list', 'text!tmpl/fuelsites/search-criteria', 'text!tmpl/fuelsites/list-item' ],
-function($, _, facade, Backbone, Mustache, tmpl_mixin, tmpl_header, tmpl_list, tmpl_criteria, tmpl_item) {
+define([ 'jquery', 'underscore', 'facade', 'backbone', 'mustache', 'tmpl/fuelsites/mixin', 'text!tmpl/fuelsites/header', 'text!tmpl/fuelsites/list', 'text!tmpl/fuelsites/search-criteria', 'text!tmpl/fuelsites/list-item', 'text!tmpl/fuelsites/dialog', 'plugin-dialog' ],
+function($, _, facade, Backbone, Mustache, tmpl_mixin, tmpl_header, tmpl_list, tmpl_criteria, tmpl_item, tmpl_dialog) {
 
     'use strict';
 
@@ -12,6 +12,12 @@ function($, _, facade, Backbone, Mustache, tmpl_mixin, tmpl_header, tmpl_list, t
         // cache templates
         tmpl_criteria: Mustache.compile(tmpl_criteria),
         tmpl_item    : Mustache.compile(tmpl_item),
+        tmpl_dialog  : Mustache.compile(tmpl_dialog),
+
+        events: {
+            'click #btn-save' : 'displaySaveDialog',
+            'click #btn-sort' : 'displaySortDialog'
+        },
 
         initialize: function() {
             // call super
@@ -35,11 +41,6 @@ function($, _, facade, Backbone, Mustache, tmpl_mixin, tmpl_header, tmpl_list, t
             this.$el.find(':jqmData(role=content)').append(Mustache.render(tmpl_list));
         },
 
-        pageShow: function() {
-            // request current location
-            facade.publish('location', 'getCurrentLocation');
-        },
-
         render: function(criteria, fuelsites) {
             // render search criteria
             this.$el.find('#searchCriteriaText')
@@ -54,6 +55,37 @@ function($, _, facade, Backbone, Mustache, tmpl_mixin, tmpl_header, tmpl_list, t
                     fuelsites: fuelsites
                 }))
                 .listview('refresh');
+        },
+
+        /*
+         * jQM Page Events
+        */
+        pageShow: function() {
+            // request current location
+            facade.publish('location', 'getCurrentLocation');
+        },
+
+        /*
+         * Event Handlers
+        */
+        displaySaveDialog: function() {
+            console.log('displaySaveDialog');
+        },
+
+        displaySortDialog: function() {
+            var $tmpl = $(this.tmpl_dialog({}));
+
+            $('<div>').simpledialog2({
+                mode        : 'blank',
+                headerText  : 'Sort by',
+                themeHeader : 'b',
+                headerClose : false,
+                blankContent: $tmpl
+            });
+
+            $tmpl.one('click', 'a', function() {
+                facade.publish('criteria', 'update', {sortBy:$(this).text()});
+            });
         }
     });
 

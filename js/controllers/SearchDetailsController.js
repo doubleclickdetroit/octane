@@ -21,6 +21,10 @@ function(SearchDetailsModel) {
             searchDetailsModel.once('change', searchDetailsModel.fetch);
         };
 
+        SearchDetailsController.prototype.updateAttributes = function(attributes) {
+            searchDetailsModel.set(attributes);
+        };
+
         SearchDetailsController.prototype.updateLocationAttributes = function(location) {
             searchDetailsModel.set(searchDetailsModel.defaults, {silent:true});
             searchDetailsModel.set(location);

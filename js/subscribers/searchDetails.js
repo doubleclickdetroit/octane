@@ -5,6 +5,10 @@ function(facade, controller) {
 
 
     //
+    facade.subscribe('criteria', 'update', controller.updateAttributes);
+
+
+    //
     facade.subscribe('location', 'change', controller.updateLocationAttributes);
 
 
