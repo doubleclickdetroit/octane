@@ -4,7 +4,7 @@
  * CC 3.0 Attribution.  May be relicensed without permission/notifcation.
  * https://github.com/jtsage/jquery-mobile-simpledialog
  */
- 
+
 (function($, undefined ) {
   $.widget( "mobile.simpledialog2", $.mobile.widget, {
 	options: {
@@ -14,12 +14,12 @@
 		themeInput: false,
 		themeButtonDefault: false,
 		themeHeader: 'a',
-		
+
 		fullScreen: false,
 		fullScreenForce: false,
 		dialogAllow: false,
 		dialogForce: false,
-		
+
 		headerText: false,
 		headerClose: false,
 		buttonPrompt: false,
@@ -28,7 +28,7 @@
 		buttonPassword: false,
 		blankContent: false,
 		blankContentAdopt: false,
-		
+
 		resizeListener: true,
 		safeNuke: true,
 		forceInput: true,
@@ -40,7 +40,7 @@
 		width: '280px',
 		left: false,
 		top: false,
-		
+
 		callbackOpen: false,
 		callbackOpenArgs: [],
 		callbackClose: false,
@@ -50,7 +50,7 @@
 		// Handle the triggers
 		var self = e.data.widget,
 			o = e.data.widget.options;
-		
+
 		if ( ! e.isPropagationStopped() ) {
 			switch (p.method) {
 				case 'close':
@@ -66,9 +66,9 @@
 		var self = this,
 			o = $.extend(this.options, this.element.jqmData('options')),
 			initDate = new Date(),
-			content = $("<div class='ui-simpledialog-container ui-overlay-shadow ui-corner-all ui-simpledialog-hidden " + 
+			content = $("<div class='ui-simpledialog-container ui-overlay-shadow ui-corner-all ui-simpledialog-hidden " +
 					((o.animate === true) ? o.transition : '') + " ui-body-" + o.themeDialog + "'></div>");
-			
+
 		if ( o.themeButtonDefault === false ) { o.themeButtonDefault = o.themeDialog; }
 		if ( o.themeInput === false ) { o.themeInput = o.themeDialog; }
 		$.mobile.sdCurrentDialog = self;
@@ -76,15 +76,15 @@
 		self.internalID = initDate.getTime();
 		self.displayAnchor = $.mobile.activePage.children('.ui-content').first();
 		if ( self.displayAnchor.length === 0 ) { self.displayAnchor = $.mobile.activePage; }
-		
+
 		self.dialogPage = $("<div data-role='dialog' data-theme='" + o.themeDialog + "'><div data-role='header'></div><div data-role='content'></div></div>");
 		self.sdAllContent = self.dialogPage.find('[data-role=content]');
-		
+
 		content.appendTo(self.sdAllContent);
-		
+
 		self.sdIntContent = self.sdAllContent.find('.ui-simpledialog-container');
 		self.sdIntContent.css('width', o.width);
-		
+
 		if ( o.headerText !== false || o.headerClose !== false ) {
 			self.sdHeader = $('<div style="margin-bottom: 4px;" class="ui-header ui-bar-'+o.themeHeader+'"></div>');
 			if ( o.headerClose === true ) {
@@ -93,7 +93,7 @@
 			$('<h1 class="ui-title">'+((o.headerText !== false)?o.headerText:'')+'</h1>').appendTo(self.sdHeader);
 			self.sdHeader.appendTo(self.sdIntContent);
 		}
-		
+
 		if ( o.mode === 'blank' ) {
 			if ( o.blankContent === true ) {
 				if ( o.blankContentAdopt === true ) {
@@ -106,14 +106,14 @@
 		} else if ( o.mode === 'button' ) {
 			self._makeButtons().appendTo(self.sdIntContent);
 		}
-		
+
 		self.sdIntContent.appendTo(self.displayAnchor.parent());
-		
+
 		self.dialogPage.appendTo( $.mobile.pageContainer )
 			.page().css('minHeight', '0px').css('zIndex', o.zindex);
-			
+
 		if ( o.animate === true ) { self.dialogPage.addClass(o.transition); }
-		
+
 		self.screen = $("<div>", {'class':'ui-simpledialog-screen ui-simpledialog-hidden'})
 			.css('z-index', (o.zindex-1))
 			.appendTo(self.displayAnchor.parent())
@@ -125,7 +125,7 @@
 			});
 
 		if ( o.showModal ) { self.screen.addClass('ui-simpledialog-screen-modal'); }
-		
+
 		$(document).bind('simpledialog.'+self.internalID, {widget:self}, function(e,p) { self._eventHandler(e,p); });
 	},
 	_makeButtons: function () {
@@ -134,12 +134,12 @@
 			buttonHTML = $('<div></div>'),
 			pickerInput = $("<div class='ui-simpledialog-controls'><input class='ui-simpledialog-input ui-input-text ui-shadow-inset ui-corner-all ui-body-"+o.themeInput+"' type='"+((o.buttonPassword===true)?"password":"text")+"' value='"+((o.buttonInputDefault!==false)?o.buttonInputDefault.replace( '"', "&#34;" ).replace( "'", "&#39;" ):"")+"' name='pickin' /></div>"),
 			pickerChoice = $("<div>", { "class":'ui-simpledialog-controls' });
-			
-		
+
+
 		if ( o.buttonPrompt !== false ) {
 			self.buttonPromptText = $("<p class='ui-simpledialog-subtitle'>"+o.buttonPrompt+"</p>").appendTo(buttonHTML);
 		}
-		
+
 		if ( o.buttonInput !== false ) {
 			$.mobile.sdLastInput = "";
 			pickerInput.appendTo(buttonHTML);
@@ -148,11 +148,11 @@
 				self.thisInput = pickerInput.find('input').first().val();
 			});
 		}
-		
+
 		pickerChoice.appendTo(buttonHTML);
-		
+
 		self.butObj = [];
-		
+
 		$.each(o.buttons, function(name, props) {
 			props = $.isFunction( props ) ? { click: props } : props;
 			props = $.extend({
@@ -166,7 +166,7 @@
 				args   : [],
 				close  : true
 			}, props);
-			
+
 			self.butObj.push($("<a href='#'>"+name+"</a>")
 				.appendTo(pickerChoice)
 				.attr('id', props.id)
@@ -186,7 +186,7 @@
 				})
 			);
 		});
-		
+
 		return buttonHTML;
 	},
 	_getCoords: function(widget) {
@@ -196,7 +196,7 @@
 			docWinHigh    = $(window).height(),
 			diaWinWidth   = widget.sdIntContent.innerWidth(),
 			diaWinHigh    = widget.sdIntContent.outerHeight(),
-			
+
 			coords        = {
 				'high'    : $(window).height(),
 				'width'   : $.mobile.activePage.width(),
@@ -205,18 +205,18 @@
 				'winTop'  : docWinHighOff + ((widget.options.top !== false) ? widget.options.top : (( docWinHigh / 2 ) - ( diaWinHigh / 2 ) )),
 				'winLeft' : ((widget.options.left !== false) ? widget.options.left : (( docWinWidth / 2 ) - ( diaWinWidth / 2 ) ))
 			};
-			
+
 		if ( coords.winTop < 45 ) { coords.winTop = 45; }
-			
+
 		return coords;
 	},
 	_orientChange: function(e) {
 		var self = e.data.widget,
 			o = e.data.widget.options,
 			coords = e.data.widget._getCoords(e.data.widget);
-		
+
 		e.stopPropagation();
-		
+
 		if ( self.isDialog === true ) {
 			return true;
 		} else {
@@ -235,19 +235,19 @@
 		var self = this,
 			o = this.options,
 			coords = this._getCoords(this);
-		
+
 		self.sdAllContent.find('.ui-btn-active').removeClass('ui-btn-active');
 		self.sdIntContent.delegate('[rel=close]', o.clickEvent, function (e) { e.preventDefault(); self.close(); });
-		
+
 		if ( ( o.dialogAllow === true && coords.width < 400 ) || o.dialogForce ) {
 			self.isDialog = true;
-			
+
 			if ( o.mode === 'blank' ) { // Custom selects do not play well with dialog mode - so, we turn them off.
 				self.sdIntContent.find('select').each(function () {
 					$(this).jqmData('nativeMenu', true);
 				});
 			}
-			
+
 			self.displayAnchor.parent().unbind("pagehide.remove");
 			self.sdAllContent.append(self.sdIntContent);
 			self.sdAllContent.trigger('create');
@@ -262,26 +262,26 @@
 			} else {
 				self.dialogPage.find('.ui-header a').remove();
 			}
-			
+
 			self.sdIntContent.removeClass().css({'top': 'auto', 'width': 'auto', 'left': 'auto', 'marginLeft': 'auto', 'marginRight': 'auto', 'zIndex': o.zindex});
 			$.mobile.changePage(self.dialogPage, {'transition': (o.animate === true) ? o.transition : 'none'});
 		} else {
 			self.isDialog = false;
 			self.selects = [];
-			
+
 			if ( o.fullScreen === false ) {
 				if ( o.showModal === true && o.animate === true ) { self.screen.fadeIn('slow'); }
 				else { self.screen.removeClass('ui-simpledialog-hidden'); }
 			}
-			
+
 			self.sdIntContent.addClass('ui-overlay-shadow in').css('zIndex', o.zindex).trigger('create');
-			
+
 			if ( o.fullScreen === true && ( coords.width < 400 || o.fullScreenForce === true ) ) {
 				self.sdIntContent.removeClass('ui-simpledialog-container').css({'border': 'none', 'position': 'absolute', 'top': coords.fullTop, 'left': coords.fullLeft, 'height': coords.high, 'width': coords.width, 'maxWidth': coords.width }).removeClass('ui-simpledialog-hidden');
 			} else {
 				self.sdIntContent.css({'position': 'absolute', 'top': coords.winTop, 'left': coords.winLeft}).removeClass('ui-simpledialog-hidden');
 			}
-			
+
 			$(document).bind('orientationchange.simpledialog', {widget:self}, function(e) { self._orientChange(e); });
 			if ( o.resizeListener === true ) {
 				$(window).bind('resize.simpledialog', {widget:self}, function (e) { self._orientChange(e); });
@@ -293,12 +293,12 @@
 	},
 	close: function() {
 		var self = this, o = this.options, retty;
-		
+
 		if ( $.isFunction(self.options.callbackClose) ) {
 			retty = self.options.callbackClose.apply(self, self.options.callbackCloseArgs);
 			if ( retty === false ) { return false; }
 		}
-		
+
 		if ( self.isDialog ) {
 			$(self.dialogPage).dialog('close');
 			self.sdIntContent.addClass('ui-simpledialog-hidden');
@@ -318,12 +318,12 @@
 			$(document).unbind('orientationchange.simpledialog');
 			if ( self.options.resizeListener === true ) { $(window).unbind('resize.simpledialog'); }
 		}
-		
+
 		if ( o.mode === 'blank' && o.blankContent !== false && o.blankContentAdopt === true ) {
 			self.element.append(o.blankContent);
 			o.blankContent = true;
 		}
-		
+
 		if ( self.isDialog === true || self.options.animate === true ) {
 			setTimeout(function(that) { return function () { that.destroy(); };}(self), 1000);
 		} else {
@@ -333,8 +333,8 @@
 	destroy: function() {
 		var self = this,
 			ele = self.element;
-		
-		if ( self.options.mode === 'blank' ) {
+
+		if ( $.mobile.sdCurrentDialog && self.options.mode === 'blank' ) {
 			$.mobile.sdCurrentDialog.sdIntContent.find('select').each(function() {
 				if ( $(this).data('nativeMenu') == false ) {
 					$(this).data('selectmenu').menuPage.remove();
@@ -343,7 +343,7 @@
 				}
 			});
 		}
-		
+
 		$(self.sdIntContent).remove();
 		$(self.dialogPage).remove();
 		$(self.screen).remove();
@@ -357,9 +357,9 @@
 	updateBlank: function (newHTML) {
 		var self = this,
 			o = this.options;
-			
+
 		self.sdIntContent.empty();
-			
+
 		if ( o.headerText !== false || o.headerClose !== false ) {
 			self.sdHeader = $('<div class="ui-header ui-bar-'+o.themeHeader+'"></div>');
 			if ( o.headerClose === true ) {
@@ -368,7 +368,7 @@
 			$('<h1 class="ui-title">'+((o.headerText !== false)?o.headerText:'')+'</h1>').appendTo(self.sdHeader);
 			self.sdHeader.appendTo(self.sdIntContent);
 		}
-		
+
 		$(newHTML).appendTo(self.sdIntContent);
 		self.sdIntContent.trigger('create');
 		$(document).trigger('orientationchange.simpledialog');
