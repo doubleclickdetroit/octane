@@ -22,6 +22,7 @@ define(function(require) {
         'LOCATION'       : '04101',
         'FUEL_TYPE'      : 'Gasoline',
         'FUEL_TYPE_GRADE': 'Unleaded Regular',
+        'SORT_BY'        : 'Price',
         'UNDEFINED'      : undefined,
         'EMPTY_STRING'   : ''
     };
@@ -62,7 +63,7 @@ define(function(require) {
         'START_LOCATION' : 'currentLocation',
         'RADIUS'         : '5.0',
         'FUEL_TYPE'      : globals.DEFAULT.FUEL_TYPE_GRADE,
-        'SORT_BY'        : 'Price',
+        'SORT_BY'        : globals.DEFAULT.SORT_BY,
         'FILTER_TODAY'   : 'no',
         'PAGE_NUMBER'    : 0,
         'PAGE_SIZE'      : 10,
@@ -176,7 +177,47 @@ define(function(require) {
         'VIEW_MODE' : globals.SEARCH_DETAILS.VIEW_MODE // fuelsites is default view_mode for search details
     };
     globals.fuelsites.configuration = {
-        //
+        'save': {
+            'title': 'Save Search',
+            'error': 'Search Name is required.',
+            'buttons': [
+                {
+                    'id'   : 'a',
+                    'label': 'Save',
+                    'type' : 'submit',
+                    'close': false
+                },
+                {
+                    'id'   : 'b',
+                    'label': 'Cancel',
+                    'type' : 'button',
+                    'close': true
+                }
+            ],
+            'fields': [
+                {
+                    'type'       : 'text',
+                    'placeholder': 'Enter Search Name'
+                }
+            ]
+        },
+        'sortBy': {
+            'title'  : 'Sort by',
+            'buttons': [
+                {
+                    'id'   : 'a',
+                    'label': globals.DEFAULT.SORT_BY,
+                    'type' : 'button',
+                    'close': true
+                },
+                {
+                    'id'   : 'b',
+                    'label': 'Distance',
+                    'type' : 'button',
+                    'close': true
+                }
+            ]
+        }
     };
 
 
