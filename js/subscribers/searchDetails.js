@@ -5,6 +5,9 @@ function(facade, controller) {
 
 
     //
+    facade.subscribe('criteria', 'save', controller.saveCriteria);
+
+    //
     facade.subscribe('criteria', 'update', controller.updateAttributes);
 
 
