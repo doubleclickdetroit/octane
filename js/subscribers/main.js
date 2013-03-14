@@ -1,11 +1,15 @@
-define([ './app', './menu', './fuelsites', './settings', './info', './alerts', './forecast'],
-function (app, menu, fuelsites, settings, info, alerts, forecast) {
+define([ './app', './location', './searchDetails', './menu', './fuelsites', './settings', './info', './alerts', './forecast'],
+function (app, location, searchDetails, menu, fuelsites, settings, info, alerts, forecast) {
 
     'use strict';
 
 
-    // kick-off subscribers
+    // app
     app.init();
+    location.init();
+    searchDetails.init();
+
+    // views
     menu.init();
     fuelsites.init();
     settings.init();

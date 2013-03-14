@@ -42,32 +42,6 @@ function(utils, globals, Backbone, SearchDetailsDatabaseManager) {
             'viewMode'     : globals.SEARCH_DETAILS.VIEW_MODE
         };
 
-        SearchDetailsModel.prototype.initialize = function(options) {
-            this.location = options.location;
-
-            this.location
-
-                // initially fetch saved data
-                .once('change', this.fetch(), this)
-
-                // update location attributes
-                .on('change', function(model) {
-                    console.log('SearchDetailsModel received new locationModel data!');
-                    this.set(this.defaults, {silent:true});
-                    this.set(model.toJSON());
-                }, this)
-
-                // propegate loading event
-                .on('loadingstart', function() {
-                    this.trigger('loadingstart');
-                }, this)
-
-                // propegate loading event
-                .on('loadingend', function() {
-                    this.trigger('loadingend');
-                }, this);
-        };
-
         SearchDetailsModel.prototype.updateAttributes = function(data) {
             if (data.length) {
                 this.set({

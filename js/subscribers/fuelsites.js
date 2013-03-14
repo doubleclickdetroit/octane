@@ -12,10 +12,15 @@ function(facade, controller) {
 
 
     /*
+     * Location Subscribers
+    */
+    facade.subscribe('location', 'loadingbegin', controller.loadingBegin);
+
+    /*
      * Criteria Subscribers
     */
     facade.subscribe('criteria', 'update',       controller.getFuelSites);
-    facade.subscribe('criteria', 'loadingstart', controller.loadingStart);
+    facade.subscribe('criteria', 'loadingbegin', controller.loadingBegin);
 
 
     return {

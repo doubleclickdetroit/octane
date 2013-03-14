@@ -18,9 +18,7 @@ function(utils, globals, Backbone) {
                     callback.call(context || window, pos.coords);
                 },
                 function(err){
-                    console.log('getCurrentPosition ERROR', err.message);
                     setTimeout(function() {
-                        console.log('getCurrentPosition trying again...');
                         getCurrentPosition(callback, context);
                     }, 1000);
                 },
@@ -63,7 +61,7 @@ function(utils, globals, Backbone) {
             var conf = {'address': address};
 
             //
-            this.trigger('loadingstart');
+            this.trigger('loadingbegin');
 
             doGeocoding(conf, function(results) {
                 //
@@ -80,20 +78,15 @@ function(utils, globals, Backbone) {
 
         LocationModel.prototype.locateFromCurrentLocation = function() {
             var conf = {};
-            console.log('locateFromCurrentLocation BEGIN');
 
             // trigger loading event
-            this.trigger('loadingstart');
+            this.trigger('loadingbegin');
 
             // get current position
             getCurrentPosition(function(coords) {
                 conf.latLng = new google.maps.LatLng(coords.latitude, coords.longitude);
-                console.log('locateFromCurrentLocation getCurrentPosition');
 
                 doGeocoding(conf, function(results) {
-                    console.log('locateFromCurrentLocation END');
-                    this.set(this.defaults, {silent:true});
-
                     // update attributes
                     this.set({
                         'location' : results[0].formatted_address,

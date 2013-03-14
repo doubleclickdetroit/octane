@@ -30,7 +30,7 @@ function(globals, utils, FuelSitesView, FuelSitesCollection) {
                     fuelSitesView.render(criteria, collection.toJSON());
 
                     // hide the loading indicator
-                    fuelSitesView.hideLoadingIndicator(false);
+                    fuelSitesView.hideLoadingIndicator();
                 });
 
                 // display loading indicator
@@ -41,7 +41,7 @@ function(globals, utils, FuelSitesView, FuelSitesCollection) {
             }
         };
 
-        FuelSitesController.prototype.loadingStart = function() {
+        FuelSitesController.prototype.loadingBegin = function() {
             fuelSitesView.showLoadingIndicator(true);
         };
 

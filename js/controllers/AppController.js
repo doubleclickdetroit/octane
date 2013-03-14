@@ -1,5 +1,5 @@
-define([ 'routers/AppRouter', 'views/AppView', 'models/LocationModel', 'models/SearchDetailsModel' ],
-function(AppRouter, AppView, LocationModel, SearchDetailsModel) {
+define([ 'routers/AppRouter', 'views/AppView', 'models/SearchDetailsModel' ],
+function(AppRouter, AppView, SearchDetailsModel) {
 
     'use strict';
 
@@ -11,7 +11,6 @@ function(AppRouter, AppView, LocationModel, SearchDetailsModel) {
 
         function AppController() {
             //
-            locationModel      = new LocationModel();
             searchDetailsModel = new SearchDetailsModel({
                 location: locationModel
             });
@@ -27,22 +26,6 @@ function(AppRouter, AppView, LocationModel, SearchDetailsModel) {
         AppController.prototype.ready = function() {
             appRouter.start();
             appView.render();
-        };
-
-        AppController.prototype.locationModelDelegate = function(delegate) {
-            locationModel.on('all', delegate);
-        };
-
-        AppController.prototype.searchDetailsModelDelegate = function(delegate) {
-            searchDetailsModel.on('all', delegate);
-        };
-
-        AppController.prototype.locateFromAddress = function(address) {
-            locationModel.locateFromAddress(address);
-        };
-
-        AppController.prototype.locateFromCurrentLocation = function() {
-            locationModel.locateFromCurrentLocation();
         };
 
         return AppController;
