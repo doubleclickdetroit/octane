@@ -1,5 +1,5 @@
-define([ 'routers/AppRouter', 'views/AppView', 'models/SearchDetailsModel' ],
-function(AppRouter, AppView, SearchDetailsModel) {
+define([ 'routers/AppRouter', 'views/AppView' ],
+function(AppRouter, AppView) {
 
     'use strict';
 
@@ -7,14 +7,9 @@ function(AppRouter, AppView, SearchDetailsModel) {
     var AppController;
     AppController = (function() {
 
-        var appRouter, appView, locationModel, searchDetailsModel;
+        var appRouter, appView;
 
-        function AppController() {
-            //
-            searchDetailsModel = new SearchDetailsModel({
-                location: locationModel
-            });
-        }
+        function AppController() {}
 
         AppController.prototype.init = function() {
             appRouter = new AppRouter();
