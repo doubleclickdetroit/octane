@@ -14,7 +14,7 @@ function(utils, SettingsView) {
         };
 
         function navigate() {
-            utils.changePage(settingsView.$el);
+            utils.changePage(settingsView.$el, null, null, true);
         };
 
         return {

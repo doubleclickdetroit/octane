@@ -1,5 +1,5 @@
 <ul data-theme="c" data-role="listview" data-inset="true" >
-    <li><a href="#feedback" id="feedbackView">Feedback</a></li>
+    <li><a href="#feedback">Feedback</a></li>
     <li><a href="#info">Information</a></li>
     <li>
         <a href="#alerts">
