@@ -66,6 +66,34 @@ function($, _, Backbone, facade) {
         },
 
         /*
+         * Public Methods
+        */
+        displayAlert: function(message, callback, btnLabel, title) {
+            callback = $.isFunction(callback) ? callback : function(){};
+            title = title === undefined ? ' ' : title;
+
+            if (navigator.notification) {
+                navigator.notification.alert(message, callback, title, btnLabel);
+            }
+            else {
+                callback( alert(title +'\n'+ message) );
+            }
+        },
+
+        displayConfirm: function(message, callback, btnLabels, title) {
+            callback = $.isFunction(callback) ? callback : function(){};
+            title = title === undefined ? ' ' : title;
+
+            if (navigator.notification) {
+                navigator.notification.confirm(message, callback, title, btnLabels);
+            }
+            else {
+                var response = confirm(title +'\n'+ message) ? 1 : 0;
+                callback(response);
+            }
+        },
+
+        /*
          * Event Handlers
         */
         delegateBeforeNavigate: function(evt) {

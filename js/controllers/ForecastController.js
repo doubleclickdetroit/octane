@@ -28,17 +28,10 @@ function(utils, ForecastView, ForecastModel) {
                 utils.changePage(forecastView.$el);
             }
             else {
-                promptNotification();
+                forecastView.promptEntryConfirmation(function() {
+                    utils.changePage(forecastView.$el);
+                });
             }
-        }
-
-        function promptNotification() {
-            navigator.notification.confirm(
-                'Forecasts are only available for Gasoline or Diesel fuel types.',    // message
-                function(id) { if (id == 1) { utils.changePage(forecastView.$el); }}, // callback to determine entry
-                ' ',                                                                  // title
-                'Continue,Cancel'                                                     // button labels
-            );
         }
 
         /*

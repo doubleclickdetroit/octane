@@ -86,7 +86,8 @@ function($, _, globals, facade, Backbone, Mustache, mixin, tmpl_header, tmpl_fue
 
                 // validate presence of value
                 if (val === '') {
-                    return alert(globals.fuelsites.configuration.save.error);
+                    facade.publish('app', 'alert', globals.fuelsites.configuration.save.error);
+                    return false;
                 }
 
                 // unbind all events

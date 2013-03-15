@@ -23,6 +23,14 @@ function(AppRouter, AppView) {
             appView.render();
         };
 
+        AppController.prototype.alert = function() {
+            appView.displayAlert.apply(null, arguments);
+        };
+
+        AppController.prototype.confirm = function() {
+            appView.displayConfirm.apply(null, arguments);
+        };
+
         return AppController;
     })();
 

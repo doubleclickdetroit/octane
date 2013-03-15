@@ -48,6 +48,17 @@ function($, _, globals, facade, Backbone, Mustache, tmpl) {
         },
 
         /*
+         * Public Methods
+        */
+        promptEntryConfirmation: function(fn) {
+            var message  = 'Forecasts are only available for Gasoline or Diesel fuel types.',
+                buttons  = 'Continue,Cancel',
+                callback = function(id) { if (id === 1) fn(); };
+
+            facade.publish('app', 'confirm', message, callback, buttons);
+        },
+
+        /*
          * Event Handlers
         */
         handleUpdatingAttribute: function(evt) {
