@@ -1,5 +1,5 @@
-define([ 'utils', 'views/InfoView', 'models/InfoModel' ],
-function (utils, InfoView, InfoModel) {
+define([ 'utils', 'views/InfoView', 'models/InfoModel', 'models/AppModel' ],
+function (utils, InfoView, InfoModel, AppModel) {
 
     'use strict';
 
@@ -8,17 +8,17 @@ function (utils, InfoView, InfoModel) {
     InfoController = (function () {
 
         var infoView, infoModel;
-        
-        function init() {
 
+        function init() {
             // create model
-            infoModel = new InfoModel();
+            infoModel = new InfoModel({
+                device: AppModel.getInstance().toJSON()
+            });
 
             // create view
             infoView = new InfoView({
                 model: infoModel
             });
-            
         }
 
         function navigate() {

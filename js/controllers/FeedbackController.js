@@ -1,5 +1,5 @@
-define([ 'utils', 'facade', 'views/FeedbackView', 'models/FeedbackModel' ],
-function (utils, facade, FeedbackView, FeedbackModel) {
+define([ 'utils', 'facade', 'views/FeedbackView', 'models/FeedbackModel', 'models/AppModel' ],
+function (utils, facade, FeedbackView, FeedbackModel, AppModel) {
 
     'use strict';
 
@@ -8,26 +8,26 @@ function (utils, facade, FeedbackView, FeedbackModel) {
     FeedbackController = (function () {
 
         var feedbackView, feedbackModel;
-        
+
         /*
          * Public Methods
         */
         function init() {
-        	
-        	// create model
-        	feedbackModel = new FeedbackModel();
+            // create model
+            feedbackModel = new FeedbackModel({
+                device: AppModel.getInstance().toJSON()
+            });
 
             // create view
-        	feedbackView = new FeedbackView({
+            feedbackView = new FeedbackView({
                 model: feedbackModel
             });
-            
         }
-        
+
         function navigate() {
             utils.changePage(feedbackView.$el);
         }
-        
+
         function updateAttribute(id, val) {
         	feedbackModel.updateAttribute(id, val);
         }
@@ -35,11 +35,11 @@ function (utils, facade, FeedbackView, FeedbackModel) {
         function saveAttributes() {
             feedbackModel.saveAttributes();
         }
-        
+
         function handleSaveSuccess() {
         	feedbackView.displaySubmitConfirmation();
         }
-        
+
         function handleDismissConfirmation() {
         	// on dismiss navigate back to Settings
         	facade.publish('settings', 'navigate');
