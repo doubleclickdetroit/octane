@@ -36,31 +36,45 @@ function (Backbone, globals) {
         },
         
         getOSVersion: function () {
-        	//return device.platform + ' ' + device.version;
+        	if (device.platform && device.version) {
+        		return device.platform + ' ' + device.version;
+        	}
+        	else {
+        		return 'Unknown';
+        	}
         },
         
         getDeviceId: function () {
-        	//return window.MyCls.getDeviceId();
+        	if (typeof window.MyCls !== 'undefined' && window.MyCls.getDeviceId() !== null) {
+        		return window.MyCls.getDeviceId();
+        	}
+        	else {
+        		return 'Unknown';
+        	}
         },
         
         getScreenType: function () {
         	
         	var screenType = 'Unknown';
         	
-        	/*switch (window.MyCls.getScreenDensity().toString()) {
-            case '.75':
-            	screenType = 'ldpi';
-            	break;
-            case '1':
-            	screenType = 'mdpi';
-            	break;
-            case '1.5':
-            	screenType = 'hdpi';
-            	break;
-            case '2':
-            	screenType = 'xdpi';
-            	break;
-            }*/
+        	if (typeof window.MyCls !== 'undefined' && window.MyCls.getScreenDensity() !== null) {
+        		        	
+	        	switch (window.MyCls.getScreenDensity().toString()) {
+	            case '.75':
+	            	screenType = 'ldpi';
+	            	break;
+	            case '1':
+	            	screenType = 'mdpi';
+	            	break;
+	            case '1.5':
+	            	screenType = 'hdpi';
+	            	break;
+	            case '2':
+	            	screenType = 'xdpi';
+	            	break;
+	            
+	        	}
+	        }
         	
         	return screenType;
         }

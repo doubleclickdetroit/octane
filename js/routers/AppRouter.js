@@ -15,6 +15,7 @@ function (utils, facade, Backbone) {
             'fuelsites': 'renderFuelSites',
             'settings': 'renderSettings',
             'info': 'renderInfo',
+            'feedback': 'renderFeedback',
             'alerts': 'renderAlerts',
             'menu': 'renderMenu',
 
@@ -38,6 +39,10 @@ function (utils, facade, Backbone) {
 
         renderInfo: function () {
             facade.publish('info', 'navigate');
+        },
+        
+        renderFeedback: function () {
+            facade.publish('feedback', 'navigate');
         },
 
         renderAlerts: function () {

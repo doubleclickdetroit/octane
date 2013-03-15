@@ -101,7 +101,17 @@ function($, _, Backbone, globals) {
             return Connection[key] === navigator.connection.type;
         }) || connectivity['NONE'];
     };
-
+    
+    /*
+     * Function to validate Email Address format
+     *
+     * @param (String) emailAddress The Email Address to validate for formatting
+     * @return (Boolean) True or False as to whether the Email Address is valid
+     */
+    utils.isEmailAddressValid = function (emailAddress) {
+    	var pattern = new RegExp(globals.APP.EMAIL_ADDRESS_VALIDATION_PATTERN);
+    	return pattern.test(emailAddress);
+    };
 
     return utils;
 });

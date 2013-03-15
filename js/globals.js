@@ -11,7 +11,8 @@ define(function(require) {
     */
     globals.APP = {
         'NAME'   : 'Octane',
-        'VERSION': '3.0'
+        'VERSION': '3.0',
+        'EMAIL_ADDRESS_VALIDATION_PATTERN': '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$'
     };
 
     /*
@@ -54,6 +55,10 @@ define(function(require) {
         'PAGE_NUMBER' : '/pageNumber/',
         'PAGE_SIZE'   : '/pageSize/',
         'BRAND'       : '?brand='
+    };
+    globals.WEBSERVICE.FEEDBACK = {
+    	'URL'     : 'https://uat.account.wexmobile.com/mobileweb/siteLocator/feedback',
+    	'SUBJECT' : 'OCTANE FEEDBACK'
     };
 
     /*
@@ -218,6 +223,33 @@ define(function(require) {
                 }
             ]
         }
+    };
+    
+    /*
+     * Page :: Feedback
+     */
+    globals.feedback = {};
+    globals.feedback.constants = {
+    	'WEBSERVICE': globals.WEBSERVICE.FEEDBACK,
+        'CONFIRMATION_TITLE'           : 'Feedback',
+        'CONFIRMATION_BUTTON'          : 'OK',
+        'CONFIRMATION_SUCCESS_TEXT'    : 'Thank you for your feedback.',
+        'ERROR_ALL_FIELDS_REQUIRED'    : 'All fields are required',
+        'ERROR_EMAIL_REQUIRED_FIELD'   : 'Email is required',
+        'ERROR_FEEDBACK_REQUIRED_FIELD': 'Message is required',
+        'ERROR_EMAIL_INVALID'          : 'Invalid Email Address'
+    };
+    globals.feedback.configuration = {
+        'sender': {
+        	'label'      : '',
+        	'placeholder': 'Enter Email',
+        	'value'      : ''
+        },
+        'messageBody': {
+        	'label'      : '',
+        	'placeholder': 'Enter Message',
+        	'value'      : ''
+        }       
     };
 
 
