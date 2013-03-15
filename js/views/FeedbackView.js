@@ -48,11 +48,11 @@ function ($, utils, facade, globals, Backbone, Mustache, tmpl) {
         },
         
         displayConfirmation: function (message, callback) {
-        	navigator.notification.confirm(
-        		message                                          // message
-        		, callback                                       // success callback
-        		, globals.feedback.constants.CONFIRMATION_TITLE  // title
-        		, globals.feedback.constants.CONFIRMATION_BUTTON // button text
+        	facade.publish('app', 'confirm'
+    			, message                                        // message
+    			, callback                                       // callback
+    			, globals.feedback.constants.CONFIRMATION_BUTTON // button(s)
+    			, globals.feedback.constants.CONFIRMATION_TITLE  // title
 			);
         },
         
