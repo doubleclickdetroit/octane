@@ -14,7 +14,7 @@ function (utils, facade, FeedbackView, FeedbackModel, AppModel) {
         */
         function init() {
             // create model
-            feedbackModel = new FeedbackModel({
+            feedbackModel = new FeedbackModel(null, {
                 device: AppModel.getInstance().toJSON()
             });
 

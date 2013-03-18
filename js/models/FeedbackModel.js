@@ -16,7 +16,7 @@ function (Backbone, globals, facade, utils) {
             'appBuildVersion': globals.APP.VERSION
         },
 
-        initialize: function(options) {
+        initialize: function(attrs, options) {
             this.set({
                 'deviceVersion' : options.device.version,
                 'devicePlatform': options.device.platform
@@ -56,7 +56,12 @@ function (Backbone, globals, facade, utils) {
          * Private Methods
         */
         handleSaveSuccess: function (model, response, options) {
-            model.set(model.defaults);
+            // Reset the form fields
+        	model.set({
+        		'sender': null,
+        		'messageBody': null
+        	});
+        	
             facade.publish('feedback', 'saveSuccess'); // TODO: I think this should be this.trigger('saveSuccess') which the controller listens to and broadcasts :)
         },
 
@@ -68,7 +73,7 @@ function (Backbone, globals, facade, utils) {
         },
 
         saveAttributes: function () {
-            this.save(this.toJSON(), {success: this.handleSaveSuccess});
+        	this.save(this.toJSON(), {success: this.handleSaveSuccess});
         }
 
     });

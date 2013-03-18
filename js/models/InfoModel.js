@@ -14,11 +14,11 @@ function (Backbone, globals) {
             'screenType'  : 'Unknown'
         },
 
-        initialize: function (options) {
+        initialize: function (attrs, options) {
             // initially bootstrap data
             this.set({
                 'buildVersion': globals.APP.VERSION,
-                'osVersion'   : options.device.osversion,
+                'osVersion'   : this.getOsVersion(options.device),
                 'deviceId'    : this.getDeviceId(),       // can 'MyCls' be encapsulated within AppModel? If so, these could be as simple as referencing options.device for the property or method that uses 'MyCls' plug-in.
                 'screenType'  : this.getScreenType()      // can 'MyCls' be encapsulated within AppModel? If so, these could be as simple as referencing options.device for the property or method that uses 'MyCls' plug-in.
             });
@@ -27,6 +27,13 @@ function (Backbone, globals) {
         /*
          * Private Methods
         */
+        getOsVersion: function (device) {
+        	var v = device.version,
+            	p = device.platform;
+        	
+        	return p && v ? p+' '+v : 'Unknown';
+        },
+        
         getDeviceId: function () {
             if (typeof window.MyCls !== 'undefined' && window.MyCls.getDeviceId() !== null) {
                 return window.MyCls.getDeviceId();

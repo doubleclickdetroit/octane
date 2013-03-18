@@ -11,7 +11,7 @@ function (utils, InfoView, InfoModel, AppModel) {
 
         function init() {
             // create model
-            infoModel = new InfoModel({
+            infoModel = new InfoModel(null, {
                 device: AppModel.getInstance().toJSON()
             });
 

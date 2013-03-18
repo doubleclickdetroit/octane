@@ -9,7 +9,6 @@ function(_, globals, Backbone) {
 
         defaults: {
             'available': null,
-            'osversion': 'Unknown',
             'name'     : null,
             'platform' : 'Unknown',
             'version'  : 'Unknown',
@@ -19,14 +18,10 @@ function(_, globals, Backbone) {
         },
 
         initialize: function() {
-            var d = window.device || {},
-                v = d.version,
-                p = d.platform;
+            var d = window.device || {};
 
             // bootstrap device data
-            this.set(_.extend(d, {
-                'osversion': p && v ? p+' '+v : 'Unknown' // if 'Unknown', will not trigger 'change:osversion' event since it's already set to the value 'Unknown' :)
-            }));
+            this.set(_.extend(d));
         }
 
     });
