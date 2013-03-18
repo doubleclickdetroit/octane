@@ -32,6 +32,16 @@ function($, _, Backbone, globals) {
     utils.__hasProp = {}.hasOwnProperty;
 
     /*
+     * Is Function Helper Method
+    */
+    utils.isFn = utils.isFunction = utils.$.isFunction;
+
+    /*
+     * Is Plain Object Helper Method
+    */
+    utils.isPlainObject = utils.$.isPlainObject;
+
+    /*
      * Extend Classes
     */
     utils.extend = function(child, parent) {
@@ -101,7 +111,7 @@ function($, _, Backbone, globals) {
             return Connection[key] === navigator.connection.type;
         }) || connectivity['NONE'];
     };
-    
+
     /*
      * Function to validate Email Address format
      *
