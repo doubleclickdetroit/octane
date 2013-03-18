@@ -30,23 +30,27 @@ function(globals, utils, FuelSitesView, FuelSitesCollection) {
                     fuelSitesView.render(criteria, collection.toJSON());
 
                     // hide the loading indicator
-                    fuelSitesView.hideLoadingIndicator();
-                });
+                    this.loadingEnd(false);
+                }, this);
 
                 // display loading indicator
-                fuelSitesView.showLoadingIndicator(true);
+                this.loadingBegin(true);
 
                 // based on criteria, fetch new fuelsites
                 fuelSitesCollection.fetch(criteria);
             }
         };
 
-        FuelSitesController.prototype.loadingBegin = function() {
-            fuelSitesView.showLoadingIndicator(true);
+        FuelSitesController.prototype.loadingBegin = function(checkView) {
+            // show loader if active view is fuelSitesView
+            checkView = checkView === undefined ? true : checkView;
+            fuelSitesView.showLoadingIndicator(checkView);
         };
 
-        FuelSitesController.prototype.loadingEnd = function() {
-            fuelSitesView.hideLoadingIndicator(true);
+        FuelSitesController.prototype.loadingEnd = function(checkView) {
+            // hide loader if active view is fuelSitesView
+            checkView = checkView === undefined ? true : checkView;
+            fuelSitesView.hideLoadingIndicator(checkView);
         };
 
         return FuelSitesController;
