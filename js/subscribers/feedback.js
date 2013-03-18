@@ -5,22 +5,22 @@ function (facade, controller) {
 
 
     var subscribe;
-    subscribe = facade.subscribeTo('feedback');
+    subscribe = facade.subscribeTo('feedback', controller);
 
     //
-    subscribe('navigate', controller.navigate);
-    
-    //
-    subscribe('updateAttribute', controller.updateAttribute);
+    subscribe('navigate', 'navigate');
 
     //
-    subscribe('saveAttributes', controller.saveAttributes);
-    
+    subscribe('updateAttribute', 'updateAttribute');
+
     //
-    subscribe('saveSuccess', controller.handleSaveSuccess);
-    
+    subscribe('saveAttributes', 'saveAttributes');
+
     //
-    subscribe('dismissConfirmation', controller.handleDismissConfirmation);
+    subscribe('saveSuccess', 'handleSaveSuccess');
+
+    //
+    subscribe('dismissConfirmation', 'handleDismissConfirmation');
 
 
     return {

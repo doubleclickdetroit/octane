@@ -5,10 +5,10 @@ function(facade, controller) {
 
 
     var subscribe;
-    subscribe = facade.subscribeTo('menu');
+    subscribe = facade.subscribeTo('menu', controller);
 
     //
-    subscribe('navigate', controller.navigate);
+    subscribe('navigate', 'navigate');
 
 
     return {

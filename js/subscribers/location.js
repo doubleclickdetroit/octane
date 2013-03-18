@@ -5,10 +5,10 @@ function(facade, controller) {
 
 
     //
-    facade.subscribe('location', 'getAddressLocation', controller.locateFromAddress);
+    facade.subscribe('location', 'getAddressLocation', controller, 'locateFromAddress');
 
     //
-    facade.subscribe('location', 'getCurrentLocation', controller.locateFromCurrentLocation);
+    facade.subscribe('location', 'getCurrentLocation', controller, 'locateFromCurrentLocation');
 
 
     /*

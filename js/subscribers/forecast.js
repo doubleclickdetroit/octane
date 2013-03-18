@@ -5,16 +5,16 @@ function(facade, controller) {
 
 
     var subscribe;
-    subscribe = facade.subscribeTo('forecast');
+    subscribe = facade.subscribeTo('forecast', controller);
 
     //
-    subscribe('navigate', controller.navigate);
+    subscribe('navigate', 'navigate');
 
     //
-    subscribe('updateAttribute', controller.updateAttribute);
+    subscribe('updateAttribute', 'updateAttribute');
 
     //
-    subscribe('saveAttributes', controller.saveAttributes);
+    subscribe('saveAttributes', 'saveAttributes');
 
 
     return {

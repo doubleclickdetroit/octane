@@ -5,19 +5,19 @@ function(facade, controller) {
 
 
     var subscribe;
-    subscribe = facade.subscribeTo('alerts');
+    subscribe = facade.subscribeTo('alerts', controller);
 
     //
-    subscribe('navigate', controller.navigate);
+    subscribe('navigate', 'navigate');
 
     //
-    subscribe('updateAttribute', controller.updateAttribute);
+    subscribe('updateAttribute', 'updateAttribute');
 
     //
-    subscribe('saveAttributes', controller.saveAttributes);
+    subscribe('saveAttributes', 'saveAttributes');
 
     //
-    subscribe('resetAttributes', controller.resetAttributes);
+    subscribe('resetAttributes', 'resetAttributes');
 
 
     return {

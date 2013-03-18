@@ -8,19 +8,19 @@ function(facade, controller) {
      * FuelSites Subscribers
     */
     //
-    facade.subscribe('fuelsites', 'navigate', controller.navigate);
+    facade.subscribe('fuelsites', 'navigate', controller, 'navigate');
 
 
     /*
      * Location Subscribers
     */
-    facade.subscribe('location', 'loadingbegin', controller.loadingBegin);
+    facade.subscribe('location', 'loadingbegin', controller, 'loadingBegin');
 
     /*
      * Criteria Subscribers
     */
-    facade.subscribe('criteria', 'change',       controller.getFuelSites);
-    facade.subscribe('criteria', 'loadingbegin', controller.loadingBegin);
+    facade.subscribe('criteria', 'change',       controller, 'getFuelSites');
+    facade.subscribe('criteria', 'loadingbegin', controller, 'loadingBegin');
 
 
     return {

@@ -14,7 +14,7 @@ function($, _, facade, Backbone, Mustache, tmpl) {
             this.constructor.__super__.initialize.apply(this, arguments);
 
             // listen for broadcasting
-            facade.subscribe('alerts', 'notifications:change', this.updateAlertsMenuItem);
+            facade.subscribe('alerts', 'notifications:change', this, 'updateAlertsMenuItem');
 
             // create page
             this.pageCreate();
