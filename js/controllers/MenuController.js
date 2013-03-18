@@ -9,8 +9,6 @@ function(utils, MenuView) {
 
         function MenuController() {}
 
-        var database, searchDetailsModel, locationModel;
-
         MenuController.prototype.init = function() {};
 
         MenuController.prototype.navigate = function() {
