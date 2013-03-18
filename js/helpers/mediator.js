@@ -1,11 +1,12 @@
-define(function () {
+define([],
+function () {
 
     'use strict';
 
 
     var channels = {};
 
-    function subscribe(channel, subscription, callback, condition) {
+    function subscribe(channel, subscription, controller, action, condition) {
         if ( !channels[channel] ) {
             channels[channel] = [];
         }
@@ -14,8 +15,8 @@ define(function () {
             channels[channel][subscription] = [];
         }
 
-        if (typeof callback !== 'function') {
-            window.console && window.console.error('Error: The argument "callback" is undefined for call to facade.subscribe('+channel+', '+subscription+').');
+        if (typeof controller[action] !== 'function') {
+            window.console && window.console.error('Error: The argument for "controller['+action+']" is undefined for call to facade.subscribe('+channel+', '+subscription+').');
             return this;
         }
 
@@ -24,8 +25,9 @@ define(function () {
         }
 
         channels[channel][subscription].push({
-            callback : callback,
-            condition: condition
+            action    : action,
+            controller: controller,
+            condition : condition
         });
 
         return this;
@@ -42,10 +44,11 @@ define(function () {
 
         for (var i = 0, l = channels[channel][subscription].length; i < l; i++) {
             var subscriber = channels[channel][subscription][i],
+                callback   = subscriber.controller[subscriber.action],
                 condition  = subscriber.condition;
 
             if (condition.apply(null, args) === true) {
-                subscriber.callback.apply(null, args);
+                callback.apply(subscriber.controller, args);
             }
         }
 

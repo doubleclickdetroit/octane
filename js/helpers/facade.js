@@ -4,15 +4,31 @@ function(utils, mediator, permissions) {
     'use strict';
 
 
-    function subscribe(channel, subscription, callback, condition) {
+    function subscribe(channel, subscription, controller, action, condition) {
+        if (controller === undefined) {
+            window.console && window.console.error('facade.subscribe is expecting 3rd argument "controller" to be defined.');
+        }
+        if (action === undefined) {
+            window.console && window.console.error('facade.subscribe is expecting 4th argument "action" to be defined.');
+        }
+
         if (permissions.validate(channel, subscription)) {
-            mediator.subscribe(channel, subscription, callback, condition);
+            mediator.subscribe(channel, subscription, controller, action, condition);
         }
     }
 
-    function subscribeTo(channel) {
-        return function(subscription, callback, condition) {
-            subscribe(channel, subscription, callback, condition);
+    function subscribeTo(channel, controller) {
+        if (channel === undefined) {
+            window.console && window.console.error('facade.subscribeTo is expecting 1st argument "channel" to be defined.');
+        }
+        if (controller === undefined) {
+            window.console && window.console.error('facade.subscribeTo is expecting 2nd argument "controller" to be defined.');
+        }
+
+        return function(subscription, action, condition) {
+            if (action && utils.isFn(controller[action])) {
+                subscribe(channel, subscription, controller, action, condition);
+            }
         };
     }
 
