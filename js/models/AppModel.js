@@ -17,7 +17,9 @@ function(_, globals, Backbone) {
             'cordova'     : null,
             'deviceId'    : 'Unknown',
             'screenType'  : 'Unknown',
-            'buildVersion': 'Unknown'
+            'buildVersion': 'Unknown',
+            'appOpenCount': null,
+            'isAppRated'  : null
         },
 
         initialize: function() {
@@ -29,6 +31,46 @@ function(_, globals, Backbone) {
             	'screenType'  : this.getScreenType(),
             	'buildVersion': globals.APP.VERSION
             }));
+            
+            // Fetch to sync the model with the local database
+        	this.fetch();
+            
+        	// Increment the App Open Count
+            if (this.get('appOpenCount') != null) {
+            	this.set('appOpenCount', parseInt(this.get('appOpenCount')) + 1);
+            	
+            	// Set the ID so it's clear this model is NOT New
+            	this.set('id', 1);
+            }
+            
+            this.save();	
+        },
+        
+        sync: function (method, model, options) {
+        	switch (method) {
+	            case 'update':
+	            	localStorage.setItem(globals.RATE_IT.APPLICATION_COUNT, model.get('appOpenCount'));
+	                localStorage.setItem(globals.RATE_IT.IS_RATED, model.get('isAppRated'));
+	                break;
+	            case 'create':
+	                localStorage.setItem(globals.RATE_IT.APPLICATION_COUNT, 1);
+	                localStorage.setItem(globals.RATE_IT.IS_RATED, null);
+	                // fall through to execute the read case as well
+	            case 'read':
+	            	model.set({
+	                    'appOpenCount': localStorage.getItem(globals.RATE_IT.APPLICATION_COUNT),
+	                    'isAppRated'  : localStorage.getItem(globals.RATE_IT.IS_RATED)
+	                });
+	                break;
+	            case 'delete':
+	                break;
+	        }
+	                                 
+	        // make sure the model is in sync with the local database
+	        model.set({
+	           'appOpenCount': localStorage.getItem(globals.RATE_IT.APPLICATION_COUNT),
+	           'isAppRated'  : localStorage.getItem(globals.RATE_IT.IS_RATED)
+	        });
         },
         
         /*

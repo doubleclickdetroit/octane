@@ -1,5 +1,5 @@
-define([ 'jquery', 'underscore', 'backbone', 'facade' ],
-function($, _, Backbone, facade) {
+define([ 'jquery', 'underscore', 'backbone', 'facade', 'globals' ],
+function($, _, Backbone, facade, globals) {
 
     'use strict';
 
@@ -10,17 +10,17 @@ function($, _, Backbone, facade) {
             'click [data-internal]': 'delegateBeforeNavigate'
         },
 
-        initialize: function(options) {
+        initialize: function (options) {
             this.render();
             this.setupBackboneLoadingIndicators();
         },
 
-        render: function(display) {
+        render: function (display) {
             display = display || false;
             return this.$el.toggleClass('ui-hidden', display);
         },
 
-        setupBackboneLoadingIndicators: function() {
+        setupBackboneLoadingIndicators: function () {
             // cache initialize method
             var init = Backbone.View.prototype.initialize;
 
@@ -39,7 +39,7 @@ function($, _, Backbone, facade) {
             }
 
             // the initialize method inherited by subclasses
-            Backbone.View.prototype.initialize = function() {
+            Backbone.View.prototype.initialize = function () {
                 if (this.model)      this.model.on('all', toggleLoader, this);
                 if (this.collection) this.collection.on('all', toggleLoader, this);
 
@@ -47,7 +47,7 @@ function($, _, Backbone, facade) {
             };
 
             // Backbone.View convenience methods
-            Backbone.View.prototype.showLoadingIndicator = function(checkView) {
+            Backbone.View.prototype.showLoadingIndicator = function (checkView) {
                 if (checkView === true) {
                     handleLoader.call(this, true);
                 }
@@ -55,7 +55,7 @@ function($, _, Backbone, facade) {
                     $.mobile.showPageLoadingMsg();
                 }
             };
-            Backbone.View.prototype.hideLoadingIndicator = function(checkView) {
+            Backbone.View.prototype.hideLoadingIndicator = function (checkView) {
                 if (checkView === true) {
                     handleLoader.call(this, false);
                 }
@@ -68,7 +68,7 @@ function($, _, Backbone, facade) {
         /*
          * Public Methods
         */
-        displayAlert: function(message, callback, btnLabel, title) {
+        displayAlert: function (message, callback, btnLabel, title) {
             callback = $.isFunction(callback) ? callback : function(){};
             title = title === undefined ? ' ' : title;
 
@@ -80,7 +80,7 @@ function($, _, Backbone, facade) {
             }
         },
 
-        displayConfirm: function(message, callback, btnLabels, title) {
+        displayConfirm: function (message, callback, btnLabels, title) {
             callback = $.isFunction(callback) ? callback : function(){};
             title = title === undefined ? ' ' : title;
 
@@ -92,11 +92,40 @@ function($, _, Backbone, facade) {
                 callback(response);
             }
         },
+        
+        promptToRateIt: function () {
+            var self = this;
+                                        
+            facade.publish('app', 'confirm'
+                , globals.RATE_IT.MESSAGE      // message
+                /* callback */
+                , function (button) {
+                
+                    // yes = 1, no = 2, later = 3
+                    if (button == '1') {    // Rate Now
+                        // navigate to the app in iTunes
+                    	window.location.href = globals.RATE_IT.URL_IOS;
+                        
+                        self.model.set('isAppRated', self.model.get('buildVersion')); 
+                    }
+                    else if (button == '2') { // Later
+                        self.model.set('isAppRated', globals.RATE_IT.LATER);
+                    }
+                    else if (button == '3') { // No
+                        self.model.set('isAppRated', globals.RATE_IT.NO_THANKS);
+                    }
+                    
+                    self.model.save();
+                }
+                , globals.RATE_IT.BUTTON_NAMES // buttons
+                , globals.RATE_IT.TITLE        // title
+            );
+        },
 
         /*
          * Event Handlers
         */
-        delegateBeforeNavigate: function(evt) {
+        delegateBeforeNavigate: function (evt) {
             evt.preventDefault();
             var pathname = $(evt.target).attr('href');
             facade.publish('app', 'beforeNavigate', pathname);
