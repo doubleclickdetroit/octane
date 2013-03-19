@@ -8,7 +8,8 @@ function(facade, controller) {
      * FuelSites Subscribers
     */
     //
-    facade.subscribe('fuelsites', 'navigate', controller, 'navigate');
+    facade.subscribe('fuelsites', 'navigate',         controller, 'navigate');
+    facade.subscribe('fuelsites', 'selectedFuelSite', controller, 'showFuelSite');
 
 
     /*

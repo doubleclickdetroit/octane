@@ -1,5 +1,5 @@
-define([ 'globals', 'utils', 'views/FuelSitesView', 'collections/FuelSitesCollection' ],
-function(globals, utils, FuelSitesView, FuelSitesCollection) {
+define([ 'globals', 'utils', 'views/DirectionsView', 'views/FuelSitesView', 'collections/FuelSitesCollection' ],
+function(globals, utils, DirectionsView, FuelSitesView, FuelSitesCollection) {
 
     'use strict';
 
@@ -7,38 +7,42 @@ function(globals, utils, FuelSitesView, FuelSitesCollection) {
     var FuelSitesController;
     FuelSitesController = (function() {
 
-        var fuelSitesCollection, fuelSitesView;
+        var fuelSitesCollection, fuelSitesView, directionsView;
+
 
         function FuelSitesController() {}
-
         FuelSitesController.prototype.init = function() {
             // cache & instantiate View and Collection
-            fuelSitesView       = new FuelSitesView();
             fuelSitesCollection = new FuelSitesCollection();
+
+            directionsView = new DirectionsView();
+
+            fuelSitesView = new FuelSitesView({
+                collection: fuelSitesCollection
+            });
         };
 
         FuelSitesController.prototype.navigate = function() {
-            utils.changePage('#fuelsites', null, true);
+            utils.changePage('#fuelsites');
         };
 
         FuelSitesController.prototype.getFuelSites = function(criteria) {
             if (criteria.viewMode === globals.fuelsites.constants.VIEW_MODE) {
-
-                // listen for when collection receives the fuelsites
-                fuelSitesCollection.once('reset', function(collection) {
-                    // render search criteria & fuelsites
-                    fuelSitesView.render(criteria, collection.toJSON());
-
-                    // hide the loading indicator
-                    this.loadingEnd(false);
-                }, this);
-
                 // display loading indicator
                 this.loadingBegin(true);
 
-                // based on criteria, fetch new fuelsites
-                fuelSitesCollection.fetch(criteria);
+                fuelSitesCollection
+                    // hide the loading indicator
+                    .once('reset', function() { this.loadingEnd(false) }, this)
+                    // fetch new fuelsites with criteria
+                    .fetch(criteria);
             }
+        };
+
+        FuelSitesController.prototype.showFuelSite = function(fuelsiteId) {
+            var fuelSiteModel = fuelSitesCollection.get(fuelsiteId);
+            utils.changePage('#directions', null, null, true); // update hash
+            directionsView.render(fuelSiteModel);
         };
 
         FuelSitesController.prototype.loadingBegin = function(checkView) {
