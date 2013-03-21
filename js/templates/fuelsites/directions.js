@@ -21,7 +21,7 @@
 <ul data-role="listview" data-theme="c" data-dividertheme="d">
     {{#steps}}
     <li data-icon="speaker" style="padding:10px 0px;">
-        <a href="#">
+        <a href="#" class="text-to-speech">
             <div class="ui-grid-b direction-page-list">
                 <div class="ui-block-a">1</div>
                 <div class="ui-block-b">

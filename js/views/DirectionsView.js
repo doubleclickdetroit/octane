@@ -9,7 +9,7 @@ function($, _, globals, facade, Backbone, Mustache, tmpl_directions) {
         el: $('#directions'),
 
         events: {
-            'click a': 'handleDirectionTextToSpeech'
+            'click a.text-to-speech': 'handleDirectionTextToSpeech'
         },
 
         initialize: function() {
