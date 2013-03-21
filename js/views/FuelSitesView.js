@@ -14,16 +14,19 @@ function($, _, globals, facade, Backbone, Mustache, FuelSiteView, tmpl_header, t
         tmpl_dialog  : Mustache.compile(tmpl_dialog),
 
         events: {
-            'click #btn-save': 'displaySaveDialog',
-            'click #btn-sort': 'displaySortDialog'
+            'click .btn-save': 'displaySaveDialog',
+            'click .btn-sort': 'displaySortDialog'
         },
 
-        initialize: function() {
+        initialize: function(options) {
             // call super
             this.constructor.__super__.initialize.apply(this, arguments);
 
             // set context for methods
             _.bindAll(this, 'pageInit');
+
+            // cache criteriaModel
+            this.criteriaModel = options.criteriaModel;
 
             // collection events
             this.listenTo(this.collection, 'reset', this.render);
@@ -33,6 +36,10 @@ function($, _, globals, facade, Backbone, Mustache, FuelSiteView, tmpl_header, t
 
             // create page
             this.pageCreate();
+
+            // cache $criteria & $list
+            this.$criteria = this.$el.find('.searchtext');
+            this.$list     = this.$el.find('#fuelStationsList');
         },
 
         pageCreate: function() {
@@ -43,21 +50,23 @@ function($, _, globals, facade, Backbone, Mustache, FuelSiteView, tmpl_header, t
             this.$el.find(':jqmData(role=content)').append(Mustache.render(tmpl_fuelsites));
         },
 
-        render: function(collection) {
-            // empty the list
-            var $list = this.$el.find('#fuelStationsList').empty();
+        render: function() {
+            // empty $list
+            this.$list.empty();
 
-            collection.each(function(fuelsite) {
-                var fuelsiteView = new FuelSiteView({
-                    model: fuelsite
-                });
+            // populate $list
+            this.collection.each(function(fuelsite) {
+                var fuelsiteView = new FuelSiteView({model: fuelsite}).render();
+                this.$list.append(fuelsiteView.$el); // add fuelsite to the list
+            }, this);
 
-                // add fuelsite to the list
-                $list.append(fuelsiteView.render().$el);
-            });
+            // render $criteria
+            this.$criteria.html(this.tmpl_criteria(
+                this.criteriaModel.toJSON()
+            ));
 
-            // render the list
-            $list.listview('refresh');
+            // render $list
+            this.$list.listview('refresh');
         },
 
         /*

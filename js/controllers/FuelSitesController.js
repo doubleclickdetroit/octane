@@ -1,5 +1,5 @@
-define([ 'globals', 'utils', 'backbone', 'views/DirectionsView', 'views/FuelSitesView', 'collections/FuelSitesCollection' ],
-function(globals, utils, Backbone, DirectionsView, FuelSitesView, FuelSitesCollection) {
+define([ 'globals', 'utils', 'backbone', 'views/FuelSitesMapView', 'views/DirectionsView', 'views/FuelSitesView', 'collections/FuelSitesCollection' ],
+function(globals, utils, Backbone, FuelSitesMapView, DirectionsView, FuelSitesView, FuelSitesCollection) {
 
     'use strict';
 
@@ -7,22 +7,27 @@ function(globals, utils, Backbone, DirectionsView, FuelSitesView, FuelSitesColle
     var FuelSitesController;
     FuelSitesController = (function() {
 
-        var searchCriteriaModel, fuelSitesCollection, fuelSitesView, directionsView;
+        var searchCriteriaModel, fuelSitesCollection, fuelSitesView, fuelSitesMapView, directionsView;
 
 
         function FuelSitesController() {}
         FuelSitesController.prototype.init = function() {
-            // cache & instantiate View and Collection
+            // cache & instantiate View, Model and Collection
             searchCriteriaModel = new Backbone.Model();
 
             fuelSitesCollection = new FuelSitesCollection();
+
+            fuelSitesMapView = new FuelSitesMapView({
+                model: searchCriteriaModel
+            });
 
             directionsView = new DirectionsView({
                 model: searchCriteriaModel
             });
 
             fuelSitesView = new FuelSitesView({
-                collection: fuelSitesCollection
+                collection   : fuelSitesCollection,
+                criteriaModel: searchCriteriaModel
             });
         };
 
@@ -57,6 +62,10 @@ function(globals, utils, Backbone, DirectionsView, FuelSitesView, FuelSitesColle
                 .done(directionsView.render)      // render directions
                 .fail(directionsView.handleError) // handle failure
                 .fail(this.navigate)              // redirect to fuelsites
+        };
+
+        FuelSitesController.prototype.showMap = function() {
+            //
         };
 
         FuelSitesController.prototype.loadingBegin = function(checkView) {

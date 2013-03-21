@@ -1,1 +1,1 @@
-{{criteria.brand}} {{criteria.fuelType}} <br> in {{criteria.radius}} miles by {{criteria.sortBy}}
+{{brand}} {{fuelType}} <br> in {{radius}} miles by {{sortBy}}
