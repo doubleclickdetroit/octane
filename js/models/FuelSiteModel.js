@@ -18,14 +18,6 @@ function(utils, globals, Backbone) {
 
         FuelSiteModel.prototype.initialize = function() {
             this.formatAttributes();
-
-            // set the origin location attributes
-            this.set({
-                'origination': {
-                    'latitude' : this.origination.latitude,
-                    'longitude': this.origination.longitude
-                }
-            });
         };
 
         FuelSiteModel.prototype.formatAttributes = function() {

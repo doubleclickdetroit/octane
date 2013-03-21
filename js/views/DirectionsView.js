@@ -35,7 +35,7 @@ function($, _, globals, facade, Backbone, Mustache, tmpl_directions) {
 
             // update request object
             _.extend(this.request, {
-                'origin'     : new this.LatLng(fuelSiteModel.origination.latitude, fuelSiteModel.origination.longitude),
+                'origin'     : new this.LatLng(this.model.get('latitude'), this.model.get('longitude')),
                 'destination': new this.LatLng(fuelSiteModel.location.latitude, fuelSiteModel.location.longitude)
             });
 
@@ -47,7 +47,9 @@ function($, _, globals, facade, Backbone, Mustache, tmpl_directions) {
                         'route'  : response.routes[0].legs[0]
                     });
                 }
-                else deferred.reject('Route lookup failed.');
+                else {
+                    deferred.reject('Route lookup failed.');
+                }
             });
 
             // return promisary object

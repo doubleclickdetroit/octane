@@ -1,5 +1,5 @@
-define([ 'globals', 'utils', 'views/DirectionsView', 'views/FuelSitesView', 'collections/FuelSitesCollection' ],
-function(globals, utils, DirectionsView, FuelSitesView, FuelSitesCollection) {
+define([ 'globals', 'utils', 'backbone', 'views/DirectionsView', 'views/FuelSitesView', 'collections/FuelSitesCollection' ],
+function(globals, utils, Backbone, DirectionsView, FuelSitesView, FuelSitesCollection) {
 
     'use strict';
 
@@ -7,15 +7,19 @@ function(globals, utils, DirectionsView, FuelSitesView, FuelSitesCollection) {
     var FuelSitesController;
     FuelSitesController = (function() {
 
-        var fuelSitesCollection, fuelSitesView, directionsView;
+        var searchCriteriaModel, fuelSitesCollection, fuelSitesView, directionsView;
 
 
         function FuelSitesController() {}
         FuelSitesController.prototype.init = function() {
             // cache & instantiate View and Collection
+            searchCriteriaModel = new Backbone.Model();
+
             fuelSitesCollection = new FuelSitesCollection();
 
-            directionsView = new DirectionsView();
+            directionsView = new DirectionsView({
+                model: searchCriteriaModel
+            });
 
             fuelSitesView = new FuelSitesView({
                 collection: fuelSitesCollection
@@ -26,9 +30,14 @@ function(globals, utils, DirectionsView, FuelSitesView, FuelSitesCollection) {
             utils.changePage('#fuelsites');
         };
 
-        FuelSitesController.prototype.indexFuelSites = function(criteria) {
-            if (criteria.viewMode === globals.fuelsites.constants.VIEW_MODE) {
+        FuelSitesController.prototype.updateCriteria = function(criteria) {
+            searchCriteriaModel.set(criteria);
+            this.indexFuelSites();
+        };
 
+        FuelSitesController.prototype.indexFuelSites = function() {
+            var criteria = searchCriteriaModel.toJSON();
+            if (criteria.viewMode === globals.fuelsites.constants.VIEW_MODE) {
                 this.loadingBegin();                      // show inidicator before request
                 fuelSitesCollection
                     .once('reset', this.loadingEnd, this) // hide indicator at end of request

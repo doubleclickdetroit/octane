@@ -41,19 +41,8 @@ function(_, utils, globals, Backbone, FuelSiteModel) {
         };
 
         FuelSitesCollection.prototype.sync = function(method, model, options) {
-            // handle the read method
-            if (method === 'read') {
-
-                // retain original location
-                FuelSiteModel.prototype.origination = {
-                    'latitude' : options.latitude,
-                    'longitude': options.longitude
-                };
-
-                // construct url
-                this.url = makeURL(options);
-            }
-
+            // handle the read method & construct url
+            if (method === 'read') this.url = makeURL(options);
             Backbone.sync.apply(this, arguments);
         };
 
