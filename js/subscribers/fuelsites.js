@@ -20,11 +20,13 @@ function(facade, controller) {
     /*
      * Criteria Subscribers
     */
-    facade.subscribe('criteria', 'change',       controller, 'indexFuelSites');
+    facade.subscribe('criteria', 'change',       controller, 'updateCriteria');
     facade.subscribe('criteria', 'loadingbegin', controller, 'loadingBegin');
 
 
     return {
-        init: controller.init
+        init: function() {
+            controller.init();
+        }
     };
 });
