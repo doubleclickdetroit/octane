@@ -1,4 +1,4 @@
-define([ 'jquery', 'underscore', 'backbone', './globals' ],
+define([ 'jquery', 'underscore', 'backbone', './globals', 'plugin-timeago' ],
 function($, _, Backbone, globals) {
 
     'use strict';
@@ -40,6 +40,16 @@ function($, _, Backbone, globals) {
      * Is Plain Object Helper Method
     */
     utils.isPlainObject = utils.$.isPlainObject;
+
+    /*
+     * Is Deferred Helper Method
+    */
+    utils.when = utils.$.when;
+
+    /*
+     * jQuery Timeago Plugin convenience method
+    */
+    utils.timeago = utils.$.timeago;
 
     /*
      * Extend Classes
