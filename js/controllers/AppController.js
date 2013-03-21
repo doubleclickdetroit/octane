@@ -31,6 +31,13 @@ function(AppRouter, AppView) {
             appView.displayConfirm.apply(null, arguments);
         };
 
+        AppController.prototype.textToSpeech = function(text) {
+            // assign tts plugin
+            // tts.stop();
+            // tts.speak(text);
+            console.log('textToSpeech:', text);
+        };
+
         return AppController;
     })();
 
