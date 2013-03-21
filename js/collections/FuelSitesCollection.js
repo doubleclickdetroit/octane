@@ -1,5 +1,5 @@
-define([ 'utils', 'globals', 'backbone', 'models/FuelSiteModel' ],
-function(utils, globals, Backbone, FuelSiteModel) {
+define([ 'underscore', 'utils', 'globals', 'backbone', 'models/FuelSiteModel' ],
+function(_, utils, globals, Backbone, FuelSiteModel) {
 
     'use strict';
 
@@ -42,7 +42,18 @@ function(utils, globals, Backbone, FuelSiteModel) {
 
         FuelSitesCollection.prototype.sync = function(method, model, options) {
             // handle the read method
-            if (method === 'read') this.url = makeURL(options);
+            if (method === 'read') {
+
+                // retain original location
+                FuelSiteModel.prototype.origination = {
+                    'latitude' : options.latitude,
+                    'longitude': options.longitude
+                };
+
+                // construct url
+                this.url = makeURL(options);
+            }
+
             Backbone.sync.apply(this, arguments);
         };
 

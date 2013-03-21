@@ -1,5 +1,5 @@
-define([ 'jquery', 'utils', 'globals', 'backbone', 'plugin-timeago' ],
-function($, utils, globals, Backbone) {
+define([ 'utils', 'globals', 'backbone' ],
+function(utils, globals, Backbone) {
 
     'use strict';
 
@@ -17,6 +17,18 @@ function($, utils, globals, Backbone) {
         }
 
         FuelSiteModel.prototype.initialize = function() {
+            this.formatAttributes();
+
+            // set the origin location attributes
+            this.set({
+                'origination': {
+                    'latitude' : this.origination.latitude,
+                    'longitude': this.origination.longitude
+                }
+            });
+        };
+
+        FuelSiteModel.prototype.formatAttributes = function() {
             // add new formatted attributes
             this.set('format_ppg', function() {
                 var ppg = this.ppg;
@@ -30,7 +42,11 @@ function($, utils, globals, Backbone) {
             });
             this.set('format_time', function() {
                 var time = this.transactionTime;
-                return (this.ppg && time) ? $.timeago(new Date(parseInt(time))) : 'Unavailable';
+                return (this.ppg && time) ? utils.timeago(new Date(parseInt(time))) : 'Unavailable';
+            });
+            this.set('format_telephone', function() {
+                var phone = this.telephone;
+                return phone ? phone.replace(/-/,'') : '';
             });
         };
 

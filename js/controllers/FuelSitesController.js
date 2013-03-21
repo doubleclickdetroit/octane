@@ -26,35 +26,44 @@ function(globals, utils, DirectionsView, FuelSitesView, FuelSitesCollection) {
             utils.changePage('#fuelsites');
         };
 
-        FuelSitesController.prototype.getFuelSites = function(criteria) {
+        FuelSitesController.prototype.indexFuelSites = function(criteria) {
             if (criteria.viewMode === globals.fuelsites.constants.VIEW_MODE) {
-                // display loading indicator
-                this.loadingBegin(true);
 
+                this.loadingBegin();                      // show inidicator before request
                 fuelSitesCollection
-                    // hide the loading indicator
-                    .once('reset', function() { this.loadingEnd(false) }, this)
-                    // fetch new fuelsites with criteria
-                    .fetch(criteria);
+                    .once('reset', this.loadingEnd, this) // hide indicator at end of request
+                    .fetch(criteria);                     // fetch new fuelsites with criteria
             }
         };
 
         FuelSitesController.prototype.showFuelSite = function(fuelsiteId) {
             var fuelSiteModel = fuelSitesCollection.get(fuelsiteId);
             utils.changePage('#directions', null, null, true); // update hash
-            directionsView.render(fuelSiteModel);
+
+            this.loadingBegin(); // show indicator before requeset
+
+            // request directions
+            utils.when(directionsView.requestDirections(fuelSiteModel.toJSON()))
+                .always(this.loadingEnd)          // hide indicator at end of request
+                .done(directionsView.render)      // render directions
+                .fail(directionsView.handleError) // handle failure
+                .fail(this.navigate)              // redirect to fuelsites
         };
 
         FuelSitesController.prototype.loadingBegin = function(checkView) {
             // show loader if active view is fuelSitesView
             checkView = checkView === undefined ? true : checkView;
+
             fuelSitesView.showLoadingIndicator(checkView);
+            directionsView.showLoadingIndicator(checkView);
         };
 
         FuelSitesController.prototype.loadingEnd = function(checkView) {
             // hide loader if active view is fuelSitesView
-            checkView = checkView === undefined ? true : checkView;
+            checkView = checkView === undefined ? false : checkView;
+
             fuelSitesView.hideLoadingIndicator(checkView);
+            directionsView.hideLoadingIndicator(checkView);
         };
 
         return FuelSitesController;
