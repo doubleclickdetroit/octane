@@ -11,22 +11,21 @@ function(utils, Backbone, globals) {
          * Private Methods
         */
         function requestUsingDefaultCriteria(deferred) {
-                     
-            var self = this;
-
             // resolve with context and args
-            deferred.resolveWith(self, [{
+            deferred.resolveWith(this, [{
                 'location': globals.forecast.constants.LOCATION,
                 'fuelType': globals.forecast.constants.FUEL_TYPE
             }]);
         }
 
         function requestUsingFuelSiteSearchCriteria(deferred) {
-        
-            // TODO
-        
+            // resolve with context and args
+            deferred.resolveWith(this, [{
+                'location': this.criteriaModel.get('location'),
+                'fuelType': this.criteriaModel.get('fuelType')
+            }]);
         }
-         
+
         function sanitizeAttributes(attrs) {
             var GRADES   = globals.forecast.configuration.fuelType,
                 fuelType = false;
@@ -79,6 +78,10 @@ function(utils, Backbone, globals) {
             'fuelType' : globals.forecast.constants.FUEL_TYPE
         };
 
+        ForecastModel.prototype.initialize = function(options) {
+            this.criteriaModel = options.criteriaModel;
+        };
+
         /*
          * Public Methods
         */
@@ -87,7 +90,7 @@ function(utils, Backbone, globals) {
             var deferred = utils.$.Deferred();
 
             // respond to promisary-object
-            utils.$.when(deferred.promise())
+            utils.when(deferred.promise())
              .then(this.saveAttributes)
              .done(callback);
 
@@ -125,7 +128,7 @@ function(utils, Backbone, globals) {
             this.set(sanitizeAttributes(attrs));
 
             // respond to promisary-object
-            utils.$.when(deferred.promise())
+            utils.when(deferred.promise())
              .progress(this.set)
              .done(this.set);
 
