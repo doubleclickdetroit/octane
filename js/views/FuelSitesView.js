@@ -1,4 +1,4 @@
-define([ 'jquery', 'underscore', 'globals', 'facade', 'backbone', 'mustache', 'views/FuelSiteView', 'text!tmpl/fuelsites/header', 'text!tmpl/fuelsites/fuelsites', 'text!tmpl/fuelsites/search-criteria', 'text!tmpl/fuelsites/dialog', 'plugin-dialog' ],
+define([ 'jquery', 'underscore', 'globals', 'facade', 'backbone', 'mustache', 'views/FuelSiteView', 'text!tmpl/fuelsites/header', 'text!tmpl/fuelsites/fuelsites', 'text!tmpl/fuelsites/criteria', 'text!tmpl/fuelsites/dialog', 'plugin-dialog' ],
 function($, _, globals, facade, Backbone, Mustache, FuelSiteView, tmpl_header, tmpl_fuelsites, tmpl_criteria, tmpl_dialog) {
 
     'use strict';
