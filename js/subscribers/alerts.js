@@ -21,6 +21,8 @@ function(facade, controller) {
 
 
     return {
-        init: controller.init
+        init: function() {
+            controller.init();
+        }
     };
 });
