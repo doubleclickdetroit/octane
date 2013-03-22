@@ -9,7 +9,11 @@ function (utils, InfoView, InfoModel, AppModel) {
 
         var infoView, infoModel;
 
-        function init() {
+        /***********************************************************************
+         * Constructor
+        ***********************************************************************/
+        function InfoController() {}
+        InfoController.prototype.init = function() {
             // create model
             infoModel = new InfoModel(null, {
                 device: AppModel.getInstance().toJSON()
@@ -19,18 +23,18 @@ function (utils, InfoView, InfoModel, AppModel) {
             infoView = new InfoView({
                 model: infoModel
             });
-        }
-
-        function navigate() {
-            utils.changePage(infoView.$el);
-        }
-
-        return {
-            init    : init,
-            navigate: navigate
         };
+
+        /*
+         * Public Methods
+        */
+        InfoController.prototype.navigate = function() {
+            utils.changePage(infoView.$el);
+        };
+
+        return InfoController;
     })();
 
 
-    return InfoController;
+    return new InfoController();
 });

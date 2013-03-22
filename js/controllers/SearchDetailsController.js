@@ -9,8 +9,10 @@ function(SearchDetailsModel) {
 
         var searchDetailsModel;
 
+        /***********************************************************************
+         * Constructor
+        ***********************************************************************/
         function SearchDetailsController() {}
-
         SearchDetailsController.prototype.init = function(delegate) {
             searchDetailsModel = new SearchDetailsModel();
 
@@ -21,6 +23,9 @@ function(SearchDetailsModel) {
             searchDetailsModel.once('change', searchDetailsModel.fetch);
         };
 
+        /*
+         * Public Methods
+        */
         SearchDetailsController.prototype.updateAttributes = function(attributes) {
             searchDetailsModel.set(attributes);
         };

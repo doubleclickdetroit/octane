@@ -9,10 +9,11 @@ function (utils, facade, FeedbackView, FeedbackModel, AppModel) {
 
         var feedbackView, feedbackModel;
 
-        /*
-         * Public Methods
-        */
-        function init() {
+        /***********************************************************************
+         * Constructor
+        ***********************************************************************/
+        function FeedbackController() {}
+        FeedbackController.prototype.init = function() {
             // create model
             feedbackModel = new FeedbackModel(null, {
                 device: AppModel.getInstance().toJSON()
@@ -22,39 +23,35 @@ function (utils, facade, FeedbackView, FeedbackModel, AppModel) {
             feedbackView = new FeedbackView({
                 model: feedbackModel
             });
-        }
+        };
 
-        function navigate() {
+        /*
+         * Public Methods
+        */
+        FeedbackController.prototype.navigate = function() {
             utils.changePage(feedbackView.$el);
-        }
+        };
 
-        function updateAttribute(id, val) {
+        FeedbackController.prototype.updateAttribute = function(id, val) {
         	feedbackModel.updateAttribute(id, val);
-        }
+        };
 
-        function saveAttributes() {
+        FeedbackController.prototype.saveAttributes = function() {
             feedbackModel.saveAttributes();
-        }
+        };
 
-        function handleSaveSuccess() {
+        FeedbackController.prototype.handleSaveSuccess = function() {
         	feedbackView.displaySubmitConfirmation();
-        }
+        };
 
-        function handleDismissConfirmation() {
+        FeedbackController.prototype.handleDismissConfirmation = function() {
         	// on dismiss navigate back to Settings
         	facade.publish('settings', 'navigate');
-        }
-
-        return {
-            init: init,
-            navigate: navigate,
-            updateAttribute: updateAttribute,
-            saveAttributes: saveAttributes,
-            handleSaveSuccess: handleSaveSuccess,
-            handleDismissConfirmation: handleDismissConfirmation
         };
+
+        return FeedbackController;
     })();
 
 
-    return FeedbackController;
+    return new FeedbackController();
 });

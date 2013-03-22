@@ -7,10 +7,15 @@ function(utils, MenuView) {
     var MenuController;
     MenuController = (function() {
 
+        /***********************************************************************
+         * Constructor
+        ***********************************************************************/
         function MenuController() {}
-
         MenuController.prototype.init = function() {};
 
+        /*
+         * Public Methods
+        */
         MenuController.prototype.navigate = function() {
             utils.changePage('#menu', null, true);
         };

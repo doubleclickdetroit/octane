@@ -9,20 +9,24 @@ function(utils, SettingsView) {
 
         var settingsView;
 
-        function init() {
+        /***********************************************************************
+         * Constructor
+        ***********************************************************************/
+        function SettingsController() {}
+        SettingsController.prototype.init = function() {
             settingsView = new SettingsView();
         };
 
-        function navigate() {
-            utils.changePage(settingsView.$el, null, null, true);
+        /*
+         * Public Methods
+        */
+        SettingsController.prototype.navigate = function() {
+            utils.changePage(settingsView.$el);
         };
 
-        return {
-            init    : init,
-            navigate: navigate
-        }
+        return SettingsController;
     })();
 
 
-    return SettingsController;
+    return new SettingsController();
 });

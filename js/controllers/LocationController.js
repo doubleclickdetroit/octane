@@ -9,13 +9,18 @@ function(LocationModel) {
 
         var locationModel;
 
+        /***********************************************************************
+         * Constructor
+        ***********************************************************************/
         function LocationController() {}
-
         LocationController.prototype.init = function(delegate) {
             locationModel = new LocationModel();
             locationModel.on('all', delegate);
         };
 
+        /*
+         * Public Methods
+        */
         LocationController.prototype.locateFromAddress = function(address) {
             locationModel
                 .set(locationModel.defaults, {silent:true})

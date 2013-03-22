@@ -10,6 +10,9 @@ function(globals, utils, Backbone, FuelSitesMapView, DirectionsView, FuelSitesVi
         var searchCriteriaModel, fuelSitesCollection, fuelSitesView, fuelSitesMapView, directionsView;
 
 
+        /***********************************************************************
+         * Constructor
+        ***********************************************************************/
         function FuelSitesController() {}
         FuelSitesController.prototype.init = function() {
             // cache & instantiate View, Model and Collection
@@ -31,8 +34,11 @@ function(globals, utils, Backbone, FuelSitesMapView, DirectionsView, FuelSitesVi
             });
         };
 
+        /*
+         * Public Methods
+        */
         FuelSitesController.prototype.navigate = function() {
-            utils.changePage('#fuelsites', null, null, true); // update hash
+            utils.changePage(fuelSitesView.$el, null, null, true); // update hash
         };
 
         FuelSitesController.prototype.updateCriteria = function(criteria) {

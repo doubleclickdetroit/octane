@@ -9,8 +9,10 @@ function(AppRouter, AppView, AppModel, globals) {
 
         var appRouter, appView, appModel;
 
+        /***********************************************************************
+         * Constructor
+        ***********************************************************************/
         function AppController() {}
-        
         AppController.prototype.init = function () {
             appRouter = new AppRouter();
             appModel  = AppModel.getInstance();
@@ -18,10 +20,10 @@ function(AppRouter, AppView, AppModel, globals) {
             	model: appModel,
                 el: document.body
             });
-            
+
             // if the app has been opened a multiple of 10 times
             // and the user hasn't already rated the app or elected to never rate the app
-            if (appModel.get('appOpenCount') % 10 == 0 
+            if (appModel.get('appOpenCount') % 10 == 0
             		&& (0 > $.inArray(appModel.get('isAppRated'), [globals.RATE_IT.NO_THANKS, appModel.get('buildVersion')]))) {
                 appView.promptToRateIt();
             }

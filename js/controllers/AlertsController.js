@@ -9,8 +9,11 @@ function(utils, AlertsView, AlertModel) {
 
         var alertsView, alertModel;
 
-        function init() {
-
+        /***********************************************************************
+         * Constructor
+        ***********************************************************************/
+        function AlertsController() {}
+        AlertsController.prototype.init = function() {
             // create model
             alertModel = new AlertModel();
 
@@ -20,31 +23,25 @@ function(utils, AlertsView, AlertModel) {
             });
         }
 
-        function navigate() {
+        AlertsController.prototype.navigate = function() {
             utils.changePage(alertsView.$el);
         }
 
-        function updateAttribute(id, val) {
+        AlertsController.prototype.updateAttribute = function(id, val) {
             alertModel.updateAttribute(id, val);
         }
 
-        function saveAttributes() {
+        AlertsController.prototype.saveAttributes = function() {
             alertModel.saveAttributes();
         }
 
-        function resetAttributes() {
+        AlertsController.prototype.resetAttributes = function() {
             alertModel.resetAttributes();
         }
 
-        return {
-            init           : init,
-            navigate       : navigate,
-            updateAttribute: updateAttribute,
-            saveAttributes : saveAttributes,
-            resetAttributes: resetAttributes
-        };
+        return AlertsController;
     })();
 
 
-    return AlertsController;
+    return new AlertsController();
 });
