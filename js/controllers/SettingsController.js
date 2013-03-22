@@ -21,7 +21,7 @@ function(utils, SettingsView) {
          * Public Methods
         */
         SettingsController.prototype.navigate = function() {
-            utils.changePage(settingsView.$el);
+            utils.changePage(settingsView.$el, null, null, true); // force updateHash
         };
 
         return SettingsController;
