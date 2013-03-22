@@ -7,7 +7,8 @@ function($, _, Backbone, facade, globals) {
     var AppView = Backbone.View.extend({
 
         events: {
-            'click [data-internal]': 'delegateBeforeNavigate'
+            'click [data-rel=back]': 'handlePageBack',
+            'click [data-internal]': 'delegateBeforeNavigate',
         },
 
         initialize: function (options) {
@@ -92,21 +93,21 @@ function($, _, Backbone, facade, globals) {
                 callback(response);
             }
         },
-        
+
         promptToRateIt: function () {
             var self = this;
-                                        
+
             facade.publish('app', 'confirm'
                 , globals.RATE_IT.MESSAGE      // message
                 /* callback */
                 , function (button) {
-                
+
                     // yes = 1, no = 2, later = 3
                     if (button == '1') {    // Rate Now
                         // navigate to the app in iTunes
                     	window.location.href = globals.RATE_IT.URL_IOS;
-                        
-                        self.model.set('isAppRated', self.model.get('buildVersion')); 
+
+                        self.model.set('isAppRated', self.model.get('buildVersion'));
                     }
                     else if (button == '2') { // Later
                         self.model.set('isAppRated', globals.RATE_IT.LATER);
@@ -114,7 +115,7 @@ function($, _, Backbone, facade, globals) {
                     else if (button == '3') { // No
                         self.model.set('isAppRated', globals.RATE_IT.NO_THANKS);
                     }
-                    
+
                     self.model.save();
                 }
                 , globals.RATE_IT.BUTTON_NAMES // buttons
@@ -125,6 +126,11 @@ function($, _, Backbone, facade, globals) {
         /*
          * Event Handlers
         */
+        handlePageBack: function(evt) {
+            evt.preventDefault();
+            window.history.back();
+        },
+
         delegateBeforeNavigate: function (evt) {
             evt.preventDefault();
             var pathname = $(evt.target).attr('href');
