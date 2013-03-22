@@ -1,5 +1,5 @@
-define([ 'utils', 'views/ForecastView', 'models/ForecastModel' ],
-function(utils, ForecastView, ForecastModel) {
+define([ 'utils', 'backbone', 'views/ForecastView', 'models/ForecastModel' ],
+function(utils, Backbone, ForecastView, ForecastModel) {
 
     'use strict';
 
@@ -7,21 +7,10 @@ function(utils, ForecastView, ForecastModel) {
     var ForecastController;
     ForecastController = (function() {
 
-        var forecastView, forecastModel;
-
-        function init() {
-
-            // create model
-            forecastModel = new ForecastModel();
-
-            // create view
-            forecastView = new ForecastView({
-                model: forecastModel
-            });
-        }
+        var searchCriteriaModel, forecastView, forecastModel;
 
         /*
-         * Private Methods
+         * Private
         */
         function handleForecastEntryPoint() {
             if (forecastModel.validateAttributes()) {
@@ -34,30 +23,48 @@ function(utils, ForecastView, ForecastModel) {
             }
         }
 
+        /***********************************************************************
+         * Constructor
+        ***********************************************************************/
+        function ForecastController() {}
+        ForecastController.prototype.init = function() {
+            // create models
+            searchCriteriaModel = new Backbone.Model();
+
+            forecastModel = new ForecastModel({
+                criteriaModel: searchCriteriaModel
+            });
+
+            // create view
+            forecastView = new ForecastView({
+                model: forecastModel
+            });
+        };
+
+
         /*
          * Public Methods
         */
-        function navigate(view_id) {
+        ForecastController.prototype.navigate = function(view_id) {
             forecastModel.loadAttributes(view_id, handleForecastEntryPoint);
-        }
+        };
 
-        function updateAttribute(id, val) {
+        ForecastController.prototype.updateCriteria = function(criteria) {
+            searchCriteriaModel.set(criteria);
+        };
+
+        ForecastController.prototype.updateAttribute = function(id, val) {
             forecastModel.updateAttribute(id, val);
-        }
+        };
 
-        function saveAttributes() {
+        ForecastController.prototype.saveAttributes = function(first_argument) {
             var attrs = forecastModel.toJSON();
             forecastModel.saveAttributes(attrs);
-        }
-
-        return {
-            init            : init,
-            navigate        : navigate,
-            updateAttribute : updateAttribute,
-            saveAttributes  : saveAttributes
         };
+
+        return ForecastController;
     })();
 
 
-    return ForecastController;
+    return new ForecastController();
 });

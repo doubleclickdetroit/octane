@@ -1,5 +1,5 @@
-define([ 'jquery', 'underscore', 'globals', 'facade', 'backbone', 'mustache', 'tmpl/fuelsites/mixin', 'text!tmpl/fuelsites/header', 'text!tmpl/fuelsites/fuelsites', 'text!tmpl/fuelsites/search-criteria', 'text!tmpl/fuelsites/fuelsite', 'text!tmpl/fuelsites/dialog', 'plugin-dialog' ],
-function($, _, globals, facade, Backbone, Mustache, mixin, tmpl_header, tmpl_fuelsites, tmpl_criteria, tmpl_fuelsite, tmpl_dialog) {
+define([ 'jquery', 'underscore', 'globals', 'facade', 'backbone', 'mustache', 'views/FuelSiteView', 'text!tmpl/fuelsites/header', 'text!tmpl/fuelsites/fuelsites', 'text!tmpl/fuelsites/search-criteria', 'text!tmpl/fuelsites/dialog', 'plugin-dialog' ],
+function($, _, globals, facade, Backbone, Mustache, FuelSiteView, tmpl_header, tmpl_fuelsites, tmpl_criteria, tmpl_dialog) {
 
     'use strict';
 
@@ -11,26 +11,35 @@ function($, _, globals, facade, Backbone, Mustache, mixin, tmpl_header, tmpl_fue
 
         // cache templates
         tmpl_criteria: Mustache.compile(tmpl_criteria),
-        tmpl_fuelsite: Mustache.compile(tmpl_fuelsite),
         tmpl_dialog  : Mustache.compile(tmpl_dialog),
 
         events: {
-            'click #btn-save' : 'displaySaveDialog',
-            'click #btn-sort' : 'displaySortDialog'
+            'click .btn-save': 'displaySaveDialog',
+            'click .btn-sort': 'displaySortDialog'
         },
 
-        initialize: function() {
+        initialize: function(options) {
             // call super
             this.constructor.__super__.initialize.apply(this, arguments);
 
             // set context for methods
             _.bindAll(this, 'pageInit');
 
+            // cache criteriaModel
+            this.criteriaModel = options.criteriaModel;
+
+            // collection events
+            this.listenTo(this.collection, 'reset', this.render);
+
             // jQM Events
             this.$el.one('pageshow', this.pageInit); // initial pageshow
 
             // create page
             this.pageCreate();
+
+            // cache $criteria & $list
+            this.$criteria = this.$el.find('.searchtext');
+            this.$list     = this.$el.find('#fuelStationsList');
         },
 
         pageCreate: function() {
@@ -41,20 +50,23 @@ function($, _, globals, facade, Backbone, Mustache, mixin, tmpl_header, tmpl_fue
             this.$el.find(':jqmData(role=content)').append(Mustache.render(tmpl_fuelsites));
         },
 
-        render: function(criteria, fuelsites) {
-            // render search criteria
-            this.$el.find('#searchCriteriaText')
-                .html(this.tmpl_criteria({
-                    criteria: criteria
-                }));
+        render: function() {
+            // empty $list
+            this.$list.empty();
 
-            // render fuel sites list
-            this.$el.find('#fuelStationsList')
-                .html(this.tmpl_fuelsite({
-                    mixin    : mixin,
-                    fuelsites: fuelsites
-                }))
-                .listview('refresh');
+            // populate $list
+            this.collection.each(function(fuelsite) {
+                var fuelsiteView = new FuelSiteView({model: fuelsite}).render();
+                this.$list.append(fuelsiteView.$el); // add fuelsite to the list
+            }, this);
+
+            // render $criteria
+            this.$criteria.html(this.tmpl_criteria(
+                this.criteriaModel.toJSON()
+            ));
+
+            // render $list
+            this.$list.listview('refresh');
         },
 
         /*
@@ -86,7 +98,7 @@ function($, _, globals, facade, Backbone, Mustache, mixin, tmpl_header, tmpl_fue
 
                 // validate presence of value
                 if (val === '') {
-                    facade.publish('app', 'alert', globals.fuelsites.configuration.save.error);
+                    facade.publish('app', 'alert', globals.fuelsites.configuration.save.error, function() { console.log('alert closed')});
                     return false;
                 }
 

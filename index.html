@@ -17,13 +17,34 @@
     <!-- fuelsites page -->
     <div data-role="page" id="fuelsites">
         <div data-theme="b" data-role="header" data-position="fixed" data-tap-toggle="false" class="marginbutton_top button_textalign uitextheader">
-            <a data-role="button" href="#menu" class="menubutton_back ui-btn-left"> Menu </a>
+            <a data-role="button" href="#menu" class="menubutton_back ui-btn-left">Menu</a>
             <h3>Fuel Sites</h3>
-            <a data-theme="b" href="#fuelMaps" class="menubutton">Map</a>
+            <a data-theme="b" href="#fuelmap" class="menubutton">Map</a>
         </div>
         <div data-role="content" class="page-content"></div>
     </div>
     <!-- fuelsites page -->
+
+    <!-- directions page -->
+    <div data-role="page" id="directions">
+        <div data-theme="b" data-role="header" data-position="fixed" data-tap-toggle="false" class="marginbutton_top button_textalign uitextheader">
+            <a data-role="button" href="#fuelsites" class="menubutton_back ui-btn-left">Back</a>
+            <h3>Directions</h3>
+            <a data-theme="b" href="#fuelmap" class="menubutton">Map</a>
+        </div>
+        <div data-role="content" class="page-content"></div>
+    </div>
+    <!-- directions page -->
+
+    <!-- fuelsitesMap page -->
+    <div data-role="page" id="fuelsitesMap">
+        <div data-theme="b" data-role="header" data-position="fixed" data-tap-toggle="false" class="marginbutton_top button_textalign uitextheader">
+            <a data-role="button" href="#fuelsites" class="menubutton_back ui-btn-left">Back</a>
+            <h3>Fuel Sites</h3>
+        </div>
+        <div data-role="content" class="page-content"></div>
+    </div>
+    <!-- fuelsitesMap page -->
 
     <!-- main menu page -->
     <div data-role="page" id="menu">
@@ -47,27 +68,27 @@
     <div data-role="page" id="settings">
         <div data-theme="b" data-role="header" data-position="fixed" data-tap-toggle="false" class="marginbutton_top button_textalign uitextheader">
             <h3>Settings</h3>
-            <a data-role="button" href="#menu" class="menubutton_back ui-btn-left"> Menu </a>
+            <a data-role="button" href="#menu" class="menubutton_back ui-btn-left">Menu</a>
         </div>
         <div data-role="content" class="menuiconbox menutextbox"></div>
     </div>
     <!-- settings menu page -->
-    
+
     <!-- Feedback -->
 	<div data-role="page" id="feedback">
 		<div data-theme="b" data-role="header" data-position="fixed" data-tap-toggle="false" class="marginbutton_top button_textalign uitextheader">
 			<h3>Feedback</h3>
-            <a data-role="button" href="#settings" class="menubutton_back ui-btn-left"> Back </a>
+            <a data-role="button" href="#settings" class="menubutton_back ui-btn-left">Back</a>
 		</div>
 		<div data-role="content"></div>
 	</div>
 	<!-- End-Feedback -->
-    
+
     <!-- Info -->
 	<div data-role="page" id="info">
 		<div data-theme="b" data-role="header" data-position="fixed" data-tap-toggle="false" class="marginbutton_top button_textalign uitextheader">
 			<h3>Information</h3>
-            <a data-role="button" href="#settings" class="menubutton_back ui-btn-left"> Back </a>
+            <a data-role="button" href="#settings" class="menubutton_back ui-btn-left">Back</a>
 		</div>
 		<div data-role="content" class="infoheader"></div>
 	</div>
@@ -77,7 +98,7 @@
     <div data-role="page" id="forecast">
         <div data-theme="b" data-role="header" data-position="fixed" data-tap-toggle="false" class=" marginbutton_top button_textalign uitextheader">
             <h3>Forecast</h3>
-            <a href="#menu" data-role="button" data-rel="back" class="menubutton_back" >Back</a>
+            <a href="#menu" data-role="button" data-rel="back" class="menubutton_back">Back</a>
         </div>
 
         <div data-role="content" class="page-content"></div>
@@ -87,9 +108,9 @@
     <!-- alerts -->
     <div data-role="page" id="alerts">
         <div data-theme="b" data-role="header" data-position="fixed" data-tap-toggle="false" class=" marginbutton_top button_textalign uitextheader">
-            <a data-role="button" href="#settings" class="ui-btn-left" id="alertCancelButton"> Cancel </a>
+            <a data-role="button" href="#settings" class="ui-btn-left" id="alertCancelButton">Cancel</a>
             <h3>Alerts</h3>
-            <a data-role="button" href="#settings" class="ui-btn-right" id="alertDoneButton"> Done </a>
+            <a data-role="button" href="#settings" class="ui-btn-right" id="alertDoneButton">Done</a>
         </div>
 
         <div data-role="content" class="page-content"></div>

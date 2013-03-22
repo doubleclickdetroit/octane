@@ -1,4 +1,4 @@
-define([ 'jquery', 'underscore', 'backbone', './globals' ],
+define([ 'jquery', 'underscore', 'backbone', './globals', 'plugin-timeago' ],
 function($, _, Backbone, globals) {
 
     'use strict';
@@ -30,6 +30,26 @@ function($, _, Backbone, globals) {
      * Object Has Property convenience method
     */
     utils.__hasProp = {}.hasOwnProperty;
+
+    /*
+     * Is Function Helper Method
+    */
+    utils.isFn = utils.isFunction = utils.$.isFunction;
+
+    /*
+     * Is Plain Object Helper Method
+    */
+    utils.isPlainObject = utils.$.isPlainObject;
+
+    /*
+     * Is Deferred Helper Method
+    */
+    utils.when = utils.$.when;
+
+    /*
+     * jQuery Timeago Plugin convenience method
+    */
+    utils.timeago = utils.$.timeago;
 
     /*
      * Extend Classes
@@ -101,7 +121,7 @@ function($, _, Backbone, globals) {
             return Connection[key] === navigator.connection.type;
         }) || connectivity['NONE'];
     };
-    
+
     /*
      * Function to validate Email Address format
      *

@@ -4,16 +4,19 @@ function(facade, controller) {
     'use strict';
 
 
-    var subscribe = facade.subscribeTo('app');
+    var subscribe = facade.subscribeTo('app', controller);
 
     //
-    subscribe('ready', controller.ready);
+    subscribe('ready', 'ready');
 
     //
-    subscribe('alert', controller.alert);
+    subscribe('speak', 'textToSpeech');
 
     //
-    subscribe('confirm', controller.confirm);
+    subscribe('alert', 'alert');
+
+    //
+    subscribe('confirm', 'confirm');
 
 
     return {

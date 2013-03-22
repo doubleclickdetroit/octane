@@ -4,17 +4,21 @@ function(facade, controller) {
     'use strict';
 
 
+    /*
+     * Forecast Subscribers
+    */
     var subscribe;
-    subscribe = facade.subscribeTo('forecast');
+    subscribe = facade.subscribeTo('forecast', controller);
 
-    //
-    subscribe('navigate', controller.navigate);
+    subscribe('navigate', 'navigate');
+    subscribe('updateAttribute', 'updateAttribute');
+    subscribe('saveAttributes', 'saveAttributes');
 
-    //
-    subscribe('updateAttribute', controller.updateAttribute);
 
-    //
-    subscribe('saveAttributes', controller.saveAttributes);
+    /*
+     * Criteria Subscribers
+    */
+    facade.subscribe('criteria', 'change', controller, 'updateCriteria');
 
 
     return {

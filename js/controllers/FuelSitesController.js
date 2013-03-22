@@ -1,5 +1,5 @@
-define([ 'globals', 'utils', 'views/FuelSitesView', 'collections/FuelSitesCollection' ],
-function(globals, utils, FuelSitesView, FuelSitesCollection) {
+define([ 'globals', 'utils', 'backbone', 'views/FuelSitesMapView', 'views/DirectionsView', 'views/FuelSitesView', 'collections/FuelSitesCollection' ],
+function(globals, utils, Backbone, FuelSitesMapView, DirectionsView, FuelSitesView, FuelSitesCollection) {
 
     'use strict';
 
@@ -7,46 +7,81 @@ function(globals, utils, FuelSitesView, FuelSitesCollection) {
     var FuelSitesController;
     FuelSitesController = (function() {
 
-        var fuelSitesCollection, fuelSitesView;
+        var searchCriteriaModel, fuelSitesCollection, fuelSitesView, fuelSitesMapView, directionsView;
+
 
         function FuelSitesController() {}
-
         FuelSitesController.prototype.init = function() {
-            // cache & instantiate View and Collection
-            fuelSitesView       = new FuelSitesView();
+            // cache & instantiate View, Model and Collection
+            searchCriteriaModel = new Backbone.Model();
+
             fuelSitesCollection = new FuelSitesCollection();
+
+            fuelSitesMapView = new FuelSitesMapView({
+                model: searchCriteriaModel
+            });
+
+            directionsView = new DirectionsView({
+                model: searchCriteriaModel
+            });
+
+            fuelSitesView = new FuelSitesView({
+                collection   : fuelSitesCollection,
+                criteriaModel: searchCriteriaModel
+            });
         };
 
         FuelSitesController.prototype.navigate = function() {
-            utils.changePage('#fuelsites', null, true);
+            utils.changePage('#fuelsites');
         };
 
-        FuelSitesController.prototype.getFuelSites = function(criteria) {
+        FuelSitesController.prototype.updateCriteria = function(criteria) {
+            searchCriteriaModel.set(criteria);
+            this.indexFuelSites();
+        };
+
+        FuelSitesController.prototype.indexFuelSites = function() {
+            var criteria = searchCriteriaModel.toJSON();
             if (criteria.viewMode === globals.fuelsites.constants.VIEW_MODE) {
-
-                // listen for when collection receives the fuelsites
-                fuelSitesCollection.once('reset', function(collection) {
-                    // render search criteria & fuelsites
-                    fuelSitesView.render(criteria, collection.toJSON());
-
-                    // hide the loading indicator
-                    fuelSitesView.hideLoadingIndicator();
-                });
-
-                // display loading indicator
-                fuelSitesView.showLoadingIndicator(true);
-
-                // based on criteria, fetch new fuelsites
-                fuelSitesCollection.fetch(criteria);
+                this.loadingBegin();                      // show inidicator before request
+                fuelSitesCollection
+                    .once('reset', this.loadingEnd, this) // hide indicator at end of request
+                    .fetch(criteria);                     // fetch new fuelsites with criteria
             }
         };
 
-        FuelSitesController.prototype.loadingBegin = function() {
-            fuelSitesView.showLoadingIndicator(true);
+        FuelSitesController.prototype.showFuelSite = function(fuelsiteId) {
+            var fuelSiteModel = fuelSitesCollection.get(fuelsiteId);
+            utils.changePage('#directions', null, null, true); // update hash
+
+            this.loadingBegin(); // show indicator before requeset
+
+            // request directions
+            utils.when(directionsView.requestDirections(fuelSiteModel.toJSON()))
+                .always(this.loadingEnd)          // hide indicator at end of request
+                .done(directionsView.render)      // render directions
+                .fail(directionsView.handleError) // handle failure
+                .fail(this.navigate)              // redirect to fuelsites
         };
 
-        FuelSitesController.prototype.loadingEnd = function() {
-            fuelSitesView.hideLoadingIndicator(true);
+        FuelSitesController.prototype.showMap = function() {
+            //
+        };
+
+        FuelSitesController.prototype.loadingBegin = function(checkView) {
+            // show loader if active view is fuelSitesView
+            checkView = checkView === undefined ? true : checkView;
+
+            fuelSitesView.showLoadingIndicator(checkView);
+            directionsView.showLoadingIndicator(checkView);
+        };
+
+        FuelSitesController.prototype.loadingEnd = function(checkView) {
+            // hide loader if active view is fuelSitesView
+            checkView = checkView === undefined ? false : checkView;
+
+            fuelSitesView.hideLoadingIndicator(checkView);
+            directionsView.hideLoadingIndicator(checkView);
         };
 
         return FuelSitesController;

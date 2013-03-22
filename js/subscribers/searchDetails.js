@@ -5,14 +5,14 @@ function(facade, controller) {
 
 
     //
-    facade.subscribe('criteria', 'save', controller.saveCriteria);
+    facade.subscribe('criteria', 'save', controller, 'saveCriteria');
 
     //
-    facade.subscribe('criteria', 'update', controller.updateAttributes);
+    facade.subscribe('criteria', 'update', controller, 'updateAttributes');
 
 
     //
-    facade.subscribe('location', 'change', controller.updateLocationAttributes);
+    facade.subscribe('location', 'change', controller, 'updateLocationAttributes');
 
 
     /*
