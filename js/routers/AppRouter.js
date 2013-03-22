@@ -12,12 +12,13 @@ function (utils, facade, Backbone) {
         */
         routes: {
             'forecast(/)(:viewId)': 'renderForecast',
-            'fuelsites': 'renderFuelSites',
-            'settings': 'renderSettings',
-            'info': 'renderInfo',
-            'feedback': 'renderFeedback',
-            'alerts': 'renderAlerts',
-            'menu': 'renderMenu',
+            'fuelsites'           : 'renderFuelSites',
+            'settings'            : 'renderSettings',
+            'info'                : 'renderInfo',
+            'feedback'            : 'renderFeedback',
+            'alerts'              : 'renderAlerts',
+            'search'              : 'renderSearch',
+            'menu'                : 'renderMenu',
 
             '': 'root'
         },
@@ -49,6 +50,10 @@ function (utils, facade, Backbone) {
             facade.publish('alerts', 'navigate');
         },
 
+        renderSearch: function() {
+            facade.publish('search', 'navigate');
+        },
+
         renderMenu: function () {
             facade.publish('menu', 'navigate');
         },
@@ -59,7 +64,7 @@ function (utils, facade, Backbone) {
 
         start: function () {
             Backbone.history.start();
-            this.root();
+            // this.root(); // disable during development
         }
     });
 
