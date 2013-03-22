@@ -40,7 +40,7 @@ function (utils, facade, Backbone) {
         renderInfo: function () {
             facade.publish('info', 'navigate');
         },
-        
+
         renderFeedback: function () {
             facade.publish('feedback', 'navigate');
         },
@@ -59,6 +59,7 @@ function (utils, facade, Backbone) {
 
         start: function () {
             Backbone.history.start();
+            this.root();
         }
     });
 

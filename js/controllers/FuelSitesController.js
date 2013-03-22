@@ -32,7 +32,7 @@ function(globals, utils, Backbone, FuelSitesMapView, DirectionsView, FuelSitesVi
         };
 
         FuelSitesController.prototype.navigate = function() {
-            utils.changePage('#fuelsites');
+            utils.changePage('#fuelsites', null, null, true); // update hash
         };
 
         FuelSitesController.prototype.updateCriteria = function(criteria) {
