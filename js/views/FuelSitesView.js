@@ -114,9 +114,14 @@ function($, _, globals, facade, Backbone, Mustache, FuelSiteView, tmpl_header, t
         },
 
         displaySortDialog: function() {
-            var $tmpl = $(this.tmpl_dialog(
+        	var $tmpl, sortBy;
+        	
+            $tmpl = $(this.tmpl_dialog(
                 globals.fuelsites.configuration.sortBy
             ));
+            
+            // Get the current Sort By value
+            sortBy = this.criteriaModel.get('sortBy');
 
             $('<div>').simpledialog2({
                 mode        : 'blank',
@@ -125,7 +130,10 @@ function($, _, globals, facade, Backbone, Mustache, FuelSiteView, tmpl_header, t
                 headerClose : false,
                 blankContent: $tmpl
             });
-
+            
+            // Set the currently selected sort by value as the Active button
+            $('input[value=' + sortBy + ']').parent().addClass('ui-btn-active');
+            
             $tmpl.one('click', ':input', function() {
                 // broadcast updated criteria sortBy value
                 facade.publish('criteria', 'update', {sortBy:$(this).val()});
