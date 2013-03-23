@@ -10,9 +10,10 @@ define(function(require) {
      * App
     */
     globals.APP = {
-        'NAME'   : 'Octane',
-        'VERSION': '3.0',
-        'EMAIL_ADDRESS_VALIDATION_PATTERN': '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$'
+        'NAME'                            : 'Octane',
+        'VERSION'                         : '3.0',
+        'EMAIL_ADDRESS_VALIDATION_PATTERN': '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$',
+        'ZIP_CODE_PATTERN'                : '/\\d{5}-\\d{4}|\\d{5}|[A-Z]\\d[A-Z] \\d[A-Z]\\d/'
     };
 
     /*

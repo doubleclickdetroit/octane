@@ -21,7 +21,7 @@ function(utils, Backbone, globals) {
         function requestUsingFuelSiteSearchCriteria(deferred) {
             // resolve with context and args
             deferred.resolveWith(this, [{
-                'location': this.criteriaModel.get('location'),
+                'location': getZipCode(this.criteriaModel.get('location')), // only the zipcode is used from the address of the location
                 'fuelType': this.criteriaModel.get('fuelType')
             }]);
         }
@@ -41,6 +41,23 @@ function(utils, Backbone, globals) {
             attrs.fuelType = fuelType;
 
             return attrs;
+        }
+                     
+        function getZipCode(location) {
+
+             var zipcode, regexp;
+                     
+             // regex statement
+             regexp  = new RegExp(globals.APP.ZIP_CODE_PATTERN);
+             
+             // get the zipcode from the full address location
+             zipcode = regexp.exec(location) || "";
+             if (zipcode) {
+                 zipcode = zipcode[0];
+             }
+
+             return zipcode;
+
         }
 
         function updateForecastIndicator(deferred, attrs) {
