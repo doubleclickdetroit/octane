@@ -1,5 +1,5 @@
-define([ 'utils', 'views/SearchView' ],
-function(utils, SearchView) {
+define([ 'utils', 'models/_EmptyModel', 'views/SearchView' ],
+function(utils, EmptyModel, SearchView) {
 
     'use strict';
 
@@ -7,14 +7,19 @@ function(utils, SearchView) {
     var SearchController;
     SearchController = (function() {
 
-        var searchView;
+        var searchCriteriaModel, searchView;
 
         /***********************************************************************
          * Constructor
         ***********************************************************************/
         function SearchController() {}
         SearchController.prototype.init = function() {
-            searchView = new SearchView();
+            // create model & view instances
+            searchCriteriaModel = new EmptyModel();
+
+            searchView = new SearchView({
+                model: new EmptyModel()
+            });
         };
 
         /*
@@ -22,6 +27,19 @@ function(utils, SearchView) {
         */
         SearchController.prototype.navigate = function() {
             utils.changePage(searchView.$el);
+        };
+
+        SearchController.prototype.resetSearchViewModel = function() {
+            // render needs to display the latest searchCriteriaModel data
+            searchView.model.set(searchCriteriaModel.toJSON());
+        };
+
+        SearchController.prototype.updateSearchByAttribute = function(value) {
+            searchView.model.set('searchBy', value);
+        };
+
+        SearchController.prototype.updateCriteria = function(criteria) {
+            searchCriteriaModel.set(criteria);
         };
 
         return SearchController;

@@ -24,6 +24,7 @@ define(function(require) {
         'FUEL_TYPE'      : 'Gasoline',
         'FUEL_TYPE_GRADE': 'Unleaded Regular',
         'SORT_BY'        : 'Price',
+        'START_LOCATION' : 'currentLocation',
         'UNDEFINED'      : undefined,
         'EMPTY_STRING'   : ''
     };
@@ -38,7 +39,47 @@ define(function(require) {
         'TIMEOUT'              : 200000,
         'SUCCESS'              : 'Database operation successful.'
     };
-    
+
+    /*
+     * Fuel Type
+    */
+    globals.FUEL_TYPE = {};
+    globals.FUEL_TYPE.constants = {
+        'GASOLINE': globals.DEFAULT.FUEL_TYPE,
+        'DIESEL'  : 'Diesel'
+    };
+    globals.FUEL_TYPE.configuration = {
+        'GASOLINE': {
+            'label': globals.FUEL_TYPE.constants.GASOLINE,
+            'value': globals.FUEL_TYPE.constants.GASOLINE
+        },
+        'DIESEL': {
+            'label': globals.FUEL_TYPE.constants.DIESEL,
+            'value': globals.FUEL_TYPE.constants.DIESEL
+        }
+    };
+
+    /*
+     * Sort By
+    */
+    globals.SORT_BY = {};
+    globals.SORT_BY.constants = {
+        'PRICE'   : globals.DEFAULT.SORT_BY,
+        'DISTANCE': 'Distance'
+    };
+    globals.SORT_BY.configuration = {
+        'PRICE': {
+            'label'  : globals.SORT_BY.constants.PRICE,
+            'value'  : globals.SORT_BY.constants.PRICE,
+            'default': globals.DEFAULT.SORT_BY === globals.SORT_BY.constants.PRICE
+        },
+        'DISTANCE': {
+            'label'  : globals.SORT_BY.constants.DISTANCE,
+            'value'  : globals.SORT_BY.constants.DISTANCE,
+            'default': globals.DEFAULT.SORT_BY === globals.SORT_BY.constants.DISTANCE
+        }
+    };
+
     /*
      * Rate the App
      */
@@ -80,7 +121,7 @@ define(function(require) {
      * Search Details
     */
     globals.SEARCH_DETAILS = {
-        'START_LOCATION' : 'currentLocation',
+        'START_LOCATION' : globals.DEFAULT.START_LOCATION,
         'RADIUS'         : '5.0',
         'FUEL_TYPE'      : globals.DEFAULT.FUEL_TYPE_GRADE,
         'SORT_BY'        : globals.DEFAULT.SORT_BY,
@@ -108,6 +149,94 @@ define(function(require) {
     };
 
     /*
+     * Page :: Search
+    */
+    globals.search = {};
+    globals.search.constants = {
+        'DISABLE_SEARCH_TEXT': 'currentLocation'
+    };
+    globals.search.configuration = {
+        'searchBy': [
+            {
+                'label'  : 'Current location',
+                'value'  : 'currentLocation',
+                'id'     : 'searchByRadio1',
+                'default': true
+            },
+            {
+                'label': 'Enter location',
+                'value': 'enterLocation',
+                'id'   : 'searchByRadio2',
+                'default': false
+            }
+        ],
+        'radius': [
+            {
+                'label' : 'Radius',
+                'values': [
+                    {
+                        'label': '5 Miles',
+                        'value': '5.0'
+                    },
+                    {
+                        'label': '7.5 Miles',
+                        'value': '7.5'
+                    },
+                    {
+                        'label': '10 Miles',
+                        'value': '10'
+                    },
+                    {
+                        'label': '15 Miles',
+                        'value': '15'
+                    },
+                    {
+                        'label': '20 Miles',
+                        'value': '20'
+                    },
+                    {
+                        'label': '30 Miles',
+                        'value': '30'
+                    }
+                ]
+            }
+        ],
+        'fuelType': [
+            {
+                'label' : 'Fuel Type',
+                'values': [
+                    globals.FUEL_TYPE.configuration.GASOLINE,
+                    globals.FUEL_TYPE.configuration.DIESEL
+                ]
+            }
+        ],
+        'sortBy': [
+            {
+                'label' : 'Sort by',
+                'values': [
+                    globals.SORT_BY.configuration.PRICE,
+                    globals.SORT_BY.configuration.DISTANCE
+                ]
+            }
+        ],
+        'defaultSearch': [
+            {
+                'label' : 'Set as default search',
+                'values': [
+                    {
+                        'label': 'NO',
+                        'value': 'NO'
+                    },
+                    {
+                        'label': 'YES',
+                        'value': 'YES'
+                    }
+                ]
+            }
+        ]
+    };
+
+    /*
      * Page :: Alerts
     */
     globals.alerts = {};
@@ -130,14 +259,8 @@ define(function(require) {
             }
         ],
         'fuelType': [
-            {
-                'label': 'Gasoline',
-                'value': globals.alerts.constants.DEFAULT_FUEL_TYPE
-            },
-            {
-                'label': 'Diesel',
-                'value': 'Diesel'
-            }
+            globals.FUEL_TYPE.configuration.GASOLINE,
+            globals.FUEL_TYPE.configuration.DIESEL
         ],
         'forecastChange': [
             {
@@ -164,8 +287,8 @@ define(function(require) {
     globals.forecast.configuration = {
         'fuelType': [
             {
-                'label' : 'Gasoline',
-                'value' : globals.forecast.constants.DEFAULT_FUEL_TYPE,
+                'label' : globals.FUEL_TYPE.configuration.GASOLINE.label,
+                'value' : globals.FUEL_TYPE.configuration.GASOLINE.value,
                 'grades': [
                     globals.DEFAULT.UNDEFINED,
                     'Gasoline',
@@ -175,8 +298,8 @@ define(function(require) {
                 ]
             },
             {
-                'label' : 'Diesel',
-                'value' : 'Diesel',
+                'label' : globals.FUEL_TYPE.configuration.DIESEL.label,
+                'value' : globals.FUEL_TYPE.configuration.DIESEL.value,
                 'grades': [
                     'Diesel',
                     'Diesel Regular',
@@ -226,20 +349,20 @@ define(function(require) {
             'buttons': [
                 {
                     'id'   : 'a',
-                    'label': globals.DEFAULT.SORT_BY,
+                    'label': globals.SORT_BY.configuration.PRICE.label,
                     'type' : 'button',
                     'close': true
                 },
                 {
                     'id'   : 'b',
-                    'label': 'Distance',
+                    'label': globals.SORT_BY.configuration.DISTANCE.label,
                     'type' : 'button',
                     'close': true
                 }
             ]
         }
     };
-    
+
     /*
      * Page :: Feedback
      */
@@ -264,7 +387,7 @@ define(function(require) {
         	'label'      : '',
         	'placeholder': 'Enter Message',
         	'value'      : ''
-        }       
+        }
     };
 
 
