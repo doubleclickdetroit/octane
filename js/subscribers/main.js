@@ -18,4 +18,5 @@ function(require) {
     require('./search').init();
     require('./alerts').init();
     require('./forecast').init();
+    require('./termsAndConditions').init();
 });

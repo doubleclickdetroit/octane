@@ -19,6 +19,7 @@ function (utils, facade, Backbone) {
             'alerts'              : 'renderAlerts',
             'search'              : 'renderSearch',
             'menu'                : 'renderMenu',
+            'termsAndConditions'  : 'renderTermsAndConditions',
 
             '': 'root'
         },
@@ -56,6 +57,10 @@ function (utils, facade, Backbone) {
 
         renderMenu: function () {
             facade.publish('menu', 'navigate');
+        },
+        
+        renderTermsAndConditions: function () {
+        	facade.publish('termsAndConditions', 'navigate');
         },
 
         root: function () {

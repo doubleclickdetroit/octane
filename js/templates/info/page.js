@@ -15,7 +15,7 @@
 		<h3>Screen Resolution:</h3>
 		<p>{{screenType}}</p>
 	</li>
-	<li><a href="#termsAndCondition">
+	<li><a href="#termsAndConditions">
 		<h3>Terms &amp; Conditions</h3> </a>
 	</li>
 </ul>
