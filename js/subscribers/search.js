@@ -17,13 +17,16 @@ function(facade, controller) {
     subscribe('beforeRender', 'resetSearchViewModel');
 
     //
-    subscribe('updateSearchByValue', 'updateSearchByAttribute');
+    subscribe('updateAttribute', 'updateAttribute');
+
+    //
+    subscribe('saveCriteria', 'saveSearchCriteriaModel');
 
 
     /*
      * SearchDetails Subscribers
     */
-    facade.subscribe('criteria', 'change', controller, 'updateCriteria');
+    facade.subscribe('criteria', 'change', controller, 'updateSearchCriteriaModel');
 
 
     return {

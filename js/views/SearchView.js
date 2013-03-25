@@ -10,7 +10,8 @@ function($, _, globals, facade, Backbone, Mustache, tmpl) {
         el: $('#search'),
 
         events: {
-            'change [name="radio-mini"]': 'handleChangedSearchByValue'
+            'change :input'             : 'handleUpdatingAttribute',
+            'click #submitCriteria-btn' : 'handleCriteriaSubmission'
         },
 
         initialize: function() {
@@ -24,7 +25,10 @@ function($, _, globals, facade, Backbone, Mustache, tmpl) {
             this.$content = this.$el.find(':jqmData(role=content)');
 
             // model events
-            this.model.on('change', this.render, this);
+            this.model.on('change:location', this.render, this)
+            this.model.on('invalid', function(model, error) {
+                facade.publish('app', 'alert', error);
+            });
 
             // jQM Events
             this.$el.on('pageshow', this.render);
@@ -45,19 +49,20 @@ function($, _, globals, facade, Backbone, Mustache, tmpl) {
 
         render: function() {
             var criteria = this.model.toJSON(),
-                IS_CURRENT_LOCATION = criteria.searchBy === globals.search.constants.DISABLE_SEARCH_TEXT;
-            console.log('SearchView render', criteria);
+                IS_CURRENT_LOCATION = criteria.searchBy === globals.search.constants.SEARCH_BY_CURRENT_LOCATION;
+
+            // console.log(criteria);
 
             this.$content
-                .find('[name="radio-mini"]')
+                .find('[name="'+globals.search.constants.NAME_SEARCH_BY+'"]')
                 .attr('checked', function() {
-                    return this.value === criteria.searchBy
+                    return this.value === criteria.searchBy;
                 })
                 .checkboxradio('refresh');
 
             this.$content
                 .find('#locationSearch')
-                .val(IS_CURRENT_LOCATION ? '' : criteria.location)
+                .val(criteria.location)
                 .textinput(IS_CURRENT_LOCATION ? 'disable' : 'enable');
 
             this.$content
@@ -80,8 +85,14 @@ function($, _, globals, facade, Backbone, Mustache, tmpl) {
         /*
          * Event Handlers
         */
-        handleChangedSearchByValue: function(evt) {
-            facade.publish('search', 'updateSearchByValue', evt.target.value);
+        handleUpdatingAttribute: function(evt) {
+            var target = evt.target;
+            facade.publish('search', 'updateAttribute', target.name, target.value);
+        },
+
+        handleCriteriaSubmission: function(evt) {
+            evt.preventDefault();
+            facade.publish('search', 'saveCriteria');
         }
     });
 
