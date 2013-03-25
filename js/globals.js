@@ -154,7 +154,15 @@ define(function(require) {
     globals.search = {};
     globals.search.constants = {
         'SEARCH_BY_ENTER_LOCATION'  : 'enterLocation',
-        'SEARCH_BY_CURRENT_LOCATION': 'currentLocation'
+        'SEARCH_BY_CURRENT_LOCATION': 'currentLocation',
+        'NAME_SEARCH_BY'     : 'searchBy',
+        'NAME_LOCATION'      : 'location',
+        'NAME_RADIUS'        : 'radius',
+        'NAME_FUEL_TYPE'     : 'fuelType',
+        'NAME_BRAND'         : 'brand',
+        'NAME_SORT_BY'       : 'sortBy',
+        'NAME_DEFAULT_SEARCH': 'updatedResult', // this may not be correct
+        'INVALID_LOCATION_MESSAGE': 'Current location cannot be found. Please enter a location.'
     };
     globals.search.configuration = {
         'searchBy': [
@@ -162,18 +170,26 @@ define(function(require) {
                 'label'  : 'Current location',
                 'value'  : globals.search.constants.SEARCH_BY_CURRENT_LOCATION,
                 'id'     : 'searchByRadio1',
+                'name'   : globals.search.constants.NAME_SEARCH_BY,
                 'default': true
             },
             {
                 'label': 'Enter location',
                 'value': 'enterLocation',
                 'id'   : 'searchByRadio2',
+                'name'   : globals.search.constants.NAME_SEARCH_BY,
                 'default': false
+            }
+        ],
+        'location': [
+            {
+                'name': globals.search.constants.NAME_LOCATION
             }
         ],
         'radius': [
             {
                 'label' : 'Radius',
+                'name'  : globals.search.constants.NAME_RADIUS,
                 'values': [
                     {
                         'label': '5 Miles',
@@ -205,15 +221,24 @@ define(function(require) {
         'fuelType': [
             {
                 'label' : 'Fuel Type',
+                'name'  : globals.search.constants.NAME_FUEL_TYPE,
                 'values': [
                     globals.FUEL_TYPE.configuration.GASOLINE,
                     globals.FUEL_TYPE.configuration.DIESEL
                 ]
             }
         ],
+        'brand': [
+            {
+                'label' : 'Brand',
+                'name'  : globals.search.constants.NAME_BRAND,
+                'values': []
+            }
+        ],
         'sortBy': [
             {
                 'label' : 'Sort by',
+                'name'  : globals.search.constants.NAME_SORT_BY,
                 'values': [
                     globals.SORT_BY.configuration.PRICE,
                     globals.SORT_BY.configuration.DISTANCE
@@ -223,6 +248,7 @@ define(function(require) {
         'defaultSearch': [
             {
                 'label' : 'Set as default search',
+                'name'  : globals.search.constants.NAME_DEFAULT_SEARCH,
                 'values': [
                     {
                         'label': 'NO',
