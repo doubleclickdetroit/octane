@@ -153,13 +153,14 @@ define(function(require) {
     */
     globals.search = {};
     globals.search.constants = {
-        'DISABLE_SEARCH_TEXT': 'currentLocation'
+        'SEARCH_BY_ENTER_LOCATION'  : 'enterLocation',
+        'SEARCH_BY_CURRENT_LOCATION': 'currentLocation'
     };
     globals.search.configuration = {
         'searchBy': [
             {
                 'label'  : 'Current location',
-                'value'  : 'currentLocation',
+                'value'  : globals.search.constants.SEARCH_BY_CURRENT_LOCATION,
                 'id'     : 'searchByRadio1',
                 'default': true
             },
