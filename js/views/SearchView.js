@@ -51,8 +51,6 @@ function($, _, globals, facade, Backbone, Mustache, tmpl) {
             var criteria = this.model.toJSON(),
                 IS_CURRENT_LOCATION = criteria.searchBy === globals.search.constants.SEARCH_BY_CURRENT_LOCATION;
 
-            // console.log(criteria);
-
             this.$content
                 .find('[name="'+globals.search.constants.NAME_SEARCH_BY+'"]')
                 .attr('checked', function() {
