@@ -153,7 +153,7 @@ define(function(require) {
     */
     globals.search = {};
     globals.search.constants = {
-        'SEARCH_BY_ENTER_LOCATION'  : 'enterLocation',
+        'SEARCH_BY_ADDRESS'         : 'enterLocation',
         'SEARCH_BY_CURRENT_LOCATION': 'currentLocation',
         'NAME_SEARCH_BY'     : 'searchBy',
         'NAME_LOCATION'      : 'location',
