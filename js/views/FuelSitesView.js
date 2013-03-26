@@ -1,5 +1,5 @@
 define([ 'jquery', 'underscore', 'globals', 'facade', 'backbone', 'mustache', 'views/FuelSiteView', 'text!tmpl/fuelsites/header', 'text!tmpl/fuelsites/fuelsites', 'text!tmpl/fuelsites/criteria', 'text!tmpl/fuelsites/dialog', 'plugin-dialog' ],
-function($, _, globals, facade, Backbone, Mustache, FuelSiteView, tmpl_header, tmpl_fuelsites, tmpl_criteria, tmpl_dialog) {
+function ($, _, globals, facade, Backbone, Mustache, FuelSiteView, tmpl_header, tmpl_fuelsites, tmpl_criteria, tmpl_dialog) {
 
     'use strict';
 
@@ -18,7 +18,7 @@ function($, _, globals, facade, Backbone, Mustache, FuelSiteView, tmpl_header, t
             'click .btn-sort': 'displaySortDialog'
         },
 
-        initialize: function(options) {
+        initialize: function (options) {
             // call super
             this.constructor.__super__.initialize.apply(this, arguments);
 
@@ -42,7 +42,7 @@ function($, _, globals, facade, Backbone, Mustache, FuelSiteView, tmpl_header, t
             this.$list     = this.$el.find('#fuelStationsList');
         },
 
-        pageCreate: function() {
+        pageCreate: function () {
             // append the header
             this.$el.find(':jqmData(role=header)').append(Mustache.render(tmpl_header));
 
@@ -50,12 +50,12 @@ function($, _, globals, facade, Backbone, Mustache, FuelSiteView, tmpl_header, t
             this.$el.find(':jqmData(role=content)').append(Mustache.render(tmpl_fuelsites));
         },
 
-        render: function() {
+        render: function () {
             // empty $list
             this.$list.empty();
 
             // populate $list
-            this.collection.each(function(fuelsite) {
+            this.collection.each(function (fuelsite) {
                 var fuelsiteView = new FuelSiteView({model: fuelsite}).render();
                 this.$list.append(fuelsiteView.$el); // add fuelsite to the list
             }, this);
@@ -72,7 +72,7 @@ function($, _, globals, facade, Backbone, Mustache, FuelSiteView, tmpl_header, t
         /*
          * jQM Page Events
         */
-        pageInit: function() {
+        pageInit: function () {
             // request current location
             facade.publish('location', 'getCurrentLocation');
         },
@@ -80,7 +80,7 @@ function($, _, globals, facade, Backbone, Mustache, FuelSiteView, tmpl_header, t
         /*
          * Event Handlers
         */
-        displaySaveDialog: function() {
+        displaySaveDialog: function () {
             var $tmpl = $(this.tmpl_dialog(
                 globals.fuelsites.configuration.save
             ));
@@ -93,12 +93,12 @@ function($, _, globals, facade, Backbone, Mustache, FuelSiteView, tmpl_header, t
                 blankContent: $tmpl
             });
 
-            $tmpl.on('click', ':submit', function(evt) {
+            $tmpl.on('click', ':submit', function (evt) {
                 var val = $tmpl.find(':text').val();
 
                 // validate presence of value
                 if (val === '') {
-                    facade.publish('app', 'alert', globals.fuelsites.configuration.save.error, function() { console.log('alert closed')});
+                    facade.publish('app', 'alert', globals.fuelsites.configuration.save.error);
                     return false;
                 }
 
@@ -113,7 +113,7 @@ function($, _, globals, facade, Backbone, Mustache, FuelSiteView, tmpl_header, t
             });
         },
 
-        displaySortDialog: function() {
+        displaySortDialog: function () {
         	var $tmpl, sortBy;
         	
             $tmpl = $(this.tmpl_dialog(
@@ -134,7 +134,7 @@ function($, _, globals, facade, Backbone, Mustache, FuelSiteView, tmpl_header, t
             // Set the currently selected sort by value as the Active button
             $('input[value=' + sortBy + ']').parent().addClass('ui-btn-active');
             
-            $tmpl.one('click', ':input', function() {
+            $tmpl.one('click', ':input', function () {
                 // broadcast updated criteria sortBy value
                 facade.publish('criteria', 'update', {sortBy:$(this).val()});
             });

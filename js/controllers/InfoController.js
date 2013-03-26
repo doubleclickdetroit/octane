@@ -13,7 +13,7 @@ function (utils, InfoView, InfoModel, AppModel) {
          * Constructor
         ***********************************************************************/
         function InfoController() {}
-        InfoController.prototype.init = function() {
+        InfoController.prototype.init = function () {
             // create model
             infoModel = new InfoModel(null, {
                 device: AppModel.getInstance().toJSON()
@@ -28,7 +28,7 @@ function (utils, InfoView, InfoModel, AppModel) {
         /*
          * Public Methods
         */
-        InfoController.prototype.navigate = function() {
+        InfoController.prototype.navigate = function () {
             utils.changePage(infoView.$el);
         };
 

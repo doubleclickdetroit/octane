@@ -48,10 +48,10 @@ function ($, utils, facade, globals, Backbone, Mustache, tmpl) {
         },
         
         displayConfirmation: function (message, callback) {
-        	facade.publish('app', 'confirm'
+        	facade.publish('app', 'alert'
     			, message                                        // message
     			, callback                                       // callback
-    			, globals.feedback.constants.CONFIRMATION_BUTTON // button(s)
+    			, globals.feedback.constants.CONFIRMATION_BUTTON // button
     			, globals.feedback.constants.CONFIRMATION_TITLE  // title
 			);
         },

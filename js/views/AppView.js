@@ -102,7 +102,7 @@ function($, _, Backbone, facade, globals) {
                 /* callback */
                 , function (button) {
 
-                    // yes = 1, no = 2, later = 3
+                    // yes = 1, later = 2, no = 3
                     if (button == '1') {    // Rate Now
                         // navigate to the app in iTunes
                     	window.location.href = globals.RATE_IT.URL_IOS;
