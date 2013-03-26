@@ -7,11 +7,20 @@ define(function(require) {
     globals = {};
 
     /*
+     * Environment
+    */
+    globals.ENVIRONMENT = {
+        'UAT' : 'uat.',
+        'PROD': ''
+    };
+
+    /*
      * App
     */
     globals.APP = {
-        'NAME'   : 'Octane',
-        'VERSION': '3.0',
+        'NAME'       : 'Octane',
+        'VERSION'    : '3.0',
+        'ENVIRONMENT': globals.ENVIRONMENT.UAT,
         'EMAIL_ADDRESS_VALIDATION_PATTERN': '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$'
     };
 
@@ -98,9 +107,12 @@ define(function(require) {
     /*
      * Webservices
     */
-    globals.WEBSERVICE = {};
+    globals.WEBSERVICE = {
+        'ROOT_URL': 'https://'+ globals.APP.ENVIRONMENT +'account.wexmobile.com/mobileweb/siteLocator'
+    };
+    // Fuelsites
     globals.WEBSERVICE.FUEL_SITE = {
-        'URL'         : 'https://account.wexmobile.com/mobileweb/siteLocator/fuelSites',
+        'URL'         : globals.WEBSERVICE.ROOT_URL + '/fuelSites',
         'FUEL_SITES'  : '/fuelSites',
         'LONGITUDE'   : '/longitude/',
         'LATITUDE'    : '/latitude/',
@@ -112,9 +124,18 @@ define(function(require) {
         'PAGE_SIZE'   : '/pageSize/',
         'BRAND'       : '?brand='
     };
+    // Feedback
     globals.WEBSERVICE.FEEDBACK = {
-    	'URL'     : 'https://uat.account.wexmobile.com/mobileweb/siteLocator/feedback',
+    	'URL'     : globals.WEBSERVICE.ROOT_URL + '/feedback',
     	'SUBJECT' : 'OCTANE FEEDBACK'
+    };
+    // FuelTypes
+    globals.WEBSERVICE.FUEL_TYPES = {
+        'URL' : globals.WEBSERVICE.ROOT_URL + '/fuelTypes'
+    };
+    // Brands
+    globals.WEBSERVICE.BRANDS = {
+        'URL' : globals.WEBSERVICE.ROOT_URL + '/limitedBrands'
     };
 
     /*
@@ -222,10 +243,7 @@ define(function(require) {
             {
                 'label' : 'Fuel Type',
                 'name'  : globals.search.constants.NAME_FUEL_TYPE,
-                'values': [
-                    globals.FUEL_TYPE.configuration.GASOLINE,
-                    globals.FUEL_TYPE.configuration.DIESEL
-                ]
+                'values': []
             }
         ],
         'brand': [
