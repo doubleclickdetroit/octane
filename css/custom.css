@@ -912,6 +912,9 @@ i.ui-logo[data-brand='WAWA']             { background-image: url(../img/brand_lo
     counter-increment: section; /* Increment the section counter */
     content: counter(section);  /* Display the counter */
 }
+#directions ul[data-role="listview"] .ui-block-b {
+    width: 70%;
+}
 
 
 /*********************************************
