@@ -892,6 +892,7 @@ i.ui-logo[data-brand='WAWA']             { background-image: url(../img/brand_lo
     i.ui-logo[data-brand='WAWA']             { background-image: url(../img/brand_logo/Wawa@2x.png);          }
 }
 
+
 /*********************************************
  * Fuelsites - Page
 *********************************************/
@@ -899,6 +900,19 @@ i.ui-logo[data-brand='WAWA']             { background-image: url(../img/brand_lo
     padding-top   : 5px;
     padding-bottom: 5px;
 }
+
+
+/*********************************************
+ * Directions - Page
+*********************************************/
+#directions ul[data-role="listview"] {
+    counter-reset: section;     /* Set the section counter to 0 */
+}
+#directions ul[data-role="listview"] .ui-block-a:before {
+    counter-increment: section; /* Increment the section counter */
+    content: counter(section);  /* Display the counter */
+}
+
 
 /*********************************************
  * Forecast - Page
