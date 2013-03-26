@@ -37,7 +37,7 @@ function(globals, utils, LocationModel, BackboneModel, SearchModel, SearchView) 
         SearchController.prototype.updateSearchCriteriaModel = function(criteria) {
             // update searchCriteriaModel for the view to consume
             // but silently so the view can decide when to use the data
-            searchCriteriaModel.set(criteria, {silent:true});
+            searchCriteriaModel.set(criteria, {'silent':true});
         };
 
         SearchController.prototype.resetSearchViewModel = function() {
@@ -49,8 +49,10 @@ function(globals, utils, LocationModel, BackboneModel, SearchModel, SearchView) 
             searchViewModel.set(key, val);
         };
 
-        SearchController.prototype.saveSearchCriteriaModel = function() {
-            console.log('saveSearchCriteriaModel', searchViewModel.save());
+        SearchController.prototype.saveSearchCriteriaModel = function(callback) {
+            searchViewModel.save({}, {
+                'callback': callback
+            });
         };
 
         return SearchController;

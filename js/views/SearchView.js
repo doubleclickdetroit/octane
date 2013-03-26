@@ -90,7 +90,10 @@ function($, _, globals, facade, Backbone, Mustache, tmpl) {
 
         handleCriteriaSubmission: function(evt) {
             evt.preventDefault();
-            facade.publish('search', 'saveCriteria');
+            facade.publish('search', 'saveCriteria', function(criteria) {
+                facade.publish('fuelsites', 'navigate');
+                facade.publish('criteria', 'update', criteria);
+            });
         }
     });
 

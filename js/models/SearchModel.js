@@ -12,17 +12,20 @@ function(globals, utils, Backbone) {
         /*
          * Helper Methods
         */
-        function getCurrentLocation() {
+        function getLocationFromType(type, data) {
             var deferred = $.Deferred();
 
-            new LocationHelper()
-                .locateFromCurrentLocation()               // fetch location
+            // type of location request
+            type = type === 'address' ? 'Address' : 'CurrentLocation';
+
+            // request location & resolve with data
+            new LocationHelper()['locateFrom'+type](data)
                 .once('change', function() {
-                    console.log('change', arguments);
-                    deferred.resolveWith(this, arguments); // resolve with data
+                    deferred.resolveWith(this, arguments);
                 }, this);
 
-            return deferred.promise();                     // return promisary-object
+            // return promisary-object
+            return deferred.promise();
         }
 
         /***********************************************************************
@@ -43,7 +46,7 @@ function(globals, utils, Backbone) {
                     this.respondToSearchByAddress();
                 }
                 if (searchBy === globals.search.constants.SEARCH_BY_CURRENT_LOCATION) {
-                    this.respondToSearchByLocation();
+                    this.respondToSearchByPosition();
                 }
             }, this);
         };
@@ -56,6 +59,18 @@ function(globals, utils, Backbone) {
 
         SearchModel.prototype.sync = function(method, model, options) {
             // override to prevent from trying to UPDATE server
+            if (method === 'update') {
+                if (model.get('searchBy') === globals.search.constants.SEARCH_BY_ADDRESS) {
+                    var address = this.get('location');
+                    this.requestHelperForLocation('address', address, function(location) {
+                        model.set(location.toJSON());     // update attributes with location
+                        options.callback(model.toJSON()); // invoke callback with model
+                    });
+                }
+                else {
+                    options.callback(model.toJSON());     // invoke callback with model
+                }
+            }
         };
 
         SearchModel.prototype.respondToSearchByAddress = function() {
@@ -66,16 +81,17 @@ function(globals, utils, Backbone) {
             });
         };
 
-        SearchModel.prototype.respondToSearchByLocation = function() {
-            this.trigger('loadingbegin');             // start loading indicator
+        SearchModel.prototype.respondToSearchByPosition = function() {
+            this.requestHelperForLocation('position', null, function(location) {
+                this.set(location.toJSON()); // update attributes with location
+            });
+        };
 
-            utils.when(getCurrentLocation.call(this)) // deferred for current location with context
-                .then(function(model) {
-                    this.set(model.toJSON());         // update searchViewModel attributes
-                })
-                .done(function() {
-                    this.trigger('loadingend');       // stop loading indicator
-                });
+        SearchModel.prototype.requestHelperForLocation = function(type, data, callback) {
+            this.trigger('loadingbegin');                          // start loading indicator
+            utils.when(getLocationFromType.call(this, type, data)) // deferred for current location with context
+                .then(callback)                                    // send data to callback
+                .done(function() { this.trigger('loadingend'); }); // stop loading indicator
         };
 
         return SearchModel;
