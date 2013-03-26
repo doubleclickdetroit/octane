@@ -10,6 +10,7 @@ define(function(require) {
      * Environment
     */
     globals.ENVIRONMENT = {
+        'DEV' : '',
         'UAT' : 'uat.',
         'PROD': ''
     };
@@ -20,7 +21,7 @@ define(function(require) {
     globals.APP = {
         'NAME'       : 'Octane',
         'VERSION'    : '3.0',
-        'ENVIRONMENT': globals.ENVIRONMENT.UAT,
+        'ENVIRONMENT': globals.ENVIRONMENT.DEV,
         'EMAIL_ADDRESS_VALIDATION_PATTERN': '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$'
     };
 
