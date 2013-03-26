@@ -30,20 +30,28 @@ function($, _, globals, facade, Backbone, Mustache, tmpl) {
                 facade.publish('app', 'alert', error);
             });
 
+            // collection events
+            this.collection.on('reset', function(collection) {
+                var configuration = _.clone(globals.search.configuration);
+
+                // dynamic values for configuration-object for some fields
+                configuration['brand'][0]['values']    = collection.get('brand').toJSON()['values'];
+                configuration['fuelType'][0]['values'] = collection.get('fuelType').toJSON()['values'];
+
+                // create page with updated configuration-object
+                this.pageCreate(configuration);
+            }, this);
+
             // jQM Events
             this.$el.on('pageshow', this.render);
             this.$el.on('pagebeforeshow', function() {
                 facade.publish('search', 'beforeRender');
             });
-
-            // create page
-            this.pageCreate();
         },
 
-        pageCreate: function() {
+        pageCreate: function(configuration) {
             this.$content.html(Mustache.render(
-                tmpl,
-                globals.search.configuration
+                tmpl, configuration
             ));
         },
 

@@ -11,7 +11,7 @@ function(facade, controller) {
     subscribe = facade.subscribeTo('search', controller);
 
     //
-    subscribe('navigate', 'navigate');
+    subscribe('navigate', 'navigate', controller.beforeNavigateCondition);
 
     //
     subscribe('beforeRender', 'resetSearchViewModel');

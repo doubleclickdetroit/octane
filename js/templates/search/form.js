@@ -59,7 +59,11 @@
         </div>
         <div class="ui-block-b searchfieldtable" >
             <span class="select-drop select-brand">
-                <select id="brandsSelector" name="{{name}}"></select>
+                <select id="brandsSelector" name="{{name}}">
+                {{#values}}
+                    <option value="{{value}}">{{label}}</option>
+                {{/values}}
+                </select>
             </span>
          </div>
      {{/brand}}

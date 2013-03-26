@@ -1,5 +1,5 @@
-define([ 'globals', 'utils', 'models/LocationModel', 'models/BackboneModel', 'models/SearchModel', 'views/SearchView' ],
-function(globals, utils, LocationModel, BackboneModel, SearchModel, SearchView) {
+define([ 'globals', 'utils', 'models/LocationModel', 'models/BackboneModel', 'models/SearchModel', 'collections/SearchCollection', 'views/SearchView' ],
+function(globals, utils, LocationModel, BackboneModel, SearchModel, SearchCollection, SearchView) {
 
     'use strict';
 
@@ -7,7 +7,7 @@ function(globals, utils, LocationModel, BackboneModel, SearchModel, SearchView) 
     var SearchController;
     SearchController = (function() {
 
-        var searchCriteriaModel, searchViewModel, searchView;
+        var searchCriteriaModel, searchViewModel, searchCollection, searchView;
 
         /***********************************************************************
          * Constructor
@@ -17,19 +17,35 @@ function(globals, utils, LocationModel, BackboneModel, SearchModel, SearchView) 
         }
 
         SearchController.prototype.init = function() {
-            // create model & view instances
+            // create model, collection & view instances
             searchViewModel = new SearchModel({
                 locationHelper: LocationModel
             });
 
+            searchCollection = new SearchCollection();
+
             searchView = new SearchView({
-                model: searchViewModel
+                model     : searchViewModel,
+                collection: searchCollection
             });
         };
 
         /*
          * Public Methods
         */
+        SearchController.prototype.beforeNavigateCondition = function() {
+            if (searchCollection.length === 0) {                           // collection is empty
+                searchCollection
+                    .once('loadingbegin', searchView.showLoadingIndicator) // show loading indicator
+                    .once('loadingend', searchView.hideLoadingIndicator)   // show loading indicator
+                    .once('reset', this.navigate)                          // finally allow navigate
+                    .fetch();                                              // fetch collection data
+            }
+
+            // return condition allow navigate?
+            return !!searchCollection.length;
+        };
+
         SearchController.prototype.navigate = function() {
             utils.changePage(searchView.$el);
         };
