@@ -7,11 +7,21 @@ define(function(require) {
     globals = {};
 
     /*
+     * Environment
+    */
+    globals.ENVIRONMENT = {
+        'DEV' : '',
+        'UAT' : 'uat.',
+        'PROD': ''
+    };
+
+    /*
      * App
     */
     globals.APP = {
-        'NAME'                            : 'Octane',
-        'VERSION'                         : '3.0',
+        'NAME'       : 'Octane',
+        'VERSION'    : '3.0',
+        'ENVIRONMENT': globals.ENVIRONMENT.DEV,
         'EMAIL_ADDRESS_VALIDATION_PATTERN': '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$',
         'ZIP_CODE_PATTERN'                : '/\\d{5}-\\d{4}|\\d{5}|[A-Z]\\d[A-Z] \\d[A-Z]\\d/'
     };
@@ -25,6 +35,7 @@ define(function(require) {
         'FUEL_TYPE'      : 'Gasoline',
         'FUEL_TYPE_GRADE': 'Unleaded Regular',
         'SORT_BY'        : 'Price',
+        'START_LOCATION' : 'currentLocation',
         'UNDEFINED'      : undefined,
         'EMPTY_STRING'   : ''
     };
@@ -39,7 +50,47 @@ define(function(require) {
         'TIMEOUT'              : 200000,
         'SUCCESS'              : 'Database operation successful.'
     };
-    
+
+    /*
+     * Fuel Type
+    */
+    globals.FUEL_TYPE = {};
+    globals.FUEL_TYPE.constants = {
+        'GASOLINE': globals.DEFAULT.FUEL_TYPE,
+        'DIESEL'  : 'Diesel'
+    };
+    globals.FUEL_TYPE.configuration = {
+        'GASOLINE': {
+            'label': globals.FUEL_TYPE.constants.GASOLINE,
+            'value': globals.FUEL_TYPE.constants.GASOLINE
+        },
+        'DIESEL': {
+            'label': globals.FUEL_TYPE.constants.DIESEL,
+            'value': globals.FUEL_TYPE.constants.DIESEL
+        }
+    };
+
+    /*
+     * Sort By
+    */
+    globals.SORT_BY = {};
+    globals.SORT_BY.constants = {
+        'PRICE'   : globals.DEFAULT.SORT_BY,
+        'DISTANCE': 'Distance'
+    };
+    globals.SORT_BY.configuration = {
+        'PRICE': {
+            'label'  : globals.SORT_BY.constants.PRICE,
+            'value'  : globals.SORT_BY.constants.PRICE,
+            'default': globals.DEFAULT.SORT_BY === globals.SORT_BY.constants.PRICE
+        },
+        'DISTANCE': {
+            'label'  : globals.SORT_BY.constants.DISTANCE,
+            'value'  : globals.SORT_BY.constants.DISTANCE,
+            'default': globals.DEFAULT.SORT_BY === globals.SORT_BY.constants.DISTANCE
+        }
+    };
+
     /*
      * Rate the App
      */
@@ -58,9 +109,12 @@ define(function(require) {
     /*
      * Webservices
     */
-    globals.WEBSERVICE = {};
+    globals.WEBSERVICE = {
+        'ROOT_URL': 'https://'+ globals.APP.ENVIRONMENT +'account.wexmobile.com/mobileweb/siteLocator'
+    };
+    // Fuelsites
     globals.WEBSERVICE.FUEL_SITE = {
-        'URL'         : 'https://account.wexmobile.com/mobileweb/siteLocator/fuelSites',
+        'URL'         : globals.WEBSERVICE.ROOT_URL + '/fuelSites',
         'FUEL_SITES'  : '/fuelSites',
         'LONGITUDE'   : '/longitude/',
         'LATITUDE'    : '/latitude/',
@@ -72,16 +126,25 @@ define(function(require) {
         'PAGE_SIZE'   : '/pageSize/',
         'BRAND'       : '?brand='
     };
+    // Feedback
     globals.WEBSERVICE.FEEDBACK = {
-    	'URL'     : 'https://uat.account.wexmobile.com/mobileweb/siteLocator/feedback',
+    	'URL'     : globals.WEBSERVICE.ROOT_URL + '/feedback',
     	'SUBJECT' : 'OCTANE FEEDBACK'
+    };
+    // FuelTypes
+    globals.WEBSERVICE.FUEL_TYPES = {
+        'URL' : globals.WEBSERVICE.ROOT_URL + '/fuelTypes'
+    };
+    // Brands
+    globals.WEBSERVICE.BRANDS = {
+        'URL' : globals.WEBSERVICE.ROOT_URL + '/limitedBrands'
     };
 
     /*
      * Search Details
     */
     globals.SEARCH_DETAILS = {
-        'START_LOCATION' : 'currentLocation',
+        'START_LOCATION' : globals.DEFAULT.START_LOCATION,
         'RADIUS'         : '5.0',
         'FUEL_TYPE'      : globals.DEFAULT.FUEL_TYPE_GRADE,
         'SORT_BY'        : globals.DEFAULT.SORT_BY,
@@ -109,6 +172,118 @@ define(function(require) {
     };
 
     /*
+     * Page :: Search
+    */
+    globals.search = {};
+    globals.search.constants = {
+        'SEARCH_BY_ADDRESS'         : 'enterLocation',
+        'SEARCH_BY_CURRENT_LOCATION': 'currentLocation',
+        'NAME_SEARCH_BY'     : 'searchBy',
+        'NAME_LOCATION'      : 'location',
+        'NAME_RADIUS'        : 'radius',
+        'NAME_FUEL_TYPE'     : 'fuelType',
+        'NAME_BRAND'         : 'brand',
+        'NAME_SORT_BY'       : 'sortBy',
+        'NAME_DEFAULT_SEARCH': 'updatedResult', // this may not be correct
+        'INVALID_LOCATION_MESSAGE': 'Current location cannot be found. Please enter a location.'
+    };
+    globals.search.configuration = {
+        'searchBy': [
+            {
+                'label'  : 'Current location',
+                'value'  : globals.search.constants.SEARCH_BY_CURRENT_LOCATION,
+                'id'     : 'searchByRadio1',
+                'name'   : globals.search.constants.NAME_SEARCH_BY,
+                'default': true
+            },
+            {
+                'label': 'Enter location',
+                'value': 'enterLocation',
+                'id'   : 'searchByRadio2',
+                'name'   : globals.search.constants.NAME_SEARCH_BY,
+                'default': false
+            }
+        ],
+        'location': [
+            {
+                'name': globals.search.constants.NAME_LOCATION
+            }
+        ],
+        'radius': [
+            {
+                'label' : 'Radius',
+                'name'  : globals.search.constants.NAME_RADIUS,
+                'values': [
+                    {
+                        'label': '5 Miles',
+                        'value': '5.0'
+                    },
+                    {
+                        'label': '7.5 Miles',
+                        'value': '7.5'
+                    },
+                    {
+                        'label': '10 Miles',
+                        'value': '10'
+                    },
+                    {
+                        'label': '15 Miles',
+                        'value': '15'
+                    },
+                    {
+                        'label': '20 Miles',
+                        'value': '20'
+                    },
+                    {
+                        'label': '30 Miles',
+                        'value': '30'
+                    }
+                ]
+            }
+        ],
+        'fuelType': [
+            {
+                'label' : 'Fuel Type',
+                'name'  : globals.search.constants.NAME_FUEL_TYPE,
+                'values': []
+            }
+        ],
+        'brand': [
+            {
+                'label' : 'Brand',
+                'name'  : globals.search.constants.NAME_BRAND,
+                'values': []
+            }
+        ],
+        'sortBy': [
+            {
+                'label' : 'Sort by',
+                'name'  : globals.search.constants.NAME_SORT_BY,
+                'values': [
+                    globals.SORT_BY.configuration.PRICE,
+                    globals.SORT_BY.configuration.DISTANCE
+                ]
+            }
+        ],
+        'defaultSearch': [
+            {
+                'label' : 'Set as default search',
+                'name'  : globals.search.constants.NAME_DEFAULT_SEARCH,
+                'values': [
+                    {
+                        'label': 'NO',
+                        'value': 'NO'
+                    },
+                    {
+                        'label': 'YES',
+                        'value': 'YES'
+                    }
+                ]
+            }
+        ]
+    };
+
+    /*
      * Page :: Alerts
     */
     globals.alerts = {};
@@ -131,14 +306,8 @@ define(function(require) {
             }
         ],
         'fuelType': [
-            {
-                'label': 'Gasoline',
-                'value': globals.alerts.constants.DEFAULT_FUEL_TYPE
-            },
-            {
-                'label': 'Diesel',
-                'value': 'Diesel'
-            }
+            globals.FUEL_TYPE.configuration.GASOLINE,
+            globals.FUEL_TYPE.configuration.DIESEL
         ],
         'forecastChange': [
             {
@@ -165,8 +334,8 @@ define(function(require) {
     globals.forecast.configuration = {
         'fuelType': [
             {
-                'label' : 'Gasoline',
-                'value' : globals.forecast.constants.DEFAULT_FUEL_TYPE,
+                'label' : globals.FUEL_TYPE.configuration.GASOLINE.label,
+                'value' : globals.FUEL_TYPE.configuration.GASOLINE.value,
                 'grades': [
                     globals.DEFAULT.UNDEFINED,
                     'Gasoline',
@@ -176,8 +345,8 @@ define(function(require) {
                 ]
             },
             {
-                'label' : 'Diesel',
-                'value' : 'Diesel',
+                'label' : globals.FUEL_TYPE.configuration.DIESEL.label,
+                'value' : globals.FUEL_TYPE.configuration.DIESEL.value,
                 'grades': [
                     'Diesel',
                     'Diesel Regular',
@@ -227,20 +396,20 @@ define(function(require) {
             'buttons': [
                 {
                     'id'   : 'a',
-                    'label': globals.DEFAULT.SORT_BY,
+                    'label': globals.SORT_BY.configuration.PRICE.label,
                     'type' : 'button',
                     'close': true
                 },
                 {
                     'id'   : 'b',
-                    'label': 'Distance',
+                    'label': globals.SORT_BY.configuration.DISTANCE.label,
                     'type' : 'button',
                     'close': true
                 }
             ]
         }
     };
-    
+
     /*
      * Page :: Feedback
      */
@@ -265,7 +434,7 @@ define(function(require) {
         	'label'      : '',
         	'placeholder': 'Enter Message',
         	'value'      : ''
-        }       
+        }
     };
 
 

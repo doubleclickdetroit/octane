@@ -42,7 +42,12 @@ function($, _, Backbone, globals) {
     utils.isPlainObject = utils.$.isPlainObject;
 
     /*
-     * Is Deferred Helper Method
+     * Deferred Helper Method
+    */
+    utils.Deferred = utils.$.Deferred;
+
+    /*
+     * Deferred When Helper Method
     */
     utils.when = utils.$.when;
 

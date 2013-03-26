@@ -74,6 +74,8 @@ function(utils, globals, Backbone) {
                 //
                 this.trigger('loadingend');
             }, this);
+
+            return this;
         };
 
         LocationModel.prototype.locateFromCurrentLocation = function() {
@@ -99,6 +101,8 @@ function(utils, globals, Backbone) {
                 }, this);
 
             }, this);
+
+            return this;
         };
 
         return LocationModel;

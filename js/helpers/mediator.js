@@ -47,7 +47,7 @@ function () {
                 callback   = subscriber.controller[subscriber.action],
                 condition  = subscriber.condition;
 
-            if (condition.apply(null, args) === true) {
+            if (condition.apply(subscriber.controller, args) === true) {
                 callback.apply(subscriber.controller, args);
             }
         }

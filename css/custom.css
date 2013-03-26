@@ -16,9 +16,9 @@
 	border-radius: 			.6em /*{global-radii-blocks}*/;
 	padding:12px;
 	height:auto;
--moz-box-shadow: 0px 1px 4px /*{global-box-shadow-size}*/ 			rgba(0,0,0,.3) /*{global-box-shadow-color}*/;
+    -moz-box-shadow: 0px 1px 4px /*{global-box-shadow-size}*/ 			rgba(0,0,0,.3) /*{global-box-shadow-color}*/;
 	-webkit-box-shadow: 0px 1px 4px /*{global-box-shadow-size}*/ 		rgba(0,0,0,.3) /*{global-box-shadow-color}*/;
-	box-shadow: 0px 1px 4px /*{global-box-shadow-size}*/ 				rgba(0,0,0,.3) /*{global-box-shadow-color}*/;					rgba(255,255,255,.3);
+	box-shadow: 0px 1px 4px /*{global-box-shadow-size}*/ 				rgba(0,0,0,.3) /*{global-box-shadow-color}*/;
 	background-image: -webkit-gradient(linear, left top, left bottom, from( #ffffff/*{c-bhover-background-start}*/), to(#e2e7e8 /*{c-bhover-background-end}*/)); /* Saf4+, Chrome */
 	background-image: -webkit-linear-gradient(#ffffff /*{c-bhover-background-start}*/,#e2e7e8 /*{c-bhover-background-end}*/); /* Chrome 10+, Saf5.1+ */
 	background-image:    -moz-linear-gradient(#ffffff /*{c-bhover-background-start}*/, #e2e7e8 /*{c-bhover-background-end}*/); /* FF3.6 */
@@ -328,7 +328,7 @@ a.bimbag{
 
 .activereadmore .ui-btn-active {
 	font-weight: bold;
-	/*color: 	#444 {c-bup-color}*/;
+	/*color: 	#444 {c-bup-color};*/
 
 }
 
@@ -364,14 +364,14 @@ a.bimbag{
 
 }
 
-.direction-header-bodyground{ ;position: relative; padding: .4em 15px; overflow: hidden; display: block; clear:both;
-background-image: -webkit-gradient(linear, left top, left bottom, from( #eef5f8 ), to( #d1d5d7 )); /* Saf4+, Chrome */
-                background-image: -webkit-linear-gradient( #eef5f8 , #d1d5d7 /); /* Chrome 10+, Saf5.1+ */
-                background-image:    -moz-linear-gradient( #eef5f8 , #d1d5d7 ); /* FF3.6 */
-                background-image:     -ms-linear-gradient( #eef5f8 , #d1d5d7 ); /* IE10 */
-                background-image:      -o-linear-gradient( #eef5f8 , #d1d5d7 ); /* Opera 11.10+ */
-                background-image:         linear-gradient( #eef5f8 , #d1d5d7 );
-                }
+.direction-header-bodyground{ position: relative; padding: .4em 15px; overflow: hidden; display: block; clear:both;
+    background-image: -webkit-gradient(linear, left top, left bottom, from( #eef5f8 ), to( #d1d5d7 )); /* Saf4+, Chrome */
+    background-image: -webkit-linear-gradient( #eef5f8 , #d1d5d7 ); /* Chrome 10+, Saf5.1+ */
+    background-image:    -moz-linear-gradient( #eef5f8 , #d1d5d7 ); /* FF3.6 */
+    background-image:     -ms-linear-gradient( #eef5f8 , #d1d5d7 ); /* IE10 */
+    background-image:      -o-linear-gradient( #eef5f8 , #d1d5d7 ); /* Opera 11.10+ */
+    background-image:         linear-gradient( #eef5f8 , #d1d5d7 );
+}
 
 
 #directionList a.listLink { display:none !important; padding:0px !important; }
@@ -892,6 +892,7 @@ i.ui-logo[data-brand='WAWA']             { background-image: url(../img/brand_lo
     i.ui-logo[data-brand='WAWA']             { background-image: url(../img/brand_logo/Wawa@2x.png);          }
 }
 
+
 /*********************************************
  * Fuelsites - Page
 *********************************************/
@@ -899,6 +900,22 @@ i.ui-logo[data-brand='WAWA']             { background-image: url(../img/brand_lo
     padding-top   : 5px;
     padding-bottom: 5px;
 }
+
+
+/*********************************************
+ * Directions - Page
+*********************************************/
+#directions ul[data-role="listview"] {
+    counter-reset: section;     /* Set the section counter to 0 */
+}
+#directions ul[data-role="listview"] .ui-block-a:before {
+    counter-increment: section; /* Increment the section counter */
+    content: counter(section);  /* Display the counter */
+}
+#directions ul[data-role="listview"] .ui-block-b {
+    width: 70%;
+}
+
 
 /*********************************************
  * Forecast - Page

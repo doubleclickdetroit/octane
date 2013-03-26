@@ -35,8 +35,17 @@ function($, _, Backbone, facade, globals) {
 
             // does event warrant loader?
             function toggleLoader(evt) {
-                if (evt === 'request') handleLoader.call(this, true);
-                if (evt === 'reset')   handleLoader.call(this, false);
+                switch(evt) {
+                    case 'request'     :
+                    case 'loadingbegin':
+                        handleLoader.call(this, true);
+                        break;
+
+                    case 'reset'     :
+                    case 'loadingend':
+                        handleLoader.call(this, false);
+                        break;
+                }
             }
 
             // the initialize method inherited by subclasses
