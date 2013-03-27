@@ -109,12 +109,12 @@ function(globals, utils, facade, Backbone) {
             facade.publish('app', 'confirm'
                 , globals.RATE_IT.MESSAGE      // message
                 /* callback */
-                , function (button) {
+                , function(button) {
 
                     // yes = 1, later = 2, no = 3
                     if (button == '1') {    // Rate Now
                         // navigate to the app in iTunes
-                    	window.location.href = globals.RATE_IT.URL_IOS;
+                        window.location = globals.RATE_IT.URL_IOS;
 
                         self.model.set('isAppRated', self.model.get('buildVersion'));
                     }

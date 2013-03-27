@@ -96,7 +96,7 @@ define(function(require) {
      */
      globals.RATE_IT = {
         'MESSAGE'          : 'If you like Octane, please rate it. Thanks for your support!',
-        'URL_IOS'          : 'itms-apps://itunes.apple.com/us/app/octane/id480887516?ls=1&mt=8',
+        'URL_IOS'          : 'itms://itunes.apple.com/us/app/octane/id480887516?ls=1&mt=8',
         'URL_ANDROID'      : 'market://details?id=com.wex.octane',
         'APPLICATION_COUNT': 'appOpenCount',
         'BUTTON_NAMES'     : 'Rate It,Remind Me Later, No Thanks',
