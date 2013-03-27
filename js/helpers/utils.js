@@ -32,6 +32,16 @@ function($, _, Backbone, globals) {
     utils.__hasProp = {}.hasOwnProperty;
 
     /*
+     * Trim Text Helper Method
+    */
+    utils.trim = utils.$.trim;
+
+    /*
+     * inArray Helper Method
+    */
+    utils.inArray = utils.$.inArray;
+
+    /*
      * Is Function Helper Method
     */
     utils.isFn = utils.isFunction = utils.$.isFunction;
@@ -40,6 +50,11 @@ function($, _, Backbone, globals) {
      * Is Plain Object Helper Method
     */
     utils.isPlainObject = utils.$.isPlainObject;
+
+    /*
+     * GET JSON Helper Method
+    */
+    utils.getJSON = utils.$.getJSON;
 
     /*
      * Deferred Helper Method
@@ -103,9 +118,9 @@ function($, _, Backbone, globals) {
             updateHash = false;
         }
 
-        $(function() {
+        utils.$(function() {
 
-            $.mobile.changePage(viewID, {
+            utils.$.mobile.changePage(viewID, {
                 transition: effect,
                 reverse   : direction,
                 changeHash: updateHash
