@@ -13,6 +13,8 @@ function(DatabaseManager) {
          * Insert search data into the SearchDetails table
          *
          * @param : contain settings data-object
+         * @param : function
+         * @param : [context for this]
          * @return: none
         */
         function insertSearchDetails(data, callback, context) {
@@ -49,7 +51,8 @@ function(DatabaseManager) {
         /*
          * Get the default search data
          *
-         * @param : none
+         * @param : function
+         * @param : [context for this]
          * @return: none
         */
         function getDefaultSearchValue(callback, context) {
@@ -68,12 +71,13 @@ function(DatabaseManager) {
         /*
          * Function to delete data from search Results where view mode is default </summary>
          *
-         * @param : none
-         * @return: none
+         * @param : function
+         * @param : [context for this]
         */
         function deleteDefaultSearchData(callback, context) {
             var sql, db = database.openDatabase();
             sql = "DELETE FROM SearchDetails WHERE ViewMode = 'default'";
+
             db.transaction(function(tx) {
                 tx.executeSql(sql, [], function() {
                     if (callback) { callback.call(context || window); }
@@ -86,7 +90,6 @@ function(DatabaseManager) {
          * Constructor
         ***********************************************************************/
         function SearchDetailsDatabaseManager() {
-            // console.log('SearchDetailsDatabaseManager init');
             database = DatabaseManager.getInstance();
         }
 
