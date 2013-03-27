@@ -31,8 +31,8 @@ function(SearchDetailsModel) {
             searchDetailsModel.set(attributes);
         };
 
-        SearchDetailsController.prototype.saveCriteria = function(name) {
-            console.log('SearchDetailsController saveCriteria:', name);
+        SearchDetailsController.prototype.insertAttributes = function(attributes) {
+            console.log('SearchDetailsController insertAttributes:', attributes);
         };
 
         SearchDetailsController.prototype.updateLocationAttributes = function(location) {

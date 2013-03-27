@@ -11,7 +11,7 @@ function(facade, controller) {
     subscribe = facade.subscribeTo('criteria', controller);
 
     //
-    facade.subscribe('criteria', 'save', controller, 'saveCriteria');
+    facade.subscribe('criteria', 'save', controller, 'insertAttributes');
 
     //
     facade.subscribe('criteria', 'update', controller, 'updateAttributes');
