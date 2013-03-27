@@ -53,46 +53,12 @@ function(DatabaseManager) {
         }
 
         /*
-         * Insert search data into the SearchDetails table
+         * Delete Favorite
          *
-         * @param : contain settings data-object
+         * @param : number, string
          * @param : function
          * @param : [context for this]
          * @return: none
-        */
-        function insertSearchDetails(data, callback, context) {
-            var sql, db = database.openDatabase();
-            sql = 'INSERT INTO SearchDetails ('
-                + 'SearchBy, Location, Latitude, Longitude, Radius, FuelType, UpdatedResult, '
-                + 'SortBy, Brand, ViewMode, LimitResult, FavoritesName) VALUES '
-                + '(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
-
-            if (data) {
-                db.transaction(function(tx) {
-                    tx.executeSql(sql, [
-                        data.searchBy,
-                        data.location,
-                        data.latitude,
-                        data.longitude,
-                        data.radius,
-                        data.fuelType,
-                        data.updatedResult,
-                        data.sortBy,
-                        data.brand,
-                        data.viewMode,
-                        data.limitResult,
-                        data.favoritesName
-                    ], function() {
-                        if (callback) {
-                            callback.call(context || window);
-                        }
-                    });
-                }, database.error);
-            }
-        }
-
-        /*
-         *
         */
         function deleteFavoriteSearchData(favoriteId, callback, context) {
             var sql, db = this.openDatabase();
@@ -118,7 +84,6 @@ function(DatabaseManager) {
         */
         FavoritessDatabaseManager.prototype.getFavoritesSearchValue  = getFavoritesSearchValue;
         FavoritessDatabaseManager.prototype.getFavoritesSearchId     = getFavoritesSearchId;
-        FavoritessDatabaseManager.prototype.insertSearchDetails      = insertSearchDetails;
         FavoritessDatabaseManager.prototype.deleteFavoriteSearchData = deleteFavoriteSearchData;
 
         return FavoritessDatabaseManager;
