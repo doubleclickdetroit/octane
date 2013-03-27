@@ -31,7 +31,7 @@ function(globals, utils, facade, Backbone, Mustache, tmpl_directions) {
         },
 
         requestDirections: function(fuelSiteModel) {
-            var deferred = $.Deferred();
+            var deferred = utils.Deferred();
 
             // update request object
             utils._.extend(this.request, {
@@ -79,7 +79,7 @@ function(globals, utils, facade, Backbone, Mustache, tmpl_directions) {
         handleDirectionTextToSpeech: function(evt) {
             evt.preventDefault();
             var $e = utils.$(evt.target).closest('a').find('.ui-block-b');
-            facade.publish('app', 'speak', $.trim($e.text()));
+            facade.publish('app', 'speak', utils.trim($e.text()));
         }
     });
 

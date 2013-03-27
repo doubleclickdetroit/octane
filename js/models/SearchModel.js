@@ -13,7 +13,7 @@ function(globals, utils, Backbone) {
          * Helper Methods
         */
         function getLocationFromType(type, data) {
-            var deferred = $.Deferred();
+            var deferred = utils.Deferred();
 
             // type of location request
             type = type === 'address' ? 'Address' : 'CurrentLocation';

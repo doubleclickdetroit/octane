@@ -28,7 +28,7 @@ function(globals, utils, facade, Backbone) {
             // handle toggling loading indicator
             function handleLoader(toggle) {
                 // is this page visible?
-                if (this.$el.is($.mobile.activePage)) {
+                if (this.$el.is(utils.$.mobile.activePage)) {
                     this[(toggle ? 'show' : 'hide')+'LoadingIndicator']();
                 }
             }
@@ -62,7 +62,7 @@ function(globals, utils, facade, Backbone) {
                     handleLoader.call(this, true);
                 }
                 else {
-                    $.mobile.showPageLoadingMsg();
+                    utils.$.mobile.showPageLoadingMsg();
                 }
             };
             Backbone.View.prototype.hideLoadingIndicator = function (checkView) {
@@ -70,7 +70,7 @@ function(globals, utils, facade, Backbone) {
                     handleLoader.call(this, false);
                 }
                 else {
-                    $.mobile.hidePageLoadingMsg();
+                    utils.$.mobile.hidePageLoadingMsg();
                 }
             };
         },
@@ -79,7 +79,7 @@ function(globals, utils, facade, Backbone) {
          * Public Methods
         */
         displayAlert: function (message, callback, btnLabel, title) {
-            callback = $.isFunction(callback) ? callback : function(){};
+            callback = utils.isFn(callback) ? callback : function(){};
             title = title === undefined ? ' ' : title;
 
             if (navigator.notification) {
@@ -91,7 +91,7 @@ function(globals, utils, facade, Backbone) {
         },
 
         displayConfirm: function (message, callback, btnLabels, title) {
-            callback = $.isFunction(callback) ? callback : function(){};
+            callback = utils.isFn(callback) ? callback : function(){};
             title = title === undefined ? ' ' : title;
 
             if (navigator.notification) {

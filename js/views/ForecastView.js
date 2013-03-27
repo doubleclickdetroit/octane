@@ -38,8 +38,8 @@ function(globals, utils, facade, Backbone, Mustache, tmpl) {
             json = data.toJSON();
 
             // toggle loading message
-            if (json.indicator === 'loading') setTimeout($.mobile.showPageLoadingMsg, 0);
-            else if (json.indicator !== '')   setTimeout($.mobile.hidePageLoadingMsg, 0);
+            if (json.indicator === 'loading') setTimeout(this.showLoadingIndicator, 0);
+            else if (json.indicator !== '')   setTimeout(this.hideLoadingIndicator, 0);
 
             // set values for controls
             this.$('#forecastIndicator').attr(attr, json.indicator);

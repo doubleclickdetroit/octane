@@ -104,7 +104,7 @@ function(globals, utils, Backbone) {
         */
         ForecastModel.prototype.loadAttributes = function(id, callback) {
 
-            var deferred = utils.$.Deferred();
+            var deferred = utils.Deferred();
 
             // respond to promisary-object
             utils.when(deferred.promise())
@@ -136,7 +136,7 @@ function(globals, utils, Backbone) {
         };
 
         ForecastModel.prototype.saveAttributes = function(attrs) {
-            var deferred = utils.$.Deferred();
+            var deferred = utils.Deferred();
 
             // reset the values so new (or same) values trigger "change" event
             this.set(this.defaults, {silent:true});

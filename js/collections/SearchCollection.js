@@ -16,8 +16,8 @@ function(globals, utils, Backbone) {
 
             utils
                 .when(
-                    utils.$.getJSON(webservice.BRANDS.URL),
-                    utils.$.getJSON(webservice.FUEL_TYPES.URL)
+                    utils.getJSON(webservice.BRANDS.URL),
+                    utils.getJSON(webservice.FUEL_TYPES.URL)
                 )
                 .done(function(brands, fuelTypes) {
                     deferred.resolve([

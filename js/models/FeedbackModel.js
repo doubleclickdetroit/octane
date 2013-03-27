@@ -52,7 +52,7 @@ function(globals, utils, facade, Backbone) {
                 url  = globals.feedback.constants.WEBSERVICE.URL;
 
             // Add the model attributes as query string params to the URL
-            if (data) url += '?' + $.param(data);
+            if (data) url += '?' + utils.$.param(data);
 
             return url;
         };
