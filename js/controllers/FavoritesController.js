@@ -23,7 +23,7 @@ function(globals, utils, FavoritesCollection, FavoritesView) {
         };
 
         FavoritesController.prototype.navigate = function() {
-            // utils.changePage(favoritesView.$el);
+            utils.changePage(favoritesView.$el);
         };
 
         return FavoritesController;

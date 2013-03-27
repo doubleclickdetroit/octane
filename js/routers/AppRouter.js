@@ -1,5 +1,5 @@
 define([ 'utils', 'facade', 'backbone' ],
-function (utils, facade, Backbone) {
+function(utils, facade, Backbone) {
 
     'use strict';
 
@@ -13,6 +13,7 @@ function (utils, facade, Backbone) {
         routes: {
             'forecast(/)(:viewId)': 'renderForecast',
             'fuelsites'           : 'renderFuelSites',
+            'favorites'           : 'renderFavorites',
             'settings'            : 'renderSettings',
             'info'                : 'renderInfo',
             'feedback'            : 'renderFeedback',
@@ -27,27 +28,31 @@ function (utils, facade, Backbone) {
         /*
          * Route Handlers
         */
-        renderForecast: function (viewId) {
+        renderForecast: function(viewId) {
             facade.publish('forecast', 'navigate', viewId);
         },
 
-        renderFuelSites: function () {
+        renderFuelSites: function() {
             facade.publish('fuelsites', 'navigate');
         },
 
-        renderSettings: function () {
+        renderFavorites: function() {
+            facade.publish('favorites', 'navigate');
+        },
+
+        renderSettings: function() {
             facade.publish('settings', 'navigate');
         },
 
-        renderInfo: function () {
+        renderInfo: function() {
             facade.publish('info', 'navigate');
         },
 
-        renderFeedback: function () {
+        renderFeedback: function() {
             facade.publish('feedback', 'navigate');
         },
 
-        renderAlerts: function () {
+        renderAlerts: function() {
             facade.publish('alerts', 'navigate');
         },
 
@@ -55,19 +60,19 @@ function (utils, facade, Backbone) {
             facade.publish('search', 'navigate');
         },
 
-        renderMenu: function () {
+        renderMenu: function() {
             facade.publish('menu', 'navigate');
         },
-        
-        renderTermsAndConditions: function () {
-        	facade.publish('termsAndConditions', 'navigate');
+
+        renderTermsAndConditions: function() {
+            facade.publish('termsAndConditions', 'navigate');
         },
 
-        root: function () {
+        root: function() {
             this.renderFuelSites();
         },
 
-        start: function () {
+        start: function() {
             Backbone.history.start();
             // this.root(); // disable during development
         }
