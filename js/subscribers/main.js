@@ -16,6 +16,7 @@ function(require) {
     require('./feedback').init();
     require('./info').init();
     require('./search').init();
+    require('./favorites').init();
     require('./alerts').init();
     require('./forecast').init();
     require('./termsAndConditions').init();

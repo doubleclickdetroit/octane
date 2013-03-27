@@ -104,6 +104,18 @@
     </div>
     <!-- End search -->
 
+    <!-- Favorites -->
+    <div data-role="page" id="favorites" >
+        <div data-theme="b" data-role="header" data-position="fixed" data-tap-toggle="false" class="marginbutton_top button_textalign uitextheader">
+            <a href="#menu" class="menubutton_back">Menu</a>
+            <h3>Saved Searches</h3>
+            <a href="#" id="deleteButton" class="delete-button menubutton">Delete</a>
+        </div>
+
+        <div data-role="content" class="content-primary"></div>
+    </div>
+    <!-- End Favorites -->
+
     <!-- forecast -->
     <div data-role="page" id="forecast">
         <div data-theme="b" data-role="header" data-position="fixed" data-tap-toggle="false" class=" marginbutton_top button_textalign uitextheader">
@@ -118,20 +130,20 @@
     <!-- alerts -->
     <div data-role="page" id="alerts">
         <div data-theme="b" data-role="header" data-position="fixed" data-tap-toggle="false" class="marginbutton_top button_textalign uitextheader">
-            <a href="#settings" data-role="button" class="ui-btn-left" id="alertCancelButton">Cancel</a>
+            <a href="#settings" id="alertCancelButton" data-role="button" class="ui-btn-left">Cancel</a>
             <h3>Alerts</h3>
-            <a href="#settings" data-role="button" class="ui-btn-right" id="alertDoneButton">Done</a>
+            <a href="#settings" id="alertDoneButton" data-role="button" class="ui-btn-right">Done</a>
         </div>
 
         <div data-role="content" class="page-content"></div>
     </div>
     <!-- End alerts -->
-    
+
     <!-- terms and conditions -->
     <div data-role="page" id="termsAndConditions">
         <div data-theme="b" data-role="header" data-position="fixed" data-tap-toggle="false" class="marginbutton_top button_textalign uitextheader">
             <h3>Terms &amp; Conditions</h3>
-            <a href="#info" data-role="button" class="menubutton_back ui-btn-left"> Back </a>
+            <a href="#info" data-role="button" class="menubutton_back ui-btn-left">Back</a>
         </div>
 
         <div data-role="content" class="page-content "></div>
