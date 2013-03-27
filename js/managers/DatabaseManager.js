@@ -35,8 +35,13 @@ function(globals, facade) {
         }
 
         function handle_error(error) {
+            var title, message;
+
             if (error) {
-                navigator.notification.alert('Error' + error.message, null, 'Error processing SQL:', 'OK');
+                title   = 'Error processing SQL:';
+                message = 'Error' + error.message;
+
+                facade.publish('app', 'alert', message, null, title);
             }
         }
 
