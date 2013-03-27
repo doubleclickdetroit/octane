@@ -1,5 +1,5 @@
-define([ 'jquery', 'backbone', 'mustache', 'text!tmpl/info/page' ],
-function ($, Backbone, Mustache, tmpl) {
+define([ 'utils', 'backbone', 'mustache', 'text!tmpl/info/page' ],
+function(utils, Backbone, Mustache, tmpl) {
 
     'use strict';
 
@@ -7,7 +7,7 @@ function ($, Backbone, Mustache, tmpl) {
     var InfoView;
     InfoView = Backbone.View.extend({
 
-        el: $('#info'),
+        el: utils.$('#info'),
 
         initialize: function () {
             // call super

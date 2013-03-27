@@ -1,5 +1,5 @@
-define([ 'globals', 'facade', 'backbone' ],
-function(globals, facade, Backbone) {
+define([ 'globals', 'utils', 'facade', 'backbone' ],
+function(globals, utils, facade, Backbone) {
 
     'use strict';
 
@@ -7,7 +7,7 @@ function(globals, facade, Backbone) {
     var FuelSitesMapView;
     FuelSitesMapView = Backbone.View.extend({
 
-        el: $('#fuelsitesMap'),
+        el: utils.$('#fuelsitesMap'),
 
         initialize: function() {
             // call super

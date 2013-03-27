@@ -1,5 +1,5 @@
-define([ 'jquery', 'underscore', 'globals', 'facade', 'backbone', 'mustache', 'text!tmpl/search/form' ],
-function($, _, globals, facade, Backbone, Mustache, tmpl) {
+define([ 'globals', 'utils', 'facade', 'backbone', 'mustache', 'text!tmpl/search/form' ],
+function(globals, utils, facade, Backbone, Mustache, tmpl) {
 
     'use strict';
 
@@ -7,7 +7,7 @@ function($, _, globals, facade, Backbone, Mustache, tmpl) {
     var SearchView;
     SearchView = Backbone.View.extend({
 
-        el: $('#search'),
+        el: utils.$('#search'),
 
         events: {
             'change :input'             : 'handleUpdatingAttribute',
@@ -19,7 +19,7 @@ function($, _, globals, facade, Backbone, Mustache, tmpl) {
             this.constructor.__super__.initialize.apply(this, arguments);
 
             // set context
-            _.bindAll(this, 'render');
+            utils._.bindAll(this, 'render');
 
             // cache $content
             this.$content = this.$el.find(':jqmData(role=content)');
@@ -32,7 +32,7 @@ function($, _, globals, facade, Backbone, Mustache, tmpl) {
 
             // collection events
             this.collection.on('reset', function(collection) {
-                var configuration = _.clone(globals.search.configuration);
+                var configuration = utils._.clone(globals.search.configuration);
 
                 // dynamic values for configuration-object for some fields
                 configuration['brand'][0]['values']    = collection.get('brand').toJSON()['values'];
@@ -98,9 +98,10 @@ function($, _, globals, facade, Backbone, Mustache, tmpl) {
 
         handleCriteriaSubmission: function(evt) {
             evt.preventDefault();
-            facade.publish('search', 'saveCriteria', function(criteria) {
-                facade.publish('fuelsites', 'navigate');
-                facade.publish('criteria', 'update', criteria);
+
+            facade.publish('search', 'saveCriteria', function(criteria) { // callback for controller to invoke
+                facade.publish('fuelsites', 'navigate');                  // request navigating to "fuelsites"
+                facade.publish('criteria', 'update', criteria);           // update data within the searchDetailsModel
             });
         }
     });

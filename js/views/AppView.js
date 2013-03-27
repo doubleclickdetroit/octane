@@ -1,5 +1,5 @@
-define([ 'jquery', 'underscore', 'backbone', 'facade', 'globals' ],
-function($, _, Backbone, facade, globals) {
+define([ 'globals', 'utils', 'facade', 'backbone' ],
+function(utils, globals, facade, Backbone) {
 
     'use strict';
 
@@ -142,7 +142,7 @@ function($, _, Backbone, facade, globals) {
 
         delegateBeforeNavigate: function (evt) {
             evt.preventDefault();
-            var pathname = $(evt.target).attr('href');
+            var pathname = utils.$(evt.target).attr('href');
             facade.publish('app', 'beforeNavigate', pathname);
         }
 

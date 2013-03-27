@@ -1,12 +1,12 @@
-define([ 'jquery', 'underscore', 'globals', 'facade', 'backbone', 'mustache', 'text!tmpl/fuelsites/directions' ],
-function($, _, globals, facade, Backbone, Mustache, tmpl_directions) {
+define([ 'globals', 'utils', 'facade', 'backbone', 'mustache', 'text!tmpl/fuelsites/directions' ],
+function(globals, utils, facade, Backbone, Mustache, tmpl_directions) {
 
     'use strict';
 
     var DirectionsView;
     DirectionsView = Backbone.View.extend({
 
-        el: $('#directions'),
+        el: utils.$('#directions'),
 
         events: {
             'click a.text-to-speech': 'handleDirectionTextToSpeech'
@@ -14,7 +14,7 @@ function($, _, globals, facade, Backbone, Mustache, tmpl_directions) {
 
         initialize: function() {
             // set context
-            _.bindAll(this, 'render', 'pageShow');
+            utils._.bindAll(this, 'render', 'pageShow');
 
             // cache $content
             this.$content = this.$el.find(':jqmData(role=content)');
@@ -34,7 +34,7 @@ function($, _, globals, facade, Backbone, Mustache, tmpl_directions) {
             var deferred = $.Deferred();
 
             // update request object
-            _.extend(this.request, {
+            utils._.extend(this.request, {
                 'origin'     : new this.LatLng(this.model.get('latitude'), this.model.get('longitude')),
                 'destination': new this.LatLng(fuelSiteModel.location.latitude, fuelSiteModel.location.longitude)
             });
@@ -78,7 +78,7 @@ function($, _, globals, facade, Backbone, Mustache, tmpl_directions) {
         */
         handleDirectionTextToSpeech: function(evt) {
             evt.preventDefault();
-            var $e = $(evt.target).closest('a').find('.ui-block-b');
+            var $e = utils.$(evt.target).closest('a').find('.ui-block-b');
             facade.publish('app', 'speak', $.trim($e.text()));
         }
     });

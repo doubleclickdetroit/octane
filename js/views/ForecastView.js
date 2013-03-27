@@ -1,5 +1,5 @@
-define([ 'jquery', 'underscore', 'globals', 'facade', 'backbone', 'mustache', 'text!tmpl/forecast/page' ],
-function($, _, globals, facade, Backbone, Mustache, tmpl) {
+define([ 'globals', 'utils', 'facade', 'backbone', 'mustache', 'text!tmpl/forecast/page' ],
+function(globals, utils, facade, Backbone, Mustache, tmpl) {
 
     'use strict';
 
@@ -7,7 +7,7 @@ function($, _, globals, facade, Backbone, Mustache, tmpl) {
     var ForecastView;
     ForecastView = Backbone.View.extend({
 
-        el: $('#forecast'),
+        el: utils.$('#forecast'),
 
         template: Mustache.compile(tmpl),
 
@@ -63,9 +63,10 @@ function($, _, globals, facade, Backbone, Mustache, tmpl) {
         */
         handleUpdatingAttribute: function(evt) {
             var target = evt.target,
-                val = $(target).val();
+                val    = utils.$(target).val();
             facade.publish('forecast', 'updateAttribute', target.id, val);
         },
+
         handleSavingAttributes: function() {
             facade.publish('forecast', 'saveAttributes');
         }

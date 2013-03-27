@@ -1,5 +1,5 @@
-define([ 'jquery', 'underscore', 'globals', 'facade', 'backbone', 'mustache', 'text!tmpl/fuelsites/fuelsite' ],
-function($, _, globals, facade, Backbone, Mustache, tmpl ) {
+define([ 'globals', 'facade', 'backbone', 'mustache', 'text!tmpl/fuelsites/fuelsite' ],
+function(globals, facade, Backbone, Mustache, tmpl ) {
 
     'use strict';
 

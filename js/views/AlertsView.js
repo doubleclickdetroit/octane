@@ -1,5 +1,5 @@
-define([ 'jquery', 'underscore', 'globals', 'facade', 'backbone', 'mustache', 'text!tmpl/alerts/page' ],
-function($, _, globals, facade, Backbone, Mustache, tmpl) {
+define([ 'globals', 'utils', 'facade', 'backbone', 'mustache', 'text!tmpl/alerts/page' ],
+function(globals, utils, facade, Backbone, Mustache, tmpl) {
 
     'use strict';
 
@@ -7,7 +7,7 @@ function($, _, globals, facade, Backbone, Mustache, tmpl) {
     var AlertsView;
     AlertsView = Backbone.View.extend({
 
-        el: $('#alerts'),
+        el: utils.$('#alerts'),
 
         template: Mustache.compile(tmpl),
 
@@ -22,7 +22,7 @@ function($, _, globals, facade, Backbone, Mustache, tmpl) {
             this.constructor.__super__.initialize.apply(this, arguments);
 
             // set context for event listeners
-            _.bindAll(this, 'render', 'pageHide');
+            utils._.bindAll(this, 'render', 'pageHide');
 
             // jQM event listeners
             this.$el.on('pageinit', this.render);
@@ -32,7 +32,7 @@ function($, _, globals, facade, Backbone, Mustache, tmpl) {
             // broadcast change
             this.model.on('change:notifications', function() {
                 if (this.$el.hasClass('ui-page')) this.render(); // only render after pageinit
-                facade.publish('alerts', 'notifications:change', this.model.get('notifications'));
+                facade.publish('alerts', 'notifications:change', this.model.changed);
             }, this);
 
             // create page
@@ -81,7 +81,7 @@ function($, _, globals, facade, Backbone, Mustache, tmpl) {
         */
         handleUpdatingAttribute: function(evt) {
             var target = evt.target,
-                val    = $(target).val();
+                val    = utils.$(target).val();
             facade.publish('alerts', 'updateAttribute', target.id, val);
         },
         handleCancelButtonClick: function() {
@@ -90,7 +90,6 @@ function($, _, globals, facade, Backbone, Mustache, tmpl) {
         handleDoneButtonClick: function() {
             facade.publish('alerts', 'saveAttributes');
         }
-
     });
 
 

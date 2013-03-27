@@ -1,5 +1,5 @@
-define([ 'jquery', 'backbone', 'mustache', 'text!tmpl/termsandconditions/page' ],
-function ($, Backbone, Mustache, tmpl) {
+define([ 'utils', 'backbone', 'mustache', 'text!tmpl/termsandconditions/page' ],
+function(utils, Backbone, Mustache, tmpl) {
 
     'use strict';
 
@@ -7,7 +7,7 @@ function ($, Backbone, Mustache, tmpl) {
     var TermsAndConditionsView;
     TermsAndConditionsView = Backbone.View.extend({
 
-        el: $('#termsAndConditions'),
+        el: utils.$('#termsAndConditions'),
 
         initialize: function () {
             // call super
@@ -18,7 +18,7 @@ function ($, Backbone, Mustache, tmpl) {
         },
 
         pageCreate: function () {
-        	var $el = this.$el.find(':jqmData(role=content)');
+            var $el = this.$el.find(':jqmData(role=content)');
             $el.html(Mustache.render(tmpl));
         },
 

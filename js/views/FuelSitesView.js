@@ -1,5 +1,5 @@
-define([ 'jquery', 'underscore', 'globals', 'facade', 'backbone', 'mustache', 'views/FuelSiteView', 'text!tmpl/fuelsites/header', 'text!tmpl/fuelsites/fuelsites', 'text!tmpl/fuelsites/criteria', 'text!tmpl/fuelsites/dialog', 'plugin-dialog' ],
-function ($, _, globals, facade, Backbone, Mustache, FuelSiteView, tmpl_header, tmpl_fuelsites, tmpl_criteria, tmpl_dialog) {
+define([ 'globals', 'utils', 'facade', 'backbone', 'mustache', 'views/FuelSiteView', 'text!tmpl/fuelsites/header', 'text!tmpl/fuelsites/fuelsites', 'text!tmpl/fuelsites/criteria', 'text!tmpl/fuelsites/dialog', 'plugin-dialog' ],
+function(globals, utils, facade, Backbone, Mustache, FuelSiteView, tmpl_header, tmpl_fuelsites, tmpl_criteria, tmpl_dialog) {
 
     'use strict';
 
@@ -7,7 +7,7 @@ function ($, _, globals, facade, Backbone, Mustache, FuelSiteView, tmpl_header, 
     var FuelSitesView;
     FuelSitesView = Backbone.View.extend({
 
-        el: $('#fuelsites'),
+        el: utils.$('#fuelsites'),
 
         // cache templates
         tmpl_criteria: Mustache.compile(tmpl_criteria),
@@ -23,7 +23,7 @@ function ($, _, globals, facade, Backbone, Mustache, FuelSiteView, tmpl_header, 
             this.constructor.__super__.initialize.apply(this, arguments);
 
             // set context for methods
-            _.bindAll(this, 'pageInit');
+            utils._.bindAll(this, 'pageInit');
 
             // cache criteriaModel
             this.criteriaModel = options.criteriaModel;
@@ -81,11 +81,11 @@ function ($, _, globals, facade, Backbone, Mustache, FuelSiteView, tmpl_header, 
          * Event Handlers
         */
         displaySaveDialog: function () {
-            var $tmpl = $(this.tmpl_dialog(
+            var $tmpl = utils.$(this.tmpl_dialog(
                 globals.fuelsites.configuration.save
             ));
 
-            $('<div>').simpledialog2({
+            utils.$('<div>').simpledialog2({
                 mode        : 'blank',
                 headerText  : globals.fuelsites.configuration.save.title,
                 themeHeader : 'b',
@@ -109,34 +109,36 @@ function ($, _, globals, facade, Backbone, Mustache, FuelSiteView, tmpl_header, 
                 facade.publish('criteria', 'save', val);
 
                 // close the dialog
-                $(document).trigger('simpledialog', {method:'close'});
+                utils.$(document).trigger('simpledialog', {method:'close'});
             });
         },
 
         displaySortDialog: function () {
-        	var $tmpl, sortBy;
-        	
-            $tmpl = $(this.tmpl_dialog(
+            var $tmpl, sortBy;
+
+            $tmpl = utils.$(this.tmpl_dialog(
                 globals.fuelsites.configuration.sortBy
             ));
-            
+
             // Get the current Sort By value
             sortBy = this.criteriaModel.get('sortBy');
 
-            $('<div>').simpledialog2({
+            utils.$('<div>').simpledialog2({
                 mode        : 'blank',
                 headerText  : globals.fuelsites.configuration.sortBy.title,
                 themeHeader : 'b',
                 headerClose : false,
                 blankContent: $tmpl
             });
-            
+
             // Set the currently selected sort by value as the Active button
-            $('input[value=' + sortBy + ']').parent().addClass('ui-btn-active');
-            
+            utils.$('input[value=' + sortBy + ']').parent().addClass('ui-btn-active');
+
             $tmpl.one('click', ':input', function () {
                 // broadcast updated criteria sortBy value
-                facade.publish('criteria', 'update', {sortBy:$(this).val()});
+                facade.publish('criteria', 'update', {
+                    sortBy: utils.$(this).val()
+                });
             });
         }
     });
