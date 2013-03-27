@@ -56,7 +56,6 @@ function(DatabaseManager) {
                     else {
                         sql = 'INSERT INTO ForecastAlert (FuelType, Location, ForecastChange) VALUES (?, ?, ?)';
                         db.transaction(function (transaction) {
-                            console.log('setForecastAlert INSERT ' + data.fuelType + ' ' + data.location + ' ' + data.forecastChange);
                             transaction.executeSql(sql, [data.fuelType, data.location, data.forecastChange]);
                         }, database.onError, callback);
                     }
