@@ -1,5 +1,5 @@
-define([ 'underscore', 'utils', 'globals', 'backbone', 'models/FuelSiteModel' ],
-function(_, utils, globals, Backbone, FuelSiteModel) {
+define([ 'utils', 'globals', 'backbone', 'models/FuelSiteModel' ],
+function(utils, globals, Backbone, FuelSiteModel) {
 
     'use strict';
 

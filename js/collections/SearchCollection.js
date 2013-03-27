@@ -1,5 +1,5 @@
-define([ 'underscore', 'globals', 'utils', 'backbone' ],
-function(_, globals, utils, Backbone) {
+define([ 'globals', 'utils', 'backbone' ],
+function(globals, utils, Backbone) {
 
     'use strict';
 
@@ -37,7 +37,7 @@ function(_, globals, utils, Backbone) {
 
         // format to match globals.search.configuration
         function configurationObjectAdapter(values) {
-            return _.map(values, function(value) {
+            return utils._.map(values, function(value) {
                 return {
                     'label': value,
                     'value': value
