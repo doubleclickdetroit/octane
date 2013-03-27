@@ -1,5 +1,5 @@
 define([ 'globals', 'utils', 'facade', 'backbone' ],
-function(utils, globals, facade, Backbone) {
+function(globals, utils, facade, Backbone) {
 
     'use strict';
 
