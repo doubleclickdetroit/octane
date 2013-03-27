@@ -14,7 +14,10 @@ function(LocationModel) {
         ***********************************************************************/
         function LocationController() {}
         LocationController.prototype.init = function(delegate) {
+            // cache model instance
             locationModel = new LocationModel();
+
+            // dispatch model events to delegate
             locationModel.on('all', delegate);
         };
 

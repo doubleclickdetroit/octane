@@ -15,7 +15,6 @@ function(globals, utils, LocationModel, BackboneModel, SearchModel, SearchCollec
         function SearchController() {
             searchCriteriaModel = new BackboneModel();
         }
-
         SearchController.prototype.init = function() {
             // create model, collection & view instances
             searchViewModel = new SearchModel({

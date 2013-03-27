@@ -14,6 +14,7 @@ function(utils, SettingsView) {
         ***********************************************************************/
         function SettingsController() {}
         SettingsController.prototype.init = function() {
+            // cache view instance
             settingsView = new SettingsView();
         };
 

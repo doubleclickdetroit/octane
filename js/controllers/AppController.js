@@ -14,17 +14,20 @@ function(AppRouter, AppView, AppModel, globals) {
         ***********************************************************************/
         function AppController() {}
         AppController.prototype.init = function () {
+            // cache router instance
             appRouter = new AppRouter();
-            appModel  = AppModel.getInstance();
-            appView   = new AppView({
-            	model: appModel,
-                el: document.body
+
+            // cache model & view instances
+            appModel = AppModel.getInstance();
+            appView  = new AppView({
+                model: appModel,
+                el   : document.body
             });
 
             // if the app has been opened a multiple of 10 times
             // and the user hasn't already rated the app or elected to never rate the app
             if (appModel.get('appOpenCount') % 10 == 0
-            		&& (0 > $.inArray(appModel.get('isAppRated'), [globals.RATE_IT.NO_THANKS, appModel.get('buildVersion')]))) {
+                && (0 > $.inArray(appModel.get('isAppRated'), [globals.RATE_IT.NO_THANKS, appModel.get('buildVersion')]))) {
                 appView.promptToRateIt();
             }
 

@@ -14,6 +14,7 @@ function(SearchDetailsModel) {
         ***********************************************************************/
         function SearchDetailsController() {}
         SearchDetailsController.prototype.init = function(delegate) {
+            // cache model instance
             searchDetailsModel = new SearchDetailsModel();
 
             // dispatch model events to delegate

@@ -1,5 +1,5 @@
 define([ 'utils', 'views/InfoView', 'models/InfoModel', 'models/AppModel' ],
-function (utils, InfoView, InfoModel, AppModel) {
+function(utils, InfoView, InfoModel, AppModel) {
 
     'use strict';
 
