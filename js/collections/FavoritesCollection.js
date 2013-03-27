@@ -30,11 +30,15 @@ function(globals, utils, Backbone, FavoritesDatabaseManager, FavoriteModel) {
 
             console.log('FavoritesCollection sync', method, model, options);
 
-            if (method === 'read') {
-                manager.getFavoritesSearchValue(options.callback);
-            }
-            else {
-                Backbone.synce.apply(this, arguments);
+            switch(method) {
+                case 'create':
+                    manager.insertSearchDetails(model.toJSON(), options.callback);
+                    break;
+                case 'read':
+                    manager.getFavoritesSearchValue(options.callback);
+                    break;
+                default:
+                    Backbone.synce.apply(this, arguments);
             }
         };
 
