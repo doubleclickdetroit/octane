@@ -4,6 +4,12 @@ function(facade, controller) {
     'use strict';
 
 
+    /*
+     * SearchDetails Subscribers
+    */
+    var subscribe;
+    subscribe = facade.subscribeTo('criteria', controller);
+
     //
     facade.subscribe('criteria', 'save', controller, 'saveCriteria');
 
@@ -11,6 +17,9 @@ function(facade, controller) {
     facade.subscribe('criteria', 'update', controller, 'updateAttributes');
 
 
+    /*
+     * Location Subscribers
+    */
     //
     facade.subscribe('location', 'change', controller, 'updateLocationAttributes');
 
