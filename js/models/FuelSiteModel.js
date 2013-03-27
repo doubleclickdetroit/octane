@@ -1,5 +1,5 @@
-define([ 'utils', 'globals', 'backbone' ],
-function(utils, globals, Backbone) {
+define([ 'globals', 'utils', 'backbone' ],
+function(globals, utils, Backbone) {
 
     'use strict';
 
@@ -21,21 +21,24 @@ function(utils, globals, Backbone) {
         };
 
         FuelSiteModel.prototype.formatAttributes = function() {
-            // add new formatted attributes
+            // set formatted attributes
             this.set('format_ppg', function() {
                 var ppg = this.ppg;
                 if (!ppg) return false;
                 return parseFloat(ppg).toFixed(2);
             });
+
             this.set('format_ppg_sup', function() {
                 var ppg = this.ppg;
                 if (!ppg) return '';
                 return ppg.substring(ppg.indexOf('.')+3);
             });
+
             this.set('format_time', function() {
                 var time = this.transactionTime;
                 return (this.ppg && time) ? utils.timeago(new Date(parseInt(time))) : 'Unavailable';
             });
+
             this.set('format_telephone', function() {
                 var phone = this.telephone;
                 return phone ? phone.replace(/-/,'') : '';

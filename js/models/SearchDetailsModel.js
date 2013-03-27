@@ -1,5 +1,5 @@
-define([ 'utils', 'globals', 'backbone', 'managers/SearchDetailsDatabaseManager' ],
-function(utils, globals, Backbone, SearchDetailsDatabaseManager) {
+define([ 'globals', 'utils', 'backbone', 'managers/SearchDetailsDatabaseManager' ],
+function(globals, utils, Backbone, SearchDetailsDatabaseManager) {
 
     'use strict';
 

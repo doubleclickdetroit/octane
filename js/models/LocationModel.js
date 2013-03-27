@@ -1,5 +1,5 @@
-define([ 'utils', 'globals', 'backbone', 'async!http://maps.google.com/maps/api/js?sensor=false' ],
-function(utils, globals, Backbone) {
+define([ 'globals', 'utils', 'backbone', 'async!http://maps.google.com/maps/api/js?sensor=false' ],
+function(globals, utils, Backbone) {
 
     'use strict';
 

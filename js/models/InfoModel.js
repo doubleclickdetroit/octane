@@ -1,23 +1,32 @@
-define([ 'backbone', 'globals'],
-function (Backbone, globals) {
+define([ 'globals', 'utils', 'backbone' ],
+function(globals, utils, Backbone) {
 
     'use strict';
 
 
     var InfoModel;
-    InfoModel = Backbone.Model.extend({
+    InfoModel = (function(_super) {
 
-        defaults: {
+        /***********************************************************************
+         * Constructor
+        ***********************************************************************/
+        utils.extend(InfoModel, _super);
+
+        function InfoModel() {
+            InfoModel.__super__.constructor.apply(this, arguments);
+        }
+
+        InfoModel.prototype.defaults = {
             'buildVersion': 'Unknown',
             'osVersion'   : 'Unknown',
             'deviceId'    : 'Unknown',
             'screenType'  : 'Unknown'
-        },
+        };
 
-        initialize: function (attrs, options) {
+        InfoModel.prototype.initialize = function(attrs, options) {
             var v = options.device.version,
-            	p = options.device.platform;
-       	
+                p = options.device.platform;
+
             // initially bootstrap data
             this.set({
                 'buildVersion': options.device.buildVersion,
@@ -25,10 +34,12 @@ function (Backbone, globals) {
                 'screenType'  : options.device.screenType,
                 'osVersion'   : p && v ? p + ' ' + v : 'Unknown'
             });
-        }
-        
-    });
+        };
+
+        return InfoModel;
+
+    })(Backbone.Model);
+
 
     return InfoModel;
-
 });

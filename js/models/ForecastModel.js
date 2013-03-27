@@ -1,5 +1,5 @@
-define([ 'utils', 'backbone', 'globals' ],
-function(utils, Backbone, globals) {
+define([ 'globals', 'utils', 'backbone' ],
+function(globals, utils, Backbone) {
 
     'use strict';
 
@@ -42,14 +42,14 @@ function(utils, Backbone, globals) {
 
             return attrs;
         }
-                     
+
         function getZipCode(location) {
 
              var zipcode, regexp;
-                     
+
              // regex statement
              regexp  = new RegExp(globals.APP.ZIP_CODE_PATTERN);
-             
+
              // get the zipcode from the full address location
              zipcode = regexp.exec(location) || "";
              if (zipcode) {
