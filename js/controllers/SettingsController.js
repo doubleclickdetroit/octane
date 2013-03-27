@@ -1,5 +1,5 @@
-define([ 'utils', 'views/SettingsView' ],
-function(utils, SettingsView) {
+define([ 'utils', 'models/BackboneModel', 'views/SettingsView' ],
+function(utils, BackboneModel, SettingsView) {
 
     'use strict';
 
@@ -7,15 +7,19 @@ function(utils, SettingsView) {
     var SettingsController;
     SettingsController = (function() {
 
-        var settingsView;
+        var settingsViewModel, settingsView;
 
         /***********************************************************************
          * Constructor
         ***********************************************************************/
         function SettingsController() {}
         SettingsController.prototype.init = function() {
-            // cache view instance
-            settingsView = new SettingsView();
+            // cache model & view instances
+            settingsViewModel = new BackboneModel();
+
+            settingsView = new SettingsView({
+                model: settingsViewModel
+            });
         };
 
         /*
@@ -23,6 +27,10 @@ function(utils, SettingsView) {
         */
         SettingsController.prototype.navigate = function() {
             utils.changePage(settingsView.$el, null, null, true); // force updateHash
+        };
+
+        SettingsController.prototype.updateSettingsViewModelAttributes = function(attributes) {
+            settingsViewModel.set(attributes);
         };
 
         return SettingsController;

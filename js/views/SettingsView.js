@@ -1,5 +1,5 @@
-define([ 'jquery', 'underscore', 'facade', 'backbone', 'mustache', 'text!tmpl/settings/page' ],
-function($, _, facade, Backbone, Mustache, tmpl) {
+define([ 'utils', 'facade', 'backbone', 'mustache', 'text!tmpl/settings/page' ],
+function(utils, facade, Backbone, Mustache, tmpl) {
 
     'use strict';
 
@@ -7,14 +7,16 @@ function($, _, facade, Backbone, Mustache, tmpl) {
     var SettingsView;
     SettingsView = Backbone.View.extend({
 
-        el: $('#settings'),
+        el: utils.$('#settings'),
 
         initialize: function() {
             // call super
             this.constructor.__super__.initialize.apply(this, arguments);
 
-            // listen for broadcasting
-            facade.subscribe('alerts', 'notifications:change', this, 'updateAlertsMenuItem');
+            // listen for model events
+            this.model.on('change:notifications', function(model, state) {
+                this.updateAlertsMenuItem(state);
+            }, this);
 
             // create page
             this.pageCreate();
@@ -26,7 +28,7 @@ function($, _, facade, Backbone, Mustache, tmpl) {
         },
 
         updateAlertsMenuItem: function(state) {
-            $('#alerts-menu-item').text(state);
+            utils.$('#alerts-menu-item').text(state);
         }
     });
 
