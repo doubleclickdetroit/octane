@@ -67,15 +67,13 @@ function(globals, utils, Backbone, SearchDetailsDatabaseManager) {
             switch(method) {
                 case "create":
                 case "update":
-                    database.insertSearchDetails(this.toJSON());
+                    database.insertSearchDetails(model.toJSON());
                     break;
-
                 case "read":
                     database.getDefaultSearchValue(handleMergingDefaultSearchValues, this);
                     break;
-
                 case "delete":
-                    database.deleteDefaultSearchData();
+                    database.deleteDefaultSearchData(options.callback);
                     break;
             }
         };
