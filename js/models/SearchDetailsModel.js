@@ -7,6 +7,25 @@ function(globals, utils, Backbone, SearchDetailsDatabaseManager) {
     var SearchDetailsModel;
     SearchDetailsModel = (function(_super) {
 
+        /*
+         * Private Methods
+        */
+        function handleMergingDefaultSearchValues(data) {
+            if (data.length) {
+                this.set({
+                    'searchBy'     : data.item(0).SearchBy,
+                    'radius'       : data.item(0).Radius,
+                    'fuelType'     : data.item(0).FuelType,
+                    'sortBy'       : data.item(0).SortBy,
+                    'filterToday'  : data.item(0).LimitResult.toLowerCase() || globals.SEARCH_DETAILS.FILTER_TODAY,
+                    'brand'        : data.item(0).Brand,
+                    'limitResult'  : data.item(0).LimitResult,
+                    'favoritesName': data.item(0).FavoritesName
+                });
+            }
+        }
+
+
         /***********************************************************************
          * Constructor
         ***********************************************************************/
@@ -42,21 +61,6 @@ function(globals, utils, Backbone, SearchDetailsDatabaseManager) {
             'viewMode'     : globals.SEARCH_DETAILS.VIEW_MODE
         };
 
-        SearchDetailsModel.prototype.updateAttributes = function(data) {
-            if (data.length) {
-                this.set({
-                    'searchBy'     : data.item(0).SearchBy,
-                    'radius'       : data.item(0).Radius,
-                    'fuelType'     : data.item(0).FuelType,
-                    'sortBy'       : data.item(0).SortBy,
-                    'filterToday'  : data.item(0).LimitResult.toLowerCase() || globals.SEARCH_DETAILS.FILTER_TODAY,
-                    'brand'        : data.item(0).Brand,
-                    'limitResult'  : data.item(0).LimitResult,
-                    'favoritesName': data.item(0).FavoritesName
-                });
-            }
-        };
-
         SearchDetailsModel.prototype.sync = function(method, model, options) {
             var database = SearchDetailsDatabaseManager.getInstance();
 
@@ -67,7 +71,7 @@ function(globals, utils, Backbone, SearchDetailsDatabaseManager) {
                     break;
 
                 case "read":
-                    database.getDefaultSearchValue(this.updateAttributes, this);
+                    database.getDefaultSearchValue(handleMergingDefaultSearchValues, this);
                     break;
 
                 case "delete":
