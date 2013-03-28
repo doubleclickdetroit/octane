@@ -10,6 +10,9 @@ function(facade, controller) {
     //
     subscribe('navigate', 'navigate');
 
+    //
+    subscribe('save', 'saveFavorite');
+
 
     return {
         init: function() {

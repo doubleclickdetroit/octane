@@ -26,6 +26,10 @@ function(globals, utils, FavoritesCollection, FavoritesView) {
             utils.changePage(favoritesView.$el);
         };
 
+        FavoritesController.prototype.saveFavorite = function() {
+            favoritesView.displaySaveFavoriteDialog();
+        };
+
         return FavoritesController;
     })();
 
