@@ -367,6 +367,31 @@ define(function(require) {
         'VIEW_MODE' : globals.SEARCH_DETAILS.VIEW_MODE // fuelsites is default view_mode for search details
     };
     globals.fuelsites.configuration = {
+        'sortBy': {
+            'title'  : 'Sort by',
+            'buttons': [
+                {
+                    'id'   : 'a',
+                    'label': globals.SORT_BY.configuration.PRICE.label,
+                    'type' : 'button',
+                    'close': true
+                },
+                {
+                    'id'   : 'b',
+                    'label': globals.SORT_BY.configuration.DISTANCE.label,
+                    'type' : 'button',
+                    'close': true
+                }
+            ]
+        }
+    };
+
+    /*
+     * Page :: Favorites
+    */
+    globals.favorites = {};
+    globals.favorites.constants = {};
+    globals.favorites.configuration = {
         'save': {
             'title': 'Save Search',
             'error': 'Search Name is required.',
@@ -388,23 +413,6 @@ define(function(require) {
                 {
                     'type'       : 'text',
                     'placeholder': 'Enter Search Name'
-                }
-            ]
-        },
-        'sortBy': {
-            'title'  : 'Sort by',
-            'buttons': [
-                {
-                    'id'   : 'a',
-                    'label': globals.SORT_BY.configuration.PRICE.label,
-                    'type' : 'button',
-                    'close': true
-                },
-                {
-                    'id'   : 'b',
-                    'label': globals.SORT_BY.configuration.DISTANCE.label,
-                    'type' : 'button',
-                    'close': true
                 }
             ]
         }
