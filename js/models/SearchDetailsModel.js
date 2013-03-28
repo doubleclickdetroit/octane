@@ -20,9 +20,16 @@ function(globals, utils, Backbone, SearchDetailsDatabaseManager) {
                     'filterToday'  : data.item(0).LimitResult.toLowerCase() || globals.SEARCH_DETAILS.FILTER_TODAY,
                     'brand'        : data.item(0).Brand,
                     'limitResult'  : data.item(0).LimitResult,
-                    'favoritesName': data.item(0).FavoritesName
+                    'favoritesName': data.item(0).FavoritesName,
+                    'location'     : data.item(0).Location,
+                    'latitude'     : data.item(0).Latitude,
+                    'longitude'    : data.item(0).Longitude
                 });
             }
+            else {
+                this.trigger('withoutDefaultSearchValue');
+            }
+
         }
 
 

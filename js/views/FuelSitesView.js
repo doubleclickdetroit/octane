@@ -73,8 +73,8 @@ function(globals, utils, facade, Backbone, Mustache, FuelSiteView, tmpl_header, 
          * jQM Page Events
         */
         pageInit: function () {
-            // request current location
-            facade.publish('location', 'getCurrentLocation');
+            // load criteria
+            facade.publish('criteria', 'load');
         },
 
         /*
