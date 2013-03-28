@@ -4,11 +4,17 @@ function(facade, controller) {
     'use strict';
 
 
-    //
-    facade.subscribe('location', 'getAddressLocation', controller, 'locateFromAddress');
+    /*
+     * Location Subscribers
+    */
+    var subscribe;
+    subscribe = facade.subscribeTo('location', controller);
 
     //
-    facade.subscribe('location', 'getCurrentLocation', controller, 'locateFromCurrentLocation');
+    subscribe('getAddressLocation', 'locateFromAddress');
+
+    //
+    subscribe('getCurrentLocation', 'locateFromCurrentLocation');
 
 
     /*

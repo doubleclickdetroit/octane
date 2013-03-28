@@ -19,20 +19,23 @@ function(SearchDetailsModel) {
 
             // dispatch model events to delegate
             searchDetailsModel.on('all', delegate);
-
-            // on initial model data, perform fetch
-            searchDetailsModel.once('change', searchDetailsModel.fetch);
         };
 
         /*
          * Public Methods
         */
+        SearchDetailsController.prototype.loadAttributes = function() {
+            searchDetailsModel.fetch();
+        };
+
         SearchDetailsController.prototype.updateAttributes = function(attributes) {
             searchDetailsModel.set(attributes);
         };
 
-        SearchDetailsController.prototype.insertAttributes = function(attributes) {
-            console.log('SearchDetailsController insertAttributes:', attributes);
+        SearchDetailsController.prototype.saveAttributes = function() {
+            searchDetailsModel.destroy({                            // delete previous record
+                callback: function() { searchDetailsModel.save(); } // save the new record
+            });
         };
 
         SearchDetailsController.prototype.updateLocationAttributes = function(location) {

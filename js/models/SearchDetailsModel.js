@@ -20,9 +20,16 @@ function(globals, utils, Backbone, SearchDetailsDatabaseManager) {
                     'filterToday'  : data.item(0).LimitResult.toLowerCase() || globals.SEARCH_DETAILS.FILTER_TODAY,
                     'brand'        : data.item(0).Brand,
                     'limitResult'  : data.item(0).LimitResult,
-                    'favoritesName': data.item(0).FavoritesName
+                    'favoritesName': data.item(0).FavoritesName,
+                    'location'     : data.item(0).Location,
+                    'latitude'     : data.item(0).Latitude,
+                    'longitude'    : data.item(0).Longitude
                 });
             }
+            else {
+                this.trigger('withoutDefaultSearchValue');
+            }
+
         }
 
 
@@ -67,15 +74,13 @@ function(globals, utils, Backbone, SearchDetailsDatabaseManager) {
             switch(method) {
                 case "create":
                 case "update":
-                    database.insertSearchDetails(this.toJSON());
+                    database.insertSearchDetails(model.toJSON());
                     break;
-
                 case "read":
                     database.getDefaultSearchValue(handleMergingDefaultSearchValues, this);
                     break;
-
                 case "delete":
-                    database.deleteDefaultSearchData();
+                    database.deleteDefaultSearchData(options.callback);
                     break;
             }
         };

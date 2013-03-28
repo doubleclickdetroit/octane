@@ -75,10 +75,14 @@ function(globals, utils, Backbone) {
 
         SearchModel.prototype.respondToSearchByAddress = function() {
             this.set({
-                'location' : '',
                 'latitude' : null,
                 'longitude': null
             });
+
+            // clear value if previously set by "enterLocation"
+            if (this.previous('location')) {
+                this.set('location', '');
+            }
         };
 
         SearchModel.prototype.respondToSearchByPosition = function() {

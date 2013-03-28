@@ -178,13 +178,15 @@ define(function(require) {
     globals.search.constants = {
         'SEARCH_BY_ADDRESS'         : 'enterLocation',
         'SEARCH_BY_CURRENT_LOCATION': 'currentLocation',
+        'DEFAULT_SEARCH_YES' : 'YES',
+        'DEFAULT_SEARCH_NO'  : 'NO',
         'NAME_SEARCH_BY'     : 'searchBy',
         'NAME_LOCATION'      : 'location',
         'NAME_RADIUS'        : 'radius',
         'NAME_FUEL_TYPE'     : 'fuelType',
         'NAME_BRAND'         : 'brand',
         'NAME_SORT_BY'       : 'sortBy',
-        'NAME_DEFAULT_SEARCH': 'updatedResult', // this may not be correct
+        'NAME_DEFAULT_SEARCH': 'setDefault',
         'INVALID_LOCATION_MESSAGE': 'Current location cannot be found. Please enter a location.'
     };
     globals.search.configuration = {
@@ -272,11 +274,11 @@ define(function(require) {
                 'values': [
                     {
                         'label': 'NO',
-                        'value': 'NO'
+                        'value': globals.search.constants.DEFAULT_SEARCH_NO
                     },
                     {
                         'label': 'YES',
-                        'value': 'YES'
+                        'value': globals.search.constants.DEFAULT_SEARCH_YES
                     }
                 ]
             }

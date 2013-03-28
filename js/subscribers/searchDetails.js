@@ -11,10 +11,13 @@ function(facade, controller) {
     subscribe = facade.subscribeTo('criteria', controller);
 
     //
-    facade.subscribe('criteria', 'save', controller, 'insertAttributes');
+    subscribe('load', 'loadAttributes');
 
     //
-    facade.subscribe('criteria', 'update', controller, 'updateAttributes');
+    subscribe('update', 'updateAttributes');
+
+    //
+    subscribe('save', 'saveAttributes');
 
 
     /*
@@ -37,6 +40,9 @@ function(facade, controller) {
                 break;
             case 'change':
                 facade.publish('criteria', 'change', model.toJSON());
+                break;
+            case 'withoutDefaultSearchValue':
+                facade.publish('location', 'getCurrentLocation');
                 break;
         }
     };
