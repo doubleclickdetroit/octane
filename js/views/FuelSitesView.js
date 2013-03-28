@@ -1,4 +1,4 @@
-define([ 'globals', 'utils', 'facade', 'backbone', 'mustache', 'views/FuelSiteView', 'text!tmpl/fuelsites/header', 'text!tmpl/fuelsites/fuelsites', 'text!tmpl/fuelsites/criteria', 'text!tmpl/fuelsites/dialog', 'plugin-dialog' ],
+define([ 'globals', 'utils', 'facade', 'backbone', 'mustache', 'views/FuelSiteView', 'text!tmpl/fuelsites/header', 'text!tmpl/fuelsites/fuelsites', 'text!tmpl/fuelsites/criteria', 'text!tmpl/common/dialog', 'plugin-dialog' ],
 function(globals, utils, facade, Backbone, Mustache, FuelSiteView, tmpl_header, tmpl_fuelsites, tmpl_criteria, tmpl_dialog) {
 
     'use strict';
@@ -81,36 +81,7 @@ function(globals, utils, facade, Backbone, Mustache, FuelSiteView, tmpl_header, 
          * Event Handlers
         */
         displaySaveDialog: function () {
-            var $tmpl = utils.$(this.tmpl_dialog(
-                globals.fuelsites.configuration.save
-            ));
-
-            utils.$('<div>').simpledialog2({
-                mode        : 'blank',
-                headerText  : globals.fuelsites.configuration.save.title,
-                themeHeader : 'b',
-                headerClose : false,
-                blankContent: $tmpl
-            });
-
-            $tmpl.on('click', ':submit', function (evt) {
-                var val = $tmpl.find(':text').val();
-
-                // validate presence of value
-                if (val === '') {
-                    facade.publish('app', 'alert', globals.fuelsites.configuration.save.error);
-                    return false;
-                }
-
-                // unbind all events
-                $tmpl.off();
-
-                // broadcast save event and value
-                facade.publish('criteria', 'save', val);
-
-                // close the dialog
-                utils.$(document).trigger('simpledialog', {method:'close'});
-            });
+            facade.publish('favorites', 'save');
         },
 
         displaySortDialog: function () {
