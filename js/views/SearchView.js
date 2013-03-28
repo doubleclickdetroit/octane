@@ -56,11 +56,12 @@ function(globals, utils, facade, Backbone, Mustache, tmpl) {
         },
 
         render: function() {
-            var criteria = this.model.toJSON(),
-                IS_CURRENT_LOCATION = criteria.searchBy === globals.search.constants.SEARCH_BY_CURRENT_LOCATION;
+            var criteria  = this.model.toJSON(),
+                constants = globals.search.constants,
+                IS_CURRENT_LOCATION = criteria.searchBy === constants.SEARCH_BY_CURRENT_LOCATION;
 
             this.$content
-                .find('[name="'+globals.search.constants.NAME_SEARCH_BY+'"]')
+                .find('[name="'+constants.NAME_SEARCH_BY+'"]')
                 .attr('checked', function() {
                     return this.value === criteria.searchBy;
                 })
@@ -86,6 +87,11 @@ function(globals, utils, facade, Backbone, Mustache, tmpl) {
             this.$content
                 .find('#sortBySelector').val(criteria.sortBy)
                 .selectmenu('refresh');
+
+            this.$content
+                .find('#setDefaultSlider').val(constants.DEFAULT_SEARCH_NO) // set default value
+                .trigger('change')                                          // update viewModel
+                .slider('refresh');
         },
 
         /*
@@ -97,11 +103,17 @@ function(globals, utils, facade, Backbone, Mustache, tmpl) {
         },
 
         handleCriteriaSubmission: function(evt) {
-            evt.preventDefault();
+            var constants = globals.search.constants;
 
+            evt.preventDefault();                                         // prevent JS submit button action
             facade.publish('search', 'saveCriteria', function(criteria) { // callback for controller to invoke
                 facade.publish('fuelsites', 'navigate');                  // request navigating to "fuelsites"
                 facade.publish('criteria', 'update', criteria);           // update data within the searchDetailsModel
+
+                // did the user indicate to save this as a default search?
+                if (criteria[constants.NAME_DEFAULT_SEARCH] === constants.DEFAULT_SEARCH_YES) {
+                    facade.publish('criteria', 'save');
+                }
             });
         }
     });
