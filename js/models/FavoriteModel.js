@@ -20,12 +20,12 @@ function(globals, utils, Backbone, FavoritesDatabaseManager) {
             var manager = FavoritesDatabaseManager.getInstance();
             options.callback = options.callback || null;
 
-            console.log('FavoriteModel sync', method, model, options);
+            console.log('FavoriteModel sync', method, model);
 
             switch(method) {
                 case 'create':
                 case 'update':
-                    manager.insertSearchDetails(model.toJSON(), options.callback);
+                    manager.insertFavoriteSearchDetails(model.toJSON(), options.callback);
                     break;
                 case 'read':
                     manager.getFavoritesSearchId(model.get('id'), options.callback);
@@ -34,6 +34,11 @@ function(globals, utils, Backbone, FavoritesDatabaseManager) {
                     manager.deleteFavoriteSearchData(model.get('id'), options.callback);
                     break;
             }
+        };
+
+        FavoriteModel.prototype.parse = function(attributes) {
+            console.log('parse', attributes);
+            return attributes;
         };
 
         return FavoriteModel;

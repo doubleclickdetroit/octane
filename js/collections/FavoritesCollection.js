@@ -19,23 +19,24 @@ function(globals, utils, Backbone, FavoritesDatabaseManager, FavoriteModel) {
         // Define Model to use
         FavoritesCollection.prototype.model = FavoriteModel;
 
-        FavoritesCollection.prototype.parse = function(favorites) {
-            console.log('FavoritesCollection parse', favorites);
-            return favorites;
+        // Sorting
+        FavoritesCollection.prototype.comparator = function(favoriteModel) {
+            // is model populated from localSQL or from collection.create()
+            var attr = favoriteModel.has('FavoritesName') ? 'FavoritesName' : 'favoritesName';
+            return favoriteModel.get(attr);
         };
 
-        FavoritesCollection.prototype.sync = function(method, model, options) {
+        FavoritesCollection.prototype.sync = function(method, collection, options) {
             var manager = FavoritesDatabaseManager.getInstance();
             options.callback = options.callback || null;
 
-            console.log('FavoritesCollection sync', method, model, options);
+            console.log('FavoritesCollection sync', method, collection);
 
             switch(method) {
-                case 'create':
-                    manager.insertSearchDetails(model.toJSON(), options.callback);
-                    break;
                 case 'read':
-                    manager.getFavoritesSearchValue(options.callback);
+                    manager.getFavoritesSearchValue(function(favorites) {
+                        collection.reset(favorites);
+                    });
                     break;
                 default:
                     Backbone.synce.apply(this, arguments);

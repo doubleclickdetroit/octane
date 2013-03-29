@@ -4,6 +4,9 @@ function(facade, controller) {
     'use strict';
 
 
+    /*
+     * Favorites Subscribers
+    */
     var subscribe;
     subscribe = facade.subscribeTo('favorites', controller);
 
@@ -11,7 +14,19 @@ function(facade, controller) {
     subscribe('navigate', 'navigate');
 
     //
-    subscribe('save', 'saveFavorite');
+    subscribe('prompt', 'promptFavorite');
+
+    //
+    subscribe('save', 'saveAttributes');
+
+    //
+    subscribe('delete', 'deleteAttributes');
+
+
+    /*
+     * Criteria Subscribers
+    */
+    facade.subscribe('criteria', 'change', controller, 'updateSearchCriteriaModel');
 
 
     return {

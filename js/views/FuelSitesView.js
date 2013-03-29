@@ -81,7 +81,7 @@ function(globals, utils, facade, Backbone, Mustache, FuelSiteView, tmpl_header, 
          * Event Handlers
         */
         displaySaveDialog: function () {
-            facade.publish('favorites', 'save');
+            facade.publish('favorites', 'prompt');
         },
 
         displaySortDialog: function () {

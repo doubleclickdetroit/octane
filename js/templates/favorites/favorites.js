@@ -1,0 +1,1 @@
+<ul id="favoritesList" class="listrowpadding favourites" data-role="listview"></ul>

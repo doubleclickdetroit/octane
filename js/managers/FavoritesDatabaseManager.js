@@ -23,7 +23,11 @@ function(DatabaseManager) {
 
                 db.transaction(function(tx) {
                     tx.executeSql(sql, [], function(tx, results) {
-                        callback.call(context || window, results.rows);
+                        var rows = [];
+                        for (var i=0; i < results.rows.length; i++) {
+                            rows.push(results.rows.item(i));
+                        }
+                        callback.call(context || window, rows);
                     }, database.error);
                 }, database.error);
             }
@@ -48,6 +52,45 @@ function(DatabaseManager) {
                     tx.executeSql(sql, [], function(tx, results) {
                         callback.call(context || window, results.rows);
                     }, database.error);
+                }, database.error);
+            }
+        }
+
+        /*
+         * Insert Favorite
+         *
+         * @param : contain settings data-object
+         * @param : function
+         * @param : [context for this]
+         * @return: none
+        */
+        function insertFavoriteSearchDetails(data, callback, context) {
+            var sql, db = database.openDatabase();
+            sql = 'INSERT INTO SearchDetails ('
+                + 'SearchBy, Location, Latitude, Longitude, Radius, FuelType, UpdatedResult, '
+                + 'SortBy, Brand, ViewMode, LimitResult, FavoritesName) VALUES '
+                + '(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+
+            if (data) {
+                db.transaction(function(tx) {
+                    tx.executeSql(sql, [
+                        data.searchBy,
+                        data.location,
+                        data.latitude,
+                        data.longitude,
+                        data.radius,
+                        data.fuelType,
+                        data.updatedResult,
+                        data.sortBy,
+                        data.brand,
+                        data.viewMode,
+                        data.limitResult,
+                        data.favoritesName
+                    ], function() {
+                        if (callback) {
+                            callback.call(context || window);
+                        }
+                    });
                 }, database.error);
             }
         }
@@ -82,9 +125,10 @@ function(DatabaseManager) {
         /*
          * Public Methods
         */
-        FavoritessDatabaseManager.prototype.getFavoritesSearchValue  = getFavoritesSearchValue;
-        FavoritessDatabaseManager.prototype.getFavoritesSearchId     = getFavoritesSearchId;
-        FavoritessDatabaseManager.prototype.deleteFavoriteSearchData = deleteFavoriteSearchData;
+        FavoritessDatabaseManager.prototype.getFavoritesSearchValue     = getFavoritesSearchValue;
+        FavoritessDatabaseManager.prototype.getFavoritesSearchId        = getFavoritesSearchId;
+        FavoritessDatabaseManager.prototype.insertFavoriteSearchDetails = insertFavoriteSearchDetails;
+        FavoritessDatabaseManager.prototype.deleteFavoriteSearchData    = deleteFavoriteSearchData;
 
         return FavoritessDatabaseManager;
     })();
