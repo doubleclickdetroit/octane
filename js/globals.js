@@ -394,6 +394,7 @@ define(function(require) {
     */
     globals.favorites = {};
     globals.favorites.constants = {
+        VIEW_MODE         : 'favorites',
         CLASSNAME_EDITABLE: 'ui-editable-favorite',
         CONFIRM_MESSAGE   : 'Are you sure you want to remove this favorite?'
     };
