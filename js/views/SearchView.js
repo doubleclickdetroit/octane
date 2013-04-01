@@ -19,7 +19,7 @@ function(globals, utils, facade, Backbone, Mustache, tmpl) {
             this.constructor.__super__.initialize.apply(this, arguments);
 
             // set context
-            utils._.bindAll(this, 'render');
+            utils._.bindAll(this, 'render', 'pageBeforeShow');
 
             // cache $content
             this.$content = this.$el.find(':jqmData(role=content)');
@@ -32,30 +32,33 @@ function(globals, utils, facade, Backbone, Mustache, tmpl) {
 
             // collection events
             this.collection.on('reset', function(collection) {
-                var configuration = utils._.clone(globals.search.configuration);
+                var config = utils._.clone(globals.search.configuration);
 
                 // dynamic values for configuration-object for some fields
-                configuration['brand'][0]['values']    = collection.get('brand').toJSON()['values'];
-                configuration['fuelType'][0]['values'] = collection.get('fuelType').toJSON()['values'];
+                config['brand'][0]['values']    = collection.get('brand').toJSON()['values'];
+                config['fuelType'][0]['values'] = collection.get('fuelType').toJSON()['values'];
 
                 // create page with updated configuration-object
-                this.pageCreate(configuration);
+                this.pageCreate(config);
             }, this);
 
             // jQM Events
             this.$el.on('pageshow', this.render);
-            this.$el.on('pagebeforeshow', function() {
-                facade.publish('search', 'beforeRender', {
-                    'favoritesName': null,
-                    'viewMode'     : globals.search.constants.VIEW_MODE
-                });
-            });
+            this.$el.on('pagebeforeshow', this.pageBeforeShow);
         },
 
         pageCreate: function(configuration) {
             this.$content.html(Mustache.render(
                 tmpl, configuration
             ));
+        },
+
+        pageBeforeShow: function() {
+            facade.publish('search', 'beforeRender', {
+                'favoritesName': null,
+                'viewMode'     : globals.search.constants.VIEW_MODE,
+                'setDefault'   : globals.search.constants.DEFAULT_SEARCH_NO
+            });
         },
 
         render: function() {
@@ -92,8 +95,7 @@ function(globals, utils, facade, Backbone, Mustache, tmpl) {
                 .selectmenu('refresh');
 
             this.$content
-                .find('#setDefaultSlider').val(constants.DEFAULT_SEARCH_NO) // set default value
-                .trigger('change')                                          // update viewModel
+                .find('#setDefaultSlider').val(criteria.setDefault)
                 .slider('refresh');
         },
 
@@ -107,6 +109,10 @@ function(globals, utils, facade, Backbone, Mustache, tmpl) {
 
         handleCriteriaSubmission: function(evt) {
             var constants = globals.search.constants;
+
+            /*
+             * This is very ugly and should eventually be reworked
+            */
 
             evt.preventDefault();                                         // prevent JS submit button action
             facade.publish('search', 'saveCriteria', function(criteria) { // callback for controller to invoke

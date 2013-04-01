@@ -66,6 +66,9 @@ function(globals, utils, LocationModel, BackboneModel, SearchModel, SearchCollec
         };
 
         SearchController.prototype.saveSearchCriteriaModel = function(callback) {
+            /*
+             * This is very ugly and should eventually be reworked
+            */
             searchViewModel.save({}, {
                 'callback': callback
             });
