@@ -23,6 +23,7 @@ function(globals, utils, BackboneModel, FavoritesCollection, FavoritesView, Favo
                 collection: favoritesCollection,
             });
 
+            // fetch favorites
             favoritesCollection.fetch();
         };
 
