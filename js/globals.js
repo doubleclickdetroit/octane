@@ -176,6 +176,7 @@ define(function(require) {
     */
     globals.search = {};
     globals.search.constants = {
+        'VIEW_MODE': globals.SEARCH_DETAILS.VIEW_MODE,
         'SEARCH_BY_ADDRESS'         : 'enterLocation',
         'SEARCH_BY_CURRENT_LOCATION': 'currentLocation',
         'DEFAULT_SEARCH_YES' : 'YES',
