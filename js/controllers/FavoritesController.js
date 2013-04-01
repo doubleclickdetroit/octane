@@ -1,5 +1,5 @@
-define([ 'globals', 'utils', 'models/BackboneModel', 'collections/FavoritesCollection', 'views/FavoritesView' ],
-function(globals, utils, BackboneModel, FavoritesCollection, FavoritesView) {
+define([ 'globals', 'utils', 'models/BackboneModel', 'collections/FavoritesCollection', 'views/FavoritesView', 'views/FavoritesDialogView' ],
+function(globals, utils, BackboneModel, FavoritesCollection, FavoritesView, FavoritesDialogView) {
 
     'use strict';
 
@@ -20,7 +20,7 @@ function(globals, utils, BackboneModel, FavoritesCollection, FavoritesView) {
             favoritesCollection = new FavoritesCollection();
 
             favoritesView = new FavoritesView({
-                collection: favoritesCollection
+                collection: favoritesCollection,
             });
 
             favoritesCollection.fetch();
@@ -31,7 +31,11 @@ function(globals, utils, BackboneModel, FavoritesCollection, FavoritesView) {
         };
 
         FavoritesController.prototype.promptFavorite = function() {
-            favoritesView.displaySaveFavoriteDialog();
+            new FavoritesDialogView().render();
+        };
+
+        FavoritesController.prototype.toggleEditFavorites = function(isEditable) {
+            favoritesCollection.isEditable = isEditable;
         };
 
         FavoritesController.prototype.saveAttributes = function(attributes) {
@@ -39,8 +43,8 @@ function(globals, utils, BackboneModel, FavoritesCollection, FavoritesView) {
             favoritesCollection.create(attributes);
         };
 
-        FavoritesController.prototype.deleteAttributes = function(attributes) {
-            favoritesCollection.remove(attributes);
+        FavoritesController.prototype.removeAttributes = function(favoriteModel) {
+            favoriteModel.destroy();
         };
 
         FavoritesController.prototype.updateSearchCriteriaModel = function(attributes) {

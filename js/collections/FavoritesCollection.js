@@ -16,21 +16,19 @@ function(globals, utils, Backbone, FavoritesDatabaseManager, FavoriteModel) {
             FavoritesCollection.__super__.constructor.apply(this, arguments);
         }
 
+        FavoritesCollection.prototype.isEditable = false;
+
         // Define Model to use
         FavoritesCollection.prototype.model = FavoriteModel;
 
         // Sorting
         FavoritesCollection.prototype.comparator = function(favoriteModel) {
-            // is model populated from localSQL or from collection.create()
-            var attr = favoriteModel.has('FavoritesName') ? 'FavoritesName' : 'favoritesName';
-            return favoriteModel.get(attr);
+            return favoriteModel.get('favoritesName');
         };
 
         FavoritesCollection.prototype.sync = function(method, collection, options) {
             var manager = FavoritesDatabaseManager.getInstance();
             options.callback = options.callback || null;
-
-            console.log('FavoritesCollection sync', method, collection);
 
             switch(method) {
                 case 'read':

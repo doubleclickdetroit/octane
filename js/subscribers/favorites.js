@@ -20,7 +20,10 @@ function(facade, controller) {
     subscribe('save', 'saveAttributes');
 
     //
-    subscribe('delete', 'deleteAttributes');
+    subscribe('remove', 'removeAttributes');
+
+    //
+    subscribe('editable', 'toggleEditFavorites');
 
 
     /*

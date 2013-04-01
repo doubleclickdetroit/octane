@@ -11,11 +11,7 @@ function(globals, utils, facade, Backbone, Mustache, tmpl_item) {
         className: 'favorites-li',
 
         events: {
-            'click a': 'handleRemoveFavorite'
-        },
-
-        initialize: function() {
-            //
+            'click a': 'handleFavoriteDelegation'
         },
 
         render: function() {
@@ -23,11 +19,34 @@ function(globals, utils, facade, Backbone, Mustache, tmpl_item) {
             return this;
         },
 
-        handleRemoveFavorite: function(evt) {
-            evt.preventDefault();
-            facade.publish('favorites', 'delete', this.model);
-        }
+        removeFavorite: function() {
+            var self     = this,
+                prompt   = globals.favorites.configuration.confirm,
+                message  = prompt.message,
+                callback = function(id) {
+                    if (id === 1) {
+                        self.$el.slideUp('fast', function() {
+                            facade.publish('favorites', 'remove', self.model);
+                        });
+                    }
+                };
 
+            facade.publish('app', 'confirm', message, callback);
+        },
+
+        /*
+         * Event Handlers
+        */
+        handleFavoriteDelegation: function(evt) {
+            evt.preventDefault();
+            if (this.model.collection.isEditable) {
+                this.removeFavorite();
+            }
+            else {
+                facade.publish('fuelsites', 'navigate');
+                facade.publish('criteria', 'update', this.model.toJSON());
+            }
+        },
     });
 
 

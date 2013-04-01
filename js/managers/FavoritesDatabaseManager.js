@@ -1,5 +1,5 @@
-define([ './DatabaseManager' ],
-function(DatabaseManager) {
+define([ 'utils', './DatabaseManager' ],
+function(utils, DatabaseManager) {
 
     'use strict';
 
@@ -25,7 +25,7 @@ function(DatabaseManager) {
                     tx.executeSql(sql, [], function(tx, results) {
                         var rows = [];
                         for (var i=0; i < results.rows.length; i++) {
-                            rows.push(results.rows.item(i));
+                            rows.push(utils.camelcaseKeys(results.rows.item(i)));
                         }
                         callback.call(context || window, rows);
                     }, database.error);
@@ -86,10 +86,10 @@ function(DatabaseManager) {
                         data.viewMode,
                         data.limitResult,
                         data.favoritesName
-                    ], function() {
-                        if (callback) {
-                            callback.call(context || window);
-                        }
+                    ], function(tx, result) {
+                        callback && callback.call(context || window, {
+                            'id': result.insertId
+                        });
                     });
                 }, database.error);
             }
@@ -104,7 +104,7 @@ function(DatabaseManager) {
          * @return: none
         */
         function deleteFavoriteSearchData(favoriteId, callback, context) {
-            var sql, db = this.openDatabase();
+            var sql, db = database.openDatabase();
             sql = "DELETE FROM SearchDetails WHERE Id ='" + favoriteId + "'";
 
             db.transaction(function(tx) {
