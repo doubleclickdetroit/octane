@@ -963,6 +963,33 @@ i.ui-logo[data-brand='WAWA']             { background-image: url(../img/brand_lo
 
 
 /*********************************************
+ * Favorites - Page
+*********************************************/
+#favorites.ui-editable-favorite .ui-icon {
+    width : 30px;
+    height: 30px;
+    background-position: 0 0;
+    background-image: url(../img/delete_icon.png);
+    background-size : 30px 30px;
+    background-color: transparent;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5),
+       only screen and (min--moz-device-pixel-ratio: 1.5),
+       only screen and (min-resolution: 240dpi)
+{
+    #favorites.ui-editable-favorite .ui-icon {
+        background-image: url(../img/delete_icon@2x.png);
+    }
+}
+
+#favorites.ui-editable-favorite .ui-btn-icon-left > .ui-btn-inner > .ui-icon,
+#favorites.ui-editable-favorite .ui-btn-icon-right > .ui-btn-inner > .ui-icon {
+    margin-top: -15px;
+}
+
+
+/*********************************************
  * Alert - Page
 *********************************************/
 #alerts .page-content h1 { font-size: 1.2em; margin: 0 0 20px; padding-bottom: 10px; border-bottom: 1px solid #888; }
