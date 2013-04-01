@@ -7,9 +7,12 @@ function(facade, controller) {
     /*
      * FuelSites Subscribers
     */
+    var subscribe;
+    subscribe = facade.subscribeTo('fuelsites', controller);
+
     //
-    facade.subscribe('fuelsites', 'navigate',         controller, 'navigate');
-    facade.subscribe('fuelsites', 'selectedFuelSite', controller, 'showFuelSite');
+    subscribe('navigate',         'navigate');
+    subscribe('selectedFuelSite', 'showFuelSite');
 
 
     /*
