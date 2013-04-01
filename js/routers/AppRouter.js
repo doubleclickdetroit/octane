@@ -74,7 +74,7 @@ function(utils, facade, Backbone) {
 
         start: function() {
             Backbone.history.start();
-            // this.root(); // disable during development
+            this.root(); // default to root route
         }
     });
 
