@@ -93,6 +93,31 @@ function($, _, Backbone, globals) {
     };
 
     /*
+     * Lowercase first character of string
+     *
+     * @param : string
+     * @return: string
+    */
+    utils.uncapitalize = function(str) {
+        return str.replace(/^[A-Z]/, function(m) {
+            return m.toLowerCase();
+        });
+    }
+
+    /*
+     * CamelCase object keys
+     *
+     * @param : object
+     * @return: object
+    */
+    utils.camelcaseKeys = function(attributes) {
+        return utils._.object(
+            utils._.map(utils._.keys(attributes), utils.uncapitalize),
+            utils._.values(attributes)
+        );
+    }
+
+    /*
      * Backbone.history() convenience method
     */
     utils.navigate = function(viewId) {

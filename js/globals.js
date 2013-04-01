@@ -392,7 +392,10 @@ define(function(require) {
      * Page :: Favorites
     */
     globals.favorites = {};
-    globals.favorites.constants = {};
+    globals.favorites.constants = {
+        CLASSNAME_EDITABLE: 'ui-editable-favorite',
+        CONFIRM_MESSAGE   : 'Are you sure you want to remove this favorite?'
+    };
     globals.favorites.configuration = {
         'save': {
             'title': 'Save Search',
@@ -417,6 +420,13 @@ define(function(require) {
                     'placeholder': 'Enter Search Name'
                 }
             ]
+        },
+        'confirm': {
+            'message': globals.favorites.constants.CONFIRM_MESSAGE
+        },
+        'editable': {
+            'done': 'Done',
+            'edit': 'Delete'
         }
     };
 
