@@ -55,9 +55,10 @@ function(globals, utils, LocationModel, BackboneModel, SearchModel, SearchCollec
             searchCriteriaModel.set(criteria, {'silent':true});
         };
 
-        SearchController.prototype.resetSearchViewModel = function() {
+        SearchController.prototype.resetSearchViewModel = function(attributes) {
             // view render should always default to latest searchCriteriaModel data
-            searchViewModel.set(searchCriteriaModel.toJSON());
+            attributes = utils._.extend(searchCriteriaModel.toJSON(), attributes);
+            searchViewModel.set(attributes);
         };
 
         SearchController.prototype.updateAttribute = function(key, val) {

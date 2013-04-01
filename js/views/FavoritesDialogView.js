@@ -24,11 +24,11 @@ function(globals, utils, facade, Backbone, Mustache, tmpl_dialog) {
 
         render: function() {
             this.$el.simpledialog2({
-                mode        : 'blank',
-                headerText  : globals.favorites.configuration.save.title,
-                themeHeader : 'b',
-                headerClose : false,
-                blankContent: this.$content
+                'mode'        : 'blank',
+                'headerText'  : globals.favorites.configuration.save.title,
+                'themeHeader' : 'b',
+                'headerClose' : false,
+                'blankContent': this.$content
             });
         },
 
@@ -46,9 +46,9 @@ function(globals, utils, facade, Backbone, Mustache, tmpl_dialog) {
 
             // broadcast insert event and value
             facade.publish('favorites', 'save', {
-                id           : null,
-                viewMode     : 'favorites',
-                favoritesName: favoritesName
+                'id'           : null,
+                'favoritesName': favoritesName,
+                'viewMode'     : globals.favorites.constants.VIEW_MODE
             });
 
             // close the dialog

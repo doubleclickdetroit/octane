@@ -45,7 +45,10 @@ function(globals, utils, facade, Backbone, Mustache, tmpl) {
             // jQM Events
             this.$el.on('pageshow', this.render);
             this.$el.on('pagebeforeshow', function() {
-                facade.publish('search', 'beforeRender');
+                facade.publish('search', 'beforeRender', {
+                    'favoritesName': null,
+                    'viewMode'     : globals.search.constants.VIEW_MODE
+                });
             });
         },
 
