@@ -48,12 +48,10 @@ function(globals, utils, Backbone, FuelSitesMapView, DirectionsView, FuelSitesVi
 
         FuelSitesController.prototype.indexFuelSites = function() {
             var criteria = searchCriteriaModel.toJSON();
-            if (criteria.viewMode === globals.fuelsites.constants.VIEW_MODE) {
-                this.loadingBegin();                      // show inidicator before request
-                fuelSitesCollection
-                    .once('reset', this.loadingEnd, this) // hide indicator at end of request
-                    .fetch(criteria);                     // fetch new fuelsites with criteria
-            }
+            this.loadingBegin();                      // show inidicator before request
+            fuelSitesCollection
+                .once('reset', this.loadingEnd, this) // hide indicator at end of request
+                .fetch(criteria);                     // fetch new fuelsites with criteria
         };
 
         FuelSitesController.prototype.showFuelSite = function(fuelsiteId) {
