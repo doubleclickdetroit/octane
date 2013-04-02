@@ -37,8 +37,9 @@ function(globals, utils, Backbone, FuelSitesMapView, DirectionsView, FuelSitesVi
         /*
          * Public Methods
         */
-        FuelSitesController.prototype.navigate = function() {
-            utils.changePage(fuelSitesView.$el, null, null, true); // update hash
+        FuelSitesController.prototype.navigate = function(viewId) {
+            if (viewId === 'map') this.showMap();
+            else                  utils.changePage(fuelSitesView.$el, null, null, true); // update hash
         };
 
         FuelSitesController.prototype.updateCriteria = function(criteria) {
@@ -56,7 +57,7 @@ function(globals, utils, Backbone, FuelSitesMapView, DirectionsView, FuelSitesVi
 
         FuelSitesController.prototype.showFuelSite = function(fuelsiteId) {
             var fuelSiteModel = fuelSitesCollection.get(fuelsiteId);
-            utils.changePage('#directions', null, null, true); // update hash
+            utils.changePage(directionsView.$el, null, null, true); // update hash
 
             this.loadingBegin(); // show indicator before requeset
 
@@ -65,11 +66,12 @@ function(globals, utils, Backbone, FuelSitesMapView, DirectionsView, FuelSitesVi
                 .always(this.loadingEnd)          // hide indicator at end of request
                 .done(directionsView.render)      // render directions
                 .fail(directionsView.handleError) // handle failure
-                .fail(this.navigate)              // redirect to fuelsites
+                .fail(this.navigate);             // redirect to fuelsites
         };
 
         FuelSitesController.prototype.showMap = function() {
-            //
+            utils.changePage(fuelSitesMapView.$el);
+            fuelSitesMapView.render(fuelSitesCollection);
         };
 
         FuelSitesController.prototype.loadingBegin = function(checkView) {
@@ -78,6 +80,7 @@ function(globals, utils, Backbone, FuelSitesMapView, DirectionsView, FuelSitesVi
 
             fuelSitesView.showLoadingIndicator(checkView);
             directionsView.showLoadingIndicator(checkView);
+            fuelSitesMapView.showLoadingIndicator(checkView);
         };
 
         FuelSitesController.prototype.loadingEnd = function(checkView) {
@@ -86,6 +89,7 @@ function(globals, utils, Backbone, FuelSitesMapView, DirectionsView, FuelSitesVi
 
             fuelSitesView.hideLoadingIndicator(checkView);
             directionsView.hideLoadingIndicator(checkView);
+            fuelSitesMapView.hideLoadingIndicator(checkView);
         };
 
         return FuelSitesController;

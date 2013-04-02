@@ -11,16 +11,16 @@ function(utils, facade, Backbone) {
          * Route Definitions
         */
         routes: {
-            'forecast(/)(:viewId)': 'renderForecast',
-            'fuelsites'           : 'renderFuelSites',
-            'favorites'           : 'renderFavorites',
-            'settings'            : 'renderSettings',
-            'info'                : 'renderInfo',
-            'feedback'            : 'renderFeedback',
-            'alerts'              : 'renderAlerts',
-            'search'              : 'renderSearch',
-            'menu'                : 'renderMenu',
-            'termsAndConditions'  : 'renderTermsAndConditions',
+            'fuelsites(/)(:viewId)': 'renderFuelSites',
+            'forecast(/)(:viewId)' : 'renderForecast',
+            'favorites'            : 'renderFavorites',
+            'settings'             : 'renderSettings',
+            'info'                 : 'renderInfo',
+            'feedback'             : 'renderFeedback',
+            'alerts'               : 'renderAlerts',
+            'search'               : 'renderSearch',
+            'menu'                 : 'renderMenu',
+            'termsAndConditions'   : 'renderTermsAndConditions',
 
             '': 'root'
         },
@@ -28,12 +28,12 @@ function(utils, facade, Backbone) {
         /*
          * Route Handlers
         */
-        renderForecast: function(viewId) {
-            facade.publish('forecast', 'navigate', viewId);
+        renderFuelSites: function(viewId) {
+            facade.publish('fuelsites', 'navigate', viewId);
         },
 
-        renderFuelSites: function() {
-            facade.publish('fuelsites', 'navigate');
+        renderForecast: function(viewId) {
+            facade.publish('forecast', 'navigate', viewId);
         },
 
         renderFavorites: function() {
