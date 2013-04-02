@@ -1,5 +1,5 @@
-define([ 'jquery', 'underscore', 'backbone', './globals', 'plugin-timeago' ],
-function($, _, Backbone, globals) {
+define([ 'jquery', 'underscore', 'globals', 'backbone', 'plugin-timeago' ],
+function($, _, globals, Backbone) {
 
     'use strict';
 
@@ -70,6 +70,21 @@ function($, _, Backbone, globals) {
      * jQuery Timeago Plugin convenience method
     */
     utils.timeago = utils.$.timeago;
+
+    /*
+     * Is Mobile
+    */
+    utils.isMobile = utils.$.mobile.media(globals.MEDIA_QUERY.MOBILE);
+
+    /*
+     * Is Retina
+    */
+    utils.isRetina = utils.isMobile && utils.$.mobile.media(globals.MEDIA_QUERY.RETINA);
+
+    /*
+     * FileType
+    */
+    utils.fileType = globals.DEFAULT['FILETYPE_'+(utils.isRetina ? 'RETINA' : 'NORMAL')];
 
     /*
      * Extend Classes

@@ -36,9 +36,19 @@ define(function(require) {
         'FUEL_TYPE_GRADE': 'Unleaded Regular',
         'SORT_BY'        : 'Price',
         'START_LOCATION' : 'currentLocation',
+        'FILETYPE_NORMAL': '.png',
+        'FILETYPE_RETINA': '@2x.png',
         'UNDEFINED'      : undefined,
         'EMPTY_STRING'   : ''
     };
+
+    /*
+     * Brands
+    */
+    globals.BRANDS                  = require('brands');
+    globals.BRANDS['UNBRANDED']     = 'generic';
+    globals.BRANDS['GENERAL_LOGO']  = 'generic';
+    globals.BRANDS['USER_LOCATION'] = 'currentlocation';
 
     /*
      * Database
@@ -49,6 +59,14 @@ define(function(require) {
         'DATABASE_DISPLAY_NAME': 'octane',
         'TIMEOUT'              : 200000,
         'SUCCESS'              : 'Database operation successful.'
+    };
+
+    /*
+     * Media Queries
+    */
+    globals.MEDIA_QUERY = {
+        'MOBILE': 'screen and (min-width: 320px)',
+        'RETINA': 'screen and (-webkit-min-device-pixel-ratio: 2)'
     };
 
     /*
@@ -366,8 +384,9 @@ define(function(require) {
     */
     globals.fuelsites = {};
     globals.fuelsites.constants = {
-        'WEBSERVICE': globals.WEBSERVICE.FUEL_SITE,
-        'VIEW_MODE' : globals.SEARCH_DETAILS.VIEW_MODE // fuelsites is default view_mode for search details
+        'WEBSERVICE' : globals.WEBSERVICE.FUEL_SITE,
+        'VIEW_MODE'  : globals.SEARCH_DETAILS.VIEW_MODE, // fuelsites is default view_mode for search details
+        'MARKER_PATH': 'img/map_marker/'
     };
     globals.fuelsites.configuration = {
         'sortBy': {
@@ -386,6 +405,12 @@ define(function(require) {
                     'close': true
                 }
             ]
+        },
+        'marker': {
+            'shape': {
+                'type' : 'rect',
+                'coord': [1, 1, 40, 43]
+            }
         }
     };
 
