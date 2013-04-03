@@ -1,5 +1,5 @@
-define([ 'globals', 'utils', 'backbone', 'async!http://maps.google.com/maps/api/js?sensor=false' ],
-function(globals, utils, Backbone) {
+define([ 'globals', 'utils', 'facade', 'backbone', 'async!http://maps.google.com/maps/api/js?sensor=false' ],
+function(globals, utils, facade, Backbone) {
 
     'use strict';
 
@@ -33,10 +33,12 @@ function(globals, utils, Backbone) {
         function doGeocoding(conf, callback, context) {
             geocoder.geocode(conf, function(results, status) {
                 if (status == google.maps.GeocoderStatus.OK) {
-                    callback.call(context || window, results);
+                    callback.call(context || window, results, true);
                 }
                 else {
-                    // alert('Geocode was not successful for the following reason: ' + status);
+                    var message = 'Unfortunately there was an error: ' + status + '. Please try again.';
+                    facade.publish('app', 'alert', message);
+                    callback.call(context || window, results, false);
                 }
             });
         }
@@ -60,19 +62,24 @@ function(globals, utils, Backbone) {
         LocationModel.prototype.locateFromAddress = function(address) {
             var conf = {'address': address};
 
-            //
+            // trigger loading event
             this.trigger('loadingbegin');
 
-            doGeocoding(conf, function(results) {
-                //
-                this.set({
-                    'location' : results[0].formatted_address,
-                    'latitude' : results[0].geometry.location.lat(),
-                    'longitude': results[0].geometry.location.lng()
-                });
-
-                //
+            doGeocoding(conf, function(results, isSuccess) {
+                // trigger loading event
                 this.trigger('loadingend');
+
+                if (isSuccess) {
+                    // update attributes
+                    this.set({
+                        'location' : results[0].formatted_address,
+                        'latitude' : results[0].geometry.location.lat(),
+                        'longitude': results[0].geometry.location.lng()
+                    });
+                }
+                else {
+                    this.trigger('fail');
+                }
             }, this);
 
             return this;
@@ -88,16 +95,21 @@ function(globals, utils, Backbone) {
             getCurrentPosition(function(coords) {
                 conf.latLng = new google.maps.LatLng(coords.latitude, coords.longitude);
 
-                doGeocoding(conf, function(results) {
-                    // update attributes
-                    this.set({
-                        'location' : results[0].formatted_address,
-                        'latitude' : results[0].geometry.location.lat(),
-                        'longitude': results[0].geometry.location.lng()
-                    });
-
+                doGeocoding(conf, function(results, isSuccess) {
                     // trigger loading event
                     this.trigger('loadingend');
+
+                    if (isSuccess) {
+                        // update attributes
+                        this.set({
+                            'location' : results[0].formatted_address,
+                            'latitude' : results[0].geometry.location.lat(),
+                            'longitude': results[0].geometry.location.lng()
+                        });
+                    }
+                    else {
+                        this.trigger('fail');
+                    }
                 }, this);
 
             }, this);
