@@ -20,6 +20,9 @@ function(globals, utils, Backbone) {
 
             // request location & resolve with data
             new LocationHelper()['locateFrom'+type](data)
+                .once('fail', function() {
+                    deferred.rejectWith(this, arguments);
+                }, this)
                 .once('change', function() {
                     deferred.resolveWith(this, arguments);
                 }, this);
@@ -92,10 +95,10 @@ function(globals, utils, Backbone) {
         };
 
         SearchModel.prototype.requestHelperForLocation = function(type, data, callback) {
-            this.trigger('loadingbegin');                          // start loading indicator
-            utils.when(getLocationFromType.call(this, type, data)) // deferred for current location with context
-                .then(callback)                                    // send data to callback
-                .done(function() { this.trigger('loadingend'); }); // stop loading indicator
+            this.trigger('loadingbegin');                            // start loading indicator
+            utils.when(getLocationFromType.call(this, type, data))   // deferred for current location with context
+                .then(callback)                                      // send data to callback
+                .always(function() { this.trigger('loadingend'); }); // stop loading indicator
         };
 
         return SearchModel;

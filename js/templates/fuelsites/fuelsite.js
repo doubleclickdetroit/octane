@@ -1,3 +1,4 @@
+{{#fuelsite}}
 <a href="#{{id}}">
     <div class="ui-grid-b">
         <div class="ui-block-a Pricecolumn1">
@@ -24,3 +25,8 @@
         </div>
     </div>
 </a>
+{{/fuelsite}}
+
+{{^fuelsite}}
+<h2 class="text-center">No results found.</h2>
+{{/fuelsite}}

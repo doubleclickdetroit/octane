@@ -18,7 +18,8 @@ function(globals, facade, Backbone, Mustache, tmpl ) {
         },
 
         render: function() {
-            this.$el.html(Mustache.render(tmpl, this.model.toJSON()));
+            var fuelsite = this.model.hasChanged() ? this.model.toJSON() : false;
+            this.$el.html(Mustache.render(tmpl, {'fuelsite': fuelsite}));
             return this;
         },
 

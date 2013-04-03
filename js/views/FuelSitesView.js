@@ -56,6 +56,11 @@ function(globals, utils, facade, Backbone, Mustache, FuelSiteView, tmpl_header, 
             // empty $list
             this.$list.empty();
 
+            // handle empty collection
+            if (this.collection.isEmpty()) {
+                this.collection.add(new Backbone.Model(), {'silent': true});
+            }
+
             // populate $list
             this.collection.each(function (fuelsite) {
                 var fuelsiteView = new FuelSiteView({model: fuelsite}).render();
