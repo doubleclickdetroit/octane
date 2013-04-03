@@ -29,11 +29,8 @@ function(globals, utils, facade, Backbone, Mustache, InfoBubbleView, tmpl_header
                 'mapTypeId': google.maps.MapTypeId.ROADMAP
             };
 
-            // cache infoBubbleView
-            this.infoBubbleView = new InfoBubbleView();
-
             // model events
-            this.listenTo(this.model, 'change', function(criteria) {
+            this.listenTo(this.model, 'change', function() {
                 this.options.center = new google.maps.LatLng(
                     this.model.get('latitude'),
                     this.model.get('longitude')
@@ -52,6 +49,11 @@ function(globals, utils, facade, Backbone, Mustache, InfoBubbleView, tmpl_header
 
             // cache map
             this.map = new google.maps.Map(this.$content.get(0), this.options);
+
+            // cache infoBubbleView
+            this.infoBubbleView = new InfoBubbleView({
+                'map': this.map
+            });
         },
 
         pageCreate: function () {
@@ -103,9 +105,9 @@ function(globals, utils, facade, Backbone, Mustache, InfoBubbleView, tmpl_header
                 );
 
                 // (un)branded logo
-                icon = globals.fuelsites.constants.MARKER_PATH
-                     + (globals.BRANDS[fuelsite.get('brand')] || globals.BRANDS.UNBRANDED)
-                     + utils.fileType;
+                icon = globals.fuelsites.constants.MARKER_PATH                             +
+                       (globals.BRANDS[fuelsite.get('brand')] || globals.BRANDS.UNBRANDED) +
+                       utils.fileType;
 
                 // place fuelsite marker
                 marker = new google.maps.Marker({
@@ -133,7 +135,8 @@ function(globals, utils, facade, Backbone, Mustache, InfoBubbleView, tmpl_header
         },
 
         handleMarkerSelection: function(marker, fuelsite) {
-            this.infoBubbleView.render(marker, fuelsite);
+            this.infoBubbleView.model = fuelsite;
+            this.infoBubbleView.render(marker);
         }
     });
 

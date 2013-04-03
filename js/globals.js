@@ -386,7 +386,8 @@ define(function(require) {
     globals.fuelsites.constants = {
         'WEBSERVICE' : globals.WEBSERVICE.FUEL_SITE,
         'VIEW_MODE'  : globals.SEARCH_DETAILS.VIEW_MODE, // fuelsites is default view_mode for search details
-        'MARKER_PATH': 'img/map_marker/'
+        'IMG_PATH'   : 'img/',
+        'MARKER_PATH': 'img/map_marker/',
     };
     globals.fuelsites.configuration = {
         'sortBy': {
@@ -411,6 +412,22 @@ define(function(require) {
                 'type' : 'rect',
                 'coord': [1, 1, 40, 43]
             }
+        },
+        'bubble': {
+            'shadowStyle'        : 1,
+            'padding'            : 0,
+            'backgroundColor'    : 'rgb(57,57,57)',
+            'borderRadius'       : 4,
+            'arrowSize'          : 10,
+            'borderWidth'        : 1,
+            'borderColor'        : '#2c2c2c',
+            'disableAutoPan'     : true,
+            'hideCloseButton'    : false,
+            'closeBoxMargin'     : '10px 2px 2px 2px',
+            'arrowPosition'      : 30,
+            'backgroundClassName': 'phoney',
+            'arrowStyle'         : 2,
+            'closeBoxURL': globals.fuelsites.constants.IMG_PATH + 'close_button.png'
         }
     };
 
