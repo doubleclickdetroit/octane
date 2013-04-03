@@ -24,6 +24,7 @@
     //
     // [4]: http://www.jshint.com/options/
     "predef": [
+        "google",      // google API
         "require",     // AMD
         "define",      // AMD
         "confirm"      // window.confirm();
