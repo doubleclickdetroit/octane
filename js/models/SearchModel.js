@@ -91,13 +91,17 @@ function(globals, utils, Backbone) {
         SearchModel.prototype.respondToSearchByPosition = function() {
             this.requestHelperForLocation('position', null, function(location) {
                 this.set(location.toJSON()); // update attributes with location
+            }, function() {                  // error handler, revert values
+                this.set('searchBy', this.previous('searchBy')); // revert searchBy which view will invoke respondtoSearchByAddress
+                this.set('location', this.previous('location')); // which will clear the location value, circumvent by setting separately
             });
         };
 
-        SearchModel.prototype.requestHelperForLocation = function(type, data, callback) {
+        SearchModel.prototype.requestHelperForLocation = function(type, data, success, failure) {
             this.trigger('loadingbegin');                            // start loading indicator
             utils.when(getLocationFromType.call(this, type, data))   // deferred for current location with context
-                .then(callback)                                      // send data to callback
+                .then(success)                                       // send data to success callback
+                .fail(failure || null)                               // send data to failure callback
                 .always(function() { this.trigger('loadingend'); }); // stop loading indicator
         };
 

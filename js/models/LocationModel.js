@@ -12,15 +12,22 @@ function(globals, utils, facade, Backbone) {
         /*
          * Private Methods
         */
-        function getCurrentPosition(callback, context) {
+        function getCurrentPosition(counter, callback, context) {
             navigator.geolocation.getCurrentPosition(
                 function(pos) {
-                    callback.call(context || window, pos.coords);
+                    callback.call(context || window, true, pos.coords);
                 },
-                function(err){
-                    setTimeout(function() {
-                        getCurrentPosition(callback, context);
-                    }, 1000);
+                function(err) {
+                    if (++counter <= 3) {
+                        setTimeout(function() {
+                            getCurrentPosition(counter, callback, context);
+                        }, 1000);
+                    }
+                    else {
+                        var message = 'Unfortunately there was an error locating your position. Please try again.';
+                        facade.publish('app', 'alert', message);
+                        callback.call(context || window, false);
+                    }
                 },
                 {
                     maximumAge        : 3000,
@@ -33,12 +40,12 @@ function(globals, utils, facade, Backbone) {
         function doGeocoding(conf, callback, context) {
             geocoder.geocode(conf, function(results, status) {
                 if (status == google.maps.GeocoderStatus.OK) {
-                    callback.call(context || window, results, true);
+                    callback.call(context || window, true, results);
                 }
                 else {
                     var message = 'Unfortunately there was an error: ' + status + '. Please try again.';
                     facade.publish('app', 'alert', message);
-                    callback.call(context || window, results, false);
+                    callback.call(context || window, false);
                 }
             });
         }
@@ -65,7 +72,7 @@ function(globals, utils, facade, Backbone) {
             // trigger loading event
             this.trigger('loadingbegin');
 
-            doGeocoding(conf, function(results, isSuccess) {
+            doGeocoding(conf, function(isSuccess, results) {
                 // trigger loading event
                 this.trigger('loadingend');
 
@@ -92,10 +99,17 @@ function(globals, utils, facade, Backbone) {
             this.trigger('loadingbegin');
 
             // get current position
-            getCurrentPosition(function(coords) {
+            getCurrentPosition(0, function(isSuccess, coords) {
+                if (!isSuccess) {
+                    // trigger loading event
+                    this.trigger('loadingend');
+                    this.trigger('fail');
+                    return;
+                }
+
                 conf.latLng = new google.maps.LatLng(coords.latitude, coords.longitude);
 
-                doGeocoding(conf, function(results, isSuccess) {
+                doGeocoding(conf, function(isSuccess, results) {
                     // trigger loading event
                     this.trigger('loadingend');
 
