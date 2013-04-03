@@ -26,6 +26,9 @@ require.config({
         // jQuery Plugins
         'plugin-timeago': 'libs/jquery/jquery.timeago',
         'plugin-dialog' : 'libs/jquery/jquery.mobile.simpledialog2',
+
+        // Additional Plugins
+        'plugin-infobubble': 'libs/infobubble/infobubble'
     },
 
     shim: {
@@ -35,6 +38,9 @@ require.config({
         'backbone': {
             'deps'   : [ 'underscore', 'jquery', 'mustache' ],
             'exports': 'Backbone'
+        },
+        'plugin-infobubble': {
+            'exports': 'InfoBubble'
         },
         'jquery-mobile': [ 'jquery', 'libs/jquery/jquery.mobile.config' ]
     }
