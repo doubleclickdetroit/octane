@@ -1,5 +1,5 @@
-define([ 'globals', 'utils', 'facade', 'backbone', 'mustache', 'views/InfoBubbleView', 'text!tmpl/fuelsites/header', 'text!tmpl/fuelsites/criteria' ],
-function(globals, utils, facade, Backbone, Mustache, InfoBubbleView, tmpl_header, tmpl_criteria) {
+define([ 'globals', 'utils', 'facade', 'backbone', 'mustache', 'views/InfoBubbleView', 'views/InfoLabelView', 'text!tmpl/fuelsites/header', 'text!tmpl/fuelsites/criteria' ],
+function(globals, utils, facade, Backbone, Mustache, InfoBubbleView, InfoLabelView, tmpl_header, tmpl_criteria) {
 
     'use strict';
 
@@ -93,7 +93,7 @@ function(globals, utils, facade, Backbone, Mustache, InfoBubbleView, tmpl_header
 
         render: function(fuelsites) {
             fuelsites.each(function(fuelsite, i) {
-                var self, latLng, icon, marker;
+                var self, latLng, ppg, icon, marker, label;
 
                 // set context
                 self = this;
@@ -103,6 +103,9 @@ function(globals, utils, facade, Backbone, Mustache, InfoBubbleView, tmpl_header
                     fuelsite.get('location').latitude,
                     fuelsite.get('location').longitude
                 );
+
+                // ppg
+                ppg = '$' + (fuelsite.toJSON().format_ppg() || '0.00');
 
                 // (un)branded logo
                 icon = globals.fuelsites.constants.MARKER_PATH                             +
@@ -115,13 +118,18 @@ function(globals, utils, facade, Backbone, Mustache, InfoBubbleView, tmpl_header
                     'position': latLng,
                     'zIndex'  : i+10,
                     'shape'   : globals.fuelsites.configuration.marker.shape,
-                    'title'   : '$' + (fuelsite.toJSON().format_ppg() || '0.00'),
+                    'title'   : ppg,
                     'icon'    : new google.maps.MarkerImage(icon, null, null, null, new google.maps.Size(40, 43))
                 });
+
+                // overlay labelview
+                label = new InfoLabelView({'map': this.map});
+                label.render(i, marker, ppg);
 
                 // marker event listener
                 google.maps.event.addListener(marker, 'click', function() {
                     self.handleMarkerSelection(marker, fuelsite);
+                    // possibly dealloc memory by label.destroy()
                 });
             }, this);
         },
