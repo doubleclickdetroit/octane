@@ -1,5 +1,5 @@
-define([ 'globals', 'utils', 'facade', 'backbone' ],
-function(globals, utils, facade, Backbone) {
+define([ 'globals', 'utils', 'facade', 'backbone', 'mustache', 'views/InfoBubbleView', 'text!tmpl/fuelsites/header', 'text!tmpl/fuelsites/criteria' ],
+function(globals, utils, facade, Backbone, Mustache, InfoBubbleView, tmpl_header, tmpl_criteria) {
 
     'use strict';
 
@@ -8,6 +8,13 @@ function(globals, utils, facade, Backbone) {
     FuelSitesMapView = Backbone.View.extend({
 
         el: utils.$('#fuelsitesMap'),
+
+        events: {
+            'click .btn-save': 'displaySaveDialog'
+        },
+
+        // cache templates
+        tmpl_criteria: Mustache.compile(tmpl_criteria),
 
         initialize: function() {
             // call super
@@ -22,30 +29,48 @@ function(globals, utils, facade, Backbone) {
                 'mapTypeId': google.maps.MapTypeId.ROADMAP
             };
 
-            // jQM events
-            this.$el.on('pageshow', this.pageShow);
+            // cache infoBubbleView
+            this.infoBubbleView = new InfoBubbleView();
 
             // model events
-            this.model.on('change', function(criteria) {
+            this.listenTo(this.model, 'change', function(criteria) {
                 this.options.center = new google.maps.LatLng(
                     this.model.get('latitude'),
                     this.model.get('longitude')
                 );
             }, this);
 
+            // jQM events
+            this.$el.on('pageshow', this.pageShow);
+
+            // create page
+            this.pageCreate();
+
             // cache $header & content
-            this.$header  = this.$el.find(':jqmData(role=header)');
-            this.$content = this.$el.find(':jqmData(role=content)');
+            this.$criteria = this.$el.find('.searchtext');
+            this.$content  = this.$el.find(':jqmData(role=content)');
 
             // cache map
             this.map = new google.maps.Map(this.$content.get(0), this.options);
         },
 
+        pageCreate: function () {
+            // append the header
+            this.$el.find(':jqmData(role=header)').append(Mustache.render(tmpl_header, {
+                'excludeSort': true
+            }));
+        },
+
         pageShow: function() {
-            var height = utils.$(window).height() - this.$content.offset().top,
-                icon   = globals.fuelsites.constants.MARKER_PATH + globals.BRANDS.USER_LOCATION;
+            var height, icon;
+
+            // render $criteria
+            this.$criteria.html(this.tmpl_criteria(
+                this.model.toJSON()
+            ));
 
             // set $content height
+            height = utils.$(window).height() - this.$content.offset().top,
             this.$content.height(height);
 
             // resize map to cover $content
@@ -55,6 +80,7 @@ function(globals, utils, facade, Backbone) {
             this.map.setCenter(this.options.center);
 
             // mark current position
+            icon = globals.fuelsites.constants.MARKER_PATH + globals.BRANDS.USER_LOCATION;
             new google.maps.Marker({
                 'map'     : this.map,
                 'position': this.options.center,
@@ -65,30 +91,49 @@ function(globals, utils, facade, Backbone) {
 
         render: function(fuelsites) {
             fuelsites.each(function(fuelsite, i) {
-                var latLng, icon;
-                fuelsite = fuelsite.toJSON();
+                var self, latLng, icon, marker;
+
+                // set context
+                self = this;
 
                 // fuelsite location
                 latLng = new google.maps.LatLng(
-                    fuelsite.location.latitude,
-                    fuelsite.location.longitude
+                    fuelsite.get('location').latitude,
+                    fuelsite.get('location').longitude
                 );
 
                 // (un)branded logo
                 icon = globals.fuelsites.constants.MARKER_PATH
-                     + (globals.BRANDS[fuelsite.brand] || globals.BRANDS.UNBRANDED)
+                     + (globals.BRANDS[fuelsite.get('brand')] || globals.BRANDS.UNBRANDED)
                      + utils.fileType;
 
                 // place fuelsite marker
-                new google.maps.Marker({
+                marker = new google.maps.Marker({
                     'map'     : this.map,
                     'position': latLng,
                     'zIndex'  : i+10,
                     'shape'   : globals.fuelsites.configuration.marker.shape,
-                    'title'   : '$' + (fuelsite.format_ppg() || '0.00'),
+                    'title'   : '$' + (fuelsite.toJSON().format_ppg() || '0.00'),
                     'icon'    : new google.maps.MarkerImage(icon, null, null, null, new google.maps.Size(40, 43))
                 });
+
+                // marker event listener
+                google.maps.event.addListener(marker, 'click', function() {
+                    self.handleMarkerSelection(marker, fuelsite);
+                });
             }, this);
+        },
+
+        /*
+         * Event Handlers
+        */
+        displaySaveDialog: function (evt) {
+            evt.preventDefault();
+            facade.publish('favorites', 'prompt');
+        },
+
+        handleMarkerSelection: function(marker, fuelsite) {
+            this.infoBubbleView.render(marker, fuelsite);
         }
     });
 

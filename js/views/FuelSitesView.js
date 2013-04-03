@@ -44,7 +44,9 @@ function(globals, utils, facade, Backbone, Mustache, FuelSiteView, tmpl_header, 
 
         pageCreate: function () {
             // append the header
-            this.$el.find(':jqmData(role=header)').append(Mustache.render(tmpl_header));
+            this.$el.find(':jqmData(role=header)').append(Mustache.render(tmpl_header, {
+                'excludeSort': false
+            }));
 
             // append the list
             this.$el.find(':jqmData(role=content)').append(Mustache.render(tmpl_fuelsites));
@@ -80,7 +82,8 @@ function(globals, utils, facade, Backbone, Mustache, FuelSiteView, tmpl_header, 
         /*
          * Event Handlers
         */
-        displaySaveDialog: function () {
+        displaySaveDialog: function (evt) {
+            evt.preventDefault();
             facade.publish('favorites', 'prompt');
         },
 
