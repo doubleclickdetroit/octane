@@ -18,7 +18,7 @@ function(globals, utils, facade, Backbone) {
                     callback.call(context || window, true, pos.coords);
                 },
                 function(err) {
-                    if (++counter <= 3) {
+                    if (++counter < 3) {
                         setTimeout(function() {
                             getCurrentPosition(counter, callback, context);
                         }, 1000);
