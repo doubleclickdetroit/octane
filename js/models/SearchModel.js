@@ -52,6 +52,12 @@ function(globals, utils, Backbone) {
                     this.respondToSearchByPosition();
                 }
             }, this);
+
+            // format location
+            this.on('change:location', function(model, location) {
+                location = location.replace(/, USA/, '');
+                model.set('location', location);
+            });
         };
 
         SearchModel.prototype.validate = function() {
