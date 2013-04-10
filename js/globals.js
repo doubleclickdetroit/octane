@@ -372,10 +372,11 @@ define(function(require) {
     */
     globals.fuelsites = {};
     globals.fuelsites.constants = {
-        'WEBSERVICE' : globals.WEBSERVICE.FUEL_SITE,
-        'VIEW_MODE'  : globals.SEARCH_DETAILS.VIEW_MODE, // fuelsites is default view_mode for search details
-        'IMG_PATH'   : 'img/',
-        'MARKER_PATH': 'img/map_marker/',
+        'WEBSERVICE'   : globals.WEBSERVICE.FUEL_SITE,
+        'VIEW_MODE'    : globals.SEARCH_DETAILS.VIEW_MODE, // fuelsites is default view_mode for search details
+        'DEFAULT_BRAND': globals.SEARCH_DETAILS.BRAND,     // fuelsites has the default brand
+        'IMG_PATH'     : 'img/',
+        'MARKER_PATH'  : 'img/map_marker/',
     };
     globals.fuelsites.configuration = {
         'sortBy': {

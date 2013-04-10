@@ -11,9 +11,8 @@ function(utils, globals, Backbone, FuelSiteModel) {
          * Private Methods
         */
         function makeURL(params) {
-            var key = globals.fuelsites.constants.WEBSERVICE;
-
-            console.log('makeURL', params);
+            var key          = globals.fuelsites.constants.WEBSERVICE,
+                defaultBrand = params.brand === globals.fuelsites.constants.DEFAULT_BRAND;
 
             return key.URL
                  + key.LONGITUDE    + params.longitude
@@ -24,7 +23,7 @@ function(utils, globals, Backbone, FuelSiteModel) {
                  + key.FILTER_TODAY + params.filterToday
                  + key.PAGE_NUMBER  + params.pageNumber
                  + key.PAGE_SIZE    + params.pageSize
-                 + key.BRAND        + params.brand
+                 + (defaultBrand ? '' : key.BRAND + params.brand);
         }
 
         /***********************************************************************
