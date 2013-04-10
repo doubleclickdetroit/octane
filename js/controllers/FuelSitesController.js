@@ -1,5 +1,5 @@
-define([ 'globals', 'utils', 'backbone', 'views/FuelSitesMapView', 'views/DirectionsView', 'views/FuelSitesView', 'collections/FuelSitesCollection' ],
-function(globals, utils, Backbone, FuelSitesMapView, DirectionsView, FuelSitesView, FuelSitesCollection) {
+define([ 'globals', 'utils', 'backbone', 'views/FuelSitesMapView', 'views/DirectionsView', 'views/FuelSitesView', 'collections/FuelSitesCollection', 'models/SearchDetailsModel' ],
+function(globals, utils, Backbone, FuelSitesMapView, DirectionsView, FuelSitesView, FuelSitesCollection, SearchDetailsModel) {
 
     'use strict';
 
@@ -13,11 +13,18 @@ function(globals, utils, Backbone, FuelSitesMapView, DirectionsView, FuelSitesVi
         /***********************************************************************
          * Constructor
         ***********************************************************************/
-        function FuelSitesController() {}
+        function FuelSitesController() {
+            // cache searchDetailsModel
+            searchCriteriaModel = SearchDetailsModel.getInstance();
+
+            // listen for events
+            searchCriteriaModel.on('change',       this.indexFuelSites, this);
+            searchCriteriaModel.on('loadingbegin', this.loadingBegin, this);
+            searchCriteriaModel.on('loadingend',   this.loadingEnd, this);
+        }
+
         FuelSitesController.prototype.init = function() {
             // cache & instantiate View, Model and Collection
-            searchCriteriaModel = new Backbone.Model();
-
             fuelSitesCollection = new FuelSitesCollection();
 
             fuelSitesMapView = new FuelSitesMapView({
@@ -42,13 +49,10 @@ function(globals, utils, Backbone, FuelSitesMapView, DirectionsView, FuelSitesVi
             else                  utils.changePage(fuelSitesView.$el, null, null, true); // update hash
         };
 
-        FuelSitesController.prototype.updateCriteria = function(criteria) {
-            searchCriteriaModel.set(criteria);
-            this.indexFuelSites();
-        };
-
         FuelSitesController.prototype.indexFuelSites = function() {
             var criteria = searchCriteriaModel.toJSON();
+            if (criteria.latitude === null && criteria.longitude === null) return;
+
             this.loadingBegin();                      // show inidicator before request
             fuelSitesCollection
                 .once('reset', this.loadingEnd, this) // hide indicator at end of request

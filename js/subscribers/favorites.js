@@ -26,12 +26,6 @@ function(facade, controller) {
     subscribe('editable', 'toggleEditFavorites');
 
 
-    /*
-     * Criteria Subscribers
-    */
-    facade.subscribe('criteria', 'change', controller, 'updateSearchCriteriaModel');
-
-
     return {
         init: function() {
             controller.init();

@@ -15,7 +15,10 @@ function(globals, utils, facade, Backbone) {
         function getCurrentPosition(counter, callback, context) {
             navigator.geolocation.getCurrentPosition(
                 function(pos) {
-                    callback.call(context || window, true, pos.coords);
+                    var message = 'Unfortunately there was an error locating your position. Please try again.';
+                        facade.publish('app', 'alert', message);
+                        callback.call(context || window, false);
+                    // callback.call(context || window, true, pos.coords);
                 },
                 function(err) {
                     if (++counter < 3) {
@@ -66,8 +69,17 @@ function(globals, utils, facade, Backbone) {
             'longitude': null
         };
 
+        LocationModel.prototype.reset = function() {
+            this.set(this.defaults, {
+                'silent': true
+            });
+        };
+
         LocationModel.prototype.locateFromAddress = function(address) {
             var conf = {'address': address};
+
+            // reset to allow new/same data
+            this.reset();
 
             // trigger loading event
             this.trigger('loadingbegin');
@@ -94,6 +106,9 @@ function(globals, utils, facade, Backbone) {
 
         LocationModel.prototype.locateFromCurrentLocation = function() {
             var conf = {};
+
+            // reset to allow new/same data
+            this.reset();
 
             // trigger loading event
             this.trigger('loadingbegin');

@@ -25,7 +25,7 @@ function(globals, utils, facade, Backbone, Mustache, tmpl) {
             this.$content = this.$el.find(':jqmData(role=content)');
 
             // model events
-            this.model.on('change:location', this.render, this)
+            this.model.on('change:location', this.render, this);
             this.model.on('invalid', function(model, error) {
                 facade.publish('app', 'alert', error);
             });

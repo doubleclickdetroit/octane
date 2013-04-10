@@ -1,5 +1,5 @@
-define([ 'globals', 'utils', 'models/BackboneModel', 'collections/FavoritesCollection', 'views/FavoritesView', 'views/FavoritesDialogView' ],
-function(globals, utils, BackboneModel, FavoritesCollection, FavoritesView, FavoritesDialogView) {
+define([ 'globals', 'utils', 'models/SearchDetailsModel', 'collections/FavoritesCollection', 'views/FavoritesView', 'views/FavoritesDialogView' ],
+function(globals, utils, SearchDetailsModel, FavoritesCollection, FavoritesView, FavoritesDialogView) {
 
     'use strict';
 
@@ -15,7 +15,7 @@ function(globals, utils, BackboneModel, FavoritesCollection, FavoritesView, Favo
         function FavoritesController() {}
         FavoritesController.prototype.init = function() {
             // cache collection & view
-            searchCriteriaModel = new BackboneModel();
+            searchCriteriaModel = SearchDetailsModel.getInstance();
 
             favoritesCollection = new FavoritesCollection();
 
@@ -46,10 +46,6 @@ function(globals, utils, BackboneModel, FavoritesCollection, FavoritesView, Favo
 
         FavoritesController.prototype.removeAttributes = function(favoriteModel) {
             favoriteModel.destroy();
-        };
-
-        FavoritesController.prototype.updateSearchCriteriaModel = function(attributes) {
-            searchCriteriaModel.set(attributes);
         };
 
         return FavoritesController;

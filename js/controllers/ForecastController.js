@@ -1,5 +1,5 @@
-define([ 'utils', 'backbone', 'views/ForecastView', 'models/ForecastModel' ],
-function(utils, Backbone, ForecastView, ForecastModel) {
+define([ 'utils', 'backbone', 'views/ForecastView', 'models/ForecastModel', 'models/SearchDetailsModel' ],
+function(utils, Backbone, ForecastView, ForecastModel, SearchDetailsModel) {
 
     'use strict';
 
@@ -29,7 +29,7 @@ function(utils, Backbone, ForecastView, ForecastModel) {
         function ForecastController() {}
         ForecastController.prototype.init = function() {
             // create models
-            searchCriteriaModel = new Backbone.Model();
+            searchCriteriaModel = SearchDetailsModel.getInstance();
 
             forecastModel = new ForecastModel({
                 criteriaModel: searchCriteriaModel
@@ -47,10 +47,6 @@ function(utils, Backbone, ForecastView, ForecastModel) {
         */
         ForecastController.prototype.navigate = function(view_id) {
             forecastModel.loadAttributes(view_id, handleForecastEntryPoint);
-        };
-
-        ForecastController.prototype.updateCriteria = function(criteria) {
-            searchCriteriaModel.set(criteria);
         };
 
         ForecastController.prototype.updateAttribute = function(id, val) {

@@ -15,20 +15,6 @@ function(facade, controller) {
     subscribe('selectedFuelSite', 'showFuelSite');
 
 
-    /*
-     * Location Subscribers
-    */
-    facade.subscribe('location', 'loadingbegin', controller, 'loadingBegin');
-    facade.subscribe('location', 'loadingend', controller, 'loadingEnd');
-
-    /*
-     * Criteria Subscribers
-    */
-    facade.subscribe('criteria', 'change',       controller, 'updateCriteria');
-    facade.subscribe('criteria', 'loadingbegin', controller, 'loadingBegin');
-    facade.subscribe('criteria', 'loadingend', controller, 'loadingEnd');
-
-
     return {
         init: function() {
             controller.init();

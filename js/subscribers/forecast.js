@@ -15,12 +15,6 @@ function(facade, controller) {
     subscribe('saveAttributes', 'saveAttributes');
 
 
-    /*
-     * Criteria Subscribers
-    */
-    facade.subscribe('criteria', 'change', controller, 'updateCriteria');
-
-
     return {
         init: function() {
             controller.init();
