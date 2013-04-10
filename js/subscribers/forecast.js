@@ -10,9 +10,9 @@ function(facade, controller) {
     var subscribe;
     subscribe = facade.subscribeTo('forecast', controller);
 
-    subscribe('navigate', 'navigate');
+    subscribe('navigate',        'navigate');
     subscribe('updateAttribute', 'updateAttribute');
-    subscribe('saveAttributes', 'saveAttributes');
+    subscribe('saveAttributes',  'saveAttributes');
 
 
     return {

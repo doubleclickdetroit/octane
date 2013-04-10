@@ -10,9 +10,9 @@ function(facade, controller) {
     var subscribe;
     subscribe = facade.subscribeTo('criteria', controller);
 
-    subscribe('load', 'loadAttributes');
+    subscribe('load',   'loadAttributes');
     subscribe('update', 'updateAttributes');
-    subscribe('save', 'saveAttributes');
+    subscribe('save',   'saveAttributes');
 
 
     return {

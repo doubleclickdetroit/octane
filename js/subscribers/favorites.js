@@ -10,19 +10,10 @@ function(facade, controller) {
     var subscribe;
     subscribe = facade.subscribeTo('favorites', controller);
 
-    //
     subscribe('navigate', 'navigate');
-
-    //
-    subscribe('prompt', 'promptFavorite');
-
-    //
-    subscribe('save', 'saveAttributes');
-
-    //
-    subscribe('remove', 'removeAttributes');
-
-    //
+    subscribe('prompt',   'promptFavorite');
+    subscribe('save',     'saveAttributes');
+    subscribe('remove',   'removeAttributes');
     subscribe('editable', 'toggleEditFavorites');
 
 

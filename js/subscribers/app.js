@@ -6,16 +6,9 @@ function(facade, controller) {
 
     var subscribe = facade.subscribeTo('app', controller);
 
-    //
-    subscribe('ready', 'ready');
-
-    //
-    subscribe('speak', 'textToSpeech');
-
-    //
-    subscribe('alert', 'alert');
-
-    //
+    subscribe('ready',   'ready');
+    subscribe('speak',   'textToSpeech');
+    subscribe('alert',   'alert');
     subscribe('confirm', 'confirm');
 
 
