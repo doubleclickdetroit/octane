@@ -13,6 +13,8 @@ function(utils, globals, Backbone, FuelSiteModel) {
         function makeURL(params) {
             var key = globals.fuelsites.constants.WEBSERVICE;
 
+            console.log('makeURL', params);
+
             return key.URL
                  + key.LONGITUDE    + params.longitude
                  + key.LATITUDE     + params.latitude
@@ -22,6 +24,7 @@ function(utils, globals, Backbone, FuelSiteModel) {
                  + key.FILTER_TODAY + params.filterToday
                  + key.PAGE_NUMBER  + params.pageNumber
                  + key.PAGE_SIZE    + params.pageSize
+                 + key.BRAND        + params.brand
         }
 
         /***********************************************************************
