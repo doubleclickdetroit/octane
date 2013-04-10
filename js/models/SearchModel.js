@@ -55,8 +55,10 @@ function(globals, utils, Backbone) {
 
             // format location
             this.on('change:location', function(model, location) {
-                location = location.replace(/, USA/, '');
-                model.set('location', location);
+                if (location) {
+                    location = location.replace(/, USA/, '');
+                    model.set('location', location);
+                }
             });
         };
 
