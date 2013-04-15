@@ -10,23 +10,10 @@ function(facade, controller) {
     var subscribe;
     subscribe = facade.subscribeTo('search', controller);
 
-    //
-    subscribe('navigate', 'navigate', controller.beforeNavigateCondition);
-
-    //
-    subscribe('beforeRender', 'resetSearchViewModel');
-
-    //
+    subscribe('navigate',        'navigate', controller.beforeNavigateCondition);
+    subscribe('beforeRender',    'resetSearchViewModel');
     subscribe('updateAttribute', 'updateAttribute');
-
-    //
-    subscribe('saveCriteria', 'saveSearchCriteriaModel');
-
-
-    /*
-     * SearchDetails Subscribers
-    */
-    facade.subscribe('criteria', 'change', controller, 'updateSearchCriteriaModel');
+    subscribe('saveCriteria',    'saveSearchCriteriaModel');
 
 
     return {

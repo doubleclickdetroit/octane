@@ -13,7 +13,7 @@ function(globals, utils) {
         utils.extend(InfoLabelView, _super);
 
         function InfoLabelView(options) {
-            var textPosition, span, div;
+            var span, div;
 
             // call super
             InfoLabelView.__super__.constructor.apply(this, arguments);
@@ -26,12 +26,10 @@ function(globals, utils) {
             this.setValues(options);
 
             // label styling
-            div.style.cssText = 'position: absolute; display: none';
-
-            textPosition = utils.isRetina ? ' -16px;' : ' -26px;';
-            span.style.cssText = 'position: relative; left: -50%; top: ' + textPosition +
-                                 'white-space: nowrap;color:#333;'                      +
-                                 'padding: 2px;font-family: Arial; font-weight: bold;'  +
+            div.style.cssText  = 'position: absolute; display: none';
+            span.style.cssText = 'position: relative; left: -50%; top: -26px'          +
+                                 'white-space: nowrap;color:#333;'                     +
+                                 'padding: 2px;font-family: Arial; font-weight: bold;' +
                                  'font-size: 10px;';
 
             // append child node

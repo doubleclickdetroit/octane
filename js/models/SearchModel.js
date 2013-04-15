@@ -52,6 +52,14 @@ function(globals, utils, Backbone) {
                     this.respondToSearchByPosition();
                 }
             }, this);
+
+            // format location
+            this.on('change:location', function(model, location) {
+                if (location) {
+                    location = location.replace(/, USA/, '');
+                    model.set('location', location);
+                }
+            });
         };
 
         SearchModel.prototype.validate = function() {
@@ -94,6 +102,7 @@ function(globals, utils, Backbone) {
             }, function() {                  // error handler, revert values
                 this.set('searchBy', this.previous('searchBy')); // revert searchBy which view will invoke respondtoSearchByAddress
                 this.set('location', this.previous('location')); // which will clear the location value, circumvent by setting separately
+                this.trigger('change:location');                 // force change event (even if location hasn't changed) so view will re-render
             });
         };
 

@@ -1,5 +1,5 @@
-define([ 'globals', 'utils', 'models/LocationModel', 'models/BackboneModel', 'models/SearchModel', 'collections/SearchCollection', 'views/SearchView' ],
-function(globals, utils, LocationModel, BackboneModel, SearchModel, SearchCollection, SearchView) {
+define([ 'globals', 'utils', 'models/LocationModel', 'models/SearchDetailsModel', 'models/SearchModel', 'collections/SearchCollection', 'views/SearchView' ],
+function(globals, utils, LocationModel, SearchDetailsModel, SearchModel, SearchCollection, SearchView) {
 
     'use strict';
 
@@ -13,8 +13,9 @@ function(globals, utils, LocationModel, BackboneModel, SearchModel, SearchCollec
          * Constructor
         ***********************************************************************/
         function SearchController() {
-            searchCriteriaModel = new BackboneModel();
+            searchCriteriaModel = SearchDetailsModel.getInstance();
         }
+
         SearchController.prototype.init = function() {
             // create model, collection & view instances
             searchViewModel = new SearchModel({
@@ -47,12 +48,6 @@ function(globals, utils, LocationModel, BackboneModel, SearchModel, SearchCollec
 
         SearchController.prototype.navigate = function() {
             utils.changePage(searchView.$el);
-        };
-
-        SearchController.prototype.updateSearchCriteriaModel = function(criteria) {
-            // update searchCriteriaModel for the view to consume
-            // but silently so the view can decide when to use the data
-            searchCriteriaModel.set(criteria, {'silent':true});
         };
 
         SearchController.prototype.resetSearchViewModel = function(attributes) {

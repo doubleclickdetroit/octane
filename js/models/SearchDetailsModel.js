@@ -90,5 +90,16 @@ function(globals, utils, Backbone, SearchDetailsDatabaseManager) {
     })(Backbone.Model);
 
 
-    return SearchDetailsModel;
+    return function() {
+        var __instance = null;
+
+        return {
+            getInstance: function() {
+                if (__instance === null) {
+                    __instance = new SearchDetailsModel();
+                }
+                return __instance;
+            }
+        };
+    }();
 });

@@ -6,7 +6,6 @@ function(require) {
 
     // app
     require('./app').init();
-    require('./location').init();
     require('./searchDetails').init();
 
     // views

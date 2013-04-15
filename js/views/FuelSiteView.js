@@ -14,6 +14,9 @@ function(globals, utils, facade, Backbone, Mustache, tmpl ) {
         },
 
         initialize: function() {
+            // call super
+            this.constructor.__super__.initialize.apply(this, arguments);
+
             this.listenTo(this.model, 'change', this.render);
         },
 

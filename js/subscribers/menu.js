@@ -7,7 +7,6 @@ function(facade, controller) {
     var subscribe;
     subscribe = facade.subscribeTo('menu', controller);
 
-    //
     subscribe('navigate', 'navigate');
 
 

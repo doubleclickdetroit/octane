@@ -25,7 +25,7 @@ function(globals, utils, facade, Backbone, Mustache, tmpl) {
             this.$content = this.$el.find(':jqmData(role=content)');
 
             // model events
-            this.model.on('change:location', this.render, this)
+            this.model.on('change:location', this.render, this);
             this.model.on('invalid', function(model, error) {
                 facade.publish('app', 'alert', error);
             });
@@ -35,8 +35,8 @@ function(globals, utils, facade, Backbone, Mustache, tmpl) {
                 var config = utils._.clone(globals.search.configuration);
 
                 // dynamic values for configuration-object for some fields
-                config['brand'][0]['values']    = collection.get('brand').toJSON()['values'];
-                config['fuelType'][0]['values'] = collection.get('fuelType').toJSON()['values'];
+                config['brand']['values']    = collection.get('brand').toJSON()['values'];
+                config['fuelType']['values'] = collection.get('fuelType').toJSON()['values'];
 
                 // create page with updated configuration-object
                 this.pageCreate(config);

@@ -66,8 +66,17 @@ function(globals, utils, facade, Backbone) {
             'longitude': null
         };
 
+        LocationModel.prototype.reset = function() {
+            this.set(this.defaults, {
+                'silent': true
+            });
+        };
+
         LocationModel.prototype.locateFromAddress = function(address) {
             var conf = {'address': address};
+
+            // reset to allow new/same data
+            this.reset();
 
             // trigger loading event
             this.trigger('loadingbegin');
@@ -94,6 +103,9 @@ function(globals, utils, facade, Backbone) {
 
         LocationModel.prototype.locateFromCurrentLocation = function() {
             var conf = {};
+
+            // reset to allow new/same data
+            this.reset();
 
             // trigger loading event
             this.trigger('loadingbegin');

@@ -60,6 +60,7 @@
         <div class="ui-block-b searchfieldtable" >
             <span class="select-drop select-brand">
                 <select id="brandsSelector" name="{{name}}">
+                    <option value="All">All</option>
                 {{#values}}
                     <option value="{{value}}">{{label}}</option>
                 {{/values}}

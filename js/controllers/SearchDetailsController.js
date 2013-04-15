@@ -1,5 +1,5 @@
-define([ 'models/SearchDetailsModel' ],
-function(SearchDetailsModel) {
+define([ 'models/LocationModel', 'models/SearchDetailsModel' ],
+function(LocationModel, SearchDetailsModel) {
 
     'use strict';
 
@@ -7,24 +7,44 @@ function(SearchDetailsModel) {
     var SearchDetailsController;
     SearchDetailsController = (function() {
 
-        var searchDetailsModel;
+        var locationModel, searchDetailsModel;
 
         /***********************************************************************
          * Constructor
         ***********************************************************************/
-        function SearchDetailsController() {}
-        SearchDetailsController.prototype.init = function(delegate) {
-            // cache model instance
-            searchDetailsModel = new SearchDetailsModel();
+        function SearchDetailsController() {
+            // cache model instances
+            locationModel      = new LocationModel();
+            searchDetailsModel = SearchDetailsModel.getInstance();
 
-            // dispatch model events to delegate
-            searchDetailsModel.on('all', delegate);
+            // handle triggering searchDetailsModel "loadingend" event
+            locationModel.on('fail', function() {searchDetailsModel.trigger('loadingend');});
+            searchDetailsModel.on('change', function() {searchDetailsModel.trigger('loadingend');});
+        }
+
+        SearchDetailsController.prototype.init = function() {
+            // listen for location events
+            locationModel.on('change', function(location) {
+                searchDetailsModel.set(searchDetailsModel.defaults, {'silent':true});
+                searchDetailsModel.set(location.toJSON());
+            });
+
+            // listen for location failure and default to manually entering a location
+            locationModel.on('fail', function() {
+                searchDetailsModel.set({'searchBy': 'enterLocation'});
+            });
+
+            // handle case of no default search value
+            searchDetailsModel.on('withoutDefaultSearchValue', function() {
+                locationModel.locateFromCurrentLocation();
+            });
         };
 
         /*
          * Public Methods
         */
         SearchDetailsController.prototype.loadAttributes = function() {
+            searchDetailsModel.trigger('loadingbegin');
             searchDetailsModel.fetch();
         };
 
@@ -36,11 +56,6 @@ function(SearchDetailsModel) {
             searchDetailsModel.destroy({                            // delete previous record
                 callback: function() { searchDetailsModel.save(); } // save the new record
             });
-        };
-
-        SearchDetailsController.prototype.updateLocationAttributes = function(location) {
-            searchDetailsModel.set(searchDetailsModel.defaults, {silent:true});
-            searchDetailsModel.set(location);
         };
 
         return SearchDetailsController;

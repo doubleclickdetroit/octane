@@ -225,83 +225,71 @@ define(function(require) {
                 'default': false
             }
         ],
-        'location': [
-            {
-                'name': globals.search.constants.NAME_LOCATION
-            }
-        ],
-        'radius': [
-            {
-                'label' : 'Radius',
-                'name'  : globals.search.constants.NAME_RADIUS,
-                'values': [
-                    {
-                        'label': '5 Miles',
-                        'value': '5.0'
-                    },
-                    {
-                        'label': '7.5 Miles',
-                        'value': '7.5'
-                    },
-                    {
-                        'label': '10 Miles',
-                        'value': '10'
-                    },
-                    {
-                        'label': '15 Miles',
-                        'value': '15'
-                    },
-                    {
-                        'label': '20 Miles',
-                        'value': '20'
-                    },
-                    {
-                        'label': '30 Miles',
-                        'value': '30'
-                    }
-                ]
-            }
-        ],
-        'fuelType': [
-            {
-                'label' : 'Fuel Type',
-                'name'  : globals.search.constants.NAME_FUEL_TYPE,
-                'values': []
-            }
-        ],
-        'brand': [
-            {
-                'label' : 'Brand',
-                'name'  : globals.search.constants.NAME_BRAND,
-                'values': []
-            }
-        ],
-        'sortBy': [
-            {
-                'label' : 'Sort by',
-                'name'  : globals.search.constants.NAME_SORT_BY,
-                'values': [
-                    globals.SORT_BY.configuration.PRICE,
-                    globals.SORT_BY.configuration.DISTANCE
-                ]
-            }
-        ],
-        'defaultSearch': [
-            {
-                'label' : 'Set as default search',
-                'name'  : globals.search.constants.NAME_DEFAULT_SEARCH,
-                'values': [
-                    {
-                        'label': 'NO',
-                        'value': globals.search.constants.DEFAULT_SEARCH_NO
-                    },
-                    {
-                        'label': 'YES',
-                        'value': globals.search.constants.DEFAULT_SEARCH_YES
-                    }
-                ]
-            }
-        ]
+        'location': {
+            'name': globals.search.constants.NAME_LOCATION
+        },
+        'radius': {
+            'label' : 'Radius',
+            'name'  : globals.search.constants.NAME_RADIUS,
+            'values': [
+                {
+                    'label': '5 Miles',
+                    'value': '5.0'
+                },
+                {
+                    'label': '7.5 Miles',
+                    'value': '7.5'
+                },
+                {
+                    'label': '10 Miles',
+                    'value': '10'
+                },
+                {
+                    'label': '15 Miles',
+                    'value': '15'
+                },
+                {
+                    'label': '20 Miles',
+                    'value': '20'
+                },
+                {
+                    'label': '30 Miles',
+                    'value': '30'
+                }
+            ]
+        },
+        'fuelType': {
+            'label' : 'Fuel Type',
+            'name'  : globals.search.constants.NAME_FUEL_TYPE,
+            'values': []
+        },
+        'brand': {
+            'label' : 'Brand',
+            'name'  : globals.search.constants.NAME_BRAND,
+            'values': []
+        },
+        'sortBy': {
+            'label' : 'Sort by',
+            'name'  : globals.search.constants.NAME_SORT_BY,
+            'values': [
+                globals.SORT_BY.configuration.PRICE,
+                globals.SORT_BY.configuration.DISTANCE
+            ]
+        },
+        'defaultSearch': {
+            'label' : 'Set as default search',
+            'name'  : globals.search.constants.NAME_DEFAULT_SEARCH,
+            'values': [
+                {
+                    'label': 'NO',
+                    'value': globals.search.constants.DEFAULT_SEARCH_NO
+                },
+                {
+                    'label': 'YES',
+                    'value': globals.search.constants.DEFAULT_SEARCH_YES
+                }
+            ]
+        }
     };
 
     /*
@@ -384,10 +372,11 @@ define(function(require) {
     */
     globals.fuelsites = {};
     globals.fuelsites.constants = {
-        'WEBSERVICE' : globals.WEBSERVICE.FUEL_SITE,
-        'VIEW_MODE'  : globals.SEARCH_DETAILS.VIEW_MODE, // fuelsites is default view_mode for search details
-        'IMG_PATH'   : 'img/',
-        'MARKER_PATH': 'img/map_marker/',
+        'WEBSERVICE'   : globals.WEBSERVICE.FUEL_SITE,
+        'VIEW_MODE'    : globals.SEARCH_DETAILS.VIEW_MODE, // fuelsites is default view_mode for search details
+        'DEFAULT_BRAND': globals.SEARCH_DETAILS.BRAND,     // fuelsites has the default brand
+        'IMG_PATH'     : 'img/',
+        'MARKER_PATH'  : 'img/map_marker/',
     };
     globals.fuelsites.configuration = {
         'sortBy': {
