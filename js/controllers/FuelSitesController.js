@@ -37,9 +37,12 @@ function(globals, utils, Backbone, FuelSitesMapView, DirectionsView, FuelSitesVi
         /*
          * Public Methods
         */
-        FuelSitesController.prototype.navigate = function(viewId) {
-            if (viewId === 'map') this.showMap();
-            else                  utils.changePage(fuelSitesView.$el, null, null, true); // update hash
+        FuelSitesController.prototype.navigate = function(viewId, siteId) {
+            switch(viewId) {
+                case 'map':      this.showMap(siteId);      break;
+                case 'fuelsite': this.showFuelSite(siteId); break;
+                default:         utils.changePage(fuelSitesView.$el, null, null, true); // update hash
+            }
         };
 
         FuelSitesController.prototype.updateCriteria = function(criteria) {
@@ -55,23 +58,29 @@ function(globals, utils, Backbone, FuelSitesMapView, DirectionsView, FuelSitesVi
                 .fetch(criteria);                     // fetch new fuelsites with criteria
         };
 
-        FuelSitesController.prototype.showFuelSite = function(fuelsiteId) {
-            var fuelSiteModel = fuelSitesCollection.get(fuelsiteId);
+        FuelSitesController.prototype.showFuelSite = function(siteId) {
+            var fuelSiteModel = fuelSitesCollection.get(siteId);
             utils.changePage(directionsView.$el, null, null, true); // update hash
 
             this.loadingBegin(); // show indicator before requeset
 
+            // set directionsView fuelSiteModel
+            directionsView.fuelSiteModel = fuelSiteModel;
+
             // request directions
-            utils.when(directionsView.requestDirections(fuelSiteModel.toJSON()))
+            utils.when(directionsView.requestDirections())
                 .always(this.loadingEnd)          // hide indicator at end of request
                 .done(directionsView.render)      // render directions
                 .fail(directionsView.handleError) // handle failure
                 .fail(this.navigate);             // redirect to fuelsites
         };
 
-        FuelSitesController.prototype.showMap = function() {
+        FuelSitesController.prototype.showMap = function(siteId) {
+            var fuelsite  = siteId ? fuelSitesCollection.get(siteId).toJSON() : null,
+                fuelsites = fuelsite ? fuelSitesCollection.clone().reset(fuelsite) : fuelSitesCollection;
+
             utils.changePage(fuelSitesMapView.$el);
-            fuelSitesMapView.render(fuelSitesCollection);
+            fuelSitesMapView.render(fuelsites);
         };
 
         FuelSitesController.prototype.loadingBegin = function(checkView) {

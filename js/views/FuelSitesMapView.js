@@ -92,6 +92,7 @@ function(globals, utils, facade, Backbone, Mustache, InfoBubbleView, InfoLabelVi
         },
 
         render: function(fuelsites) {
+            console.log('FuelSitesMapView render', fuelsites);
             fuelsites.each(function(fuelsite, i) {
                 var self, latLng, ppg, icon, marker, label;
 

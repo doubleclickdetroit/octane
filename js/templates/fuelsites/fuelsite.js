@@ -1,5 +1,5 @@
 {{#fuelsite}}
-<a href="#{{id}}">
+<a href="#">
     <div class="ui-grid-b">
         <div class="ui-block-a Pricecolumn1">
             <div class="PriceContainer">

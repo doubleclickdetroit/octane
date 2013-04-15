@@ -1,5 +1,5 @@
-define([ 'globals', 'facade', 'backbone', 'mustache', 'text!tmpl/fuelsites/fuelsite' ],
-function(globals, facade, Backbone, Mustache, tmpl ) {
+define([ 'globals', 'utils', 'facade', 'backbone', 'mustache', 'text!tmpl/fuelsites/fuelsite' ],
+function(globals, utils, facade, Backbone, Mustache, tmpl ) {
 
     'use strict';
 
@@ -28,7 +28,7 @@ function(globals, facade, Backbone, Mustache, tmpl ) {
         */
         handleSelectedFuelsite: function(evt) {
             evt.preventDefault();
-            facade.publish('fuelsites', 'selectedFuelSite', this.model.cid);
+            facade.publish('fuelsites', 'delegate', 'fuelsite', this.model.cid);
         }
     });
 

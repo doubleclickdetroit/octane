@@ -11,16 +11,16 @@ function(utils, facade, Backbone) {
          * Route Definitions
         */
         routes: {
-            'fuelsites(/)(:viewId)': 'renderFuelSites',
-            'forecast(/)(:viewId)' : 'renderForecast',
-            'favorites'            : 'renderFavorites',
-            'settings'             : 'renderSettings',
-            'info'                 : 'renderInfo',
-            'feedback'             : 'renderFeedback',
-            'alerts'               : 'renderAlerts',
-            'search'               : 'renderSearch',
-            'menu'                 : 'renderMenu',
-            'termsAndConditions'   : 'renderTermsAndConditions',
+            'fuelsites(/)(:viewId)(/)(:siteId)': 'renderFuelSites',
+            'forecast(/)(:viewId)'             : 'renderForecast',
+            'favorites'                        : 'renderFavorites',
+            'settings'                         : 'renderSettings',
+            'info'                             : 'renderInfo',
+            'feedback'                         : 'renderFeedback',
+            'alerts'                           : 'renderAlerts',
+            'search'                           : 'renderSearch',
+            'menu'                             : 'renderMenu',
+            'termsAndConditions'               : 'renderTermsAndConditions',
 
             '': 'root'
         },
@@ -28,8 +28,8 @@ function(utils, facade, Backbone) {
         /*
          * Route Handlers
         */
-        renderFuelSites: function(viewId) {
-            facade.publish('fuelsites', 'navigate', viewId);
+        renderFuelSites: function(viewId, siteId) {
+            facade.publish('fuelsites', 'navigate', viewId, siteId);
         },
 
         renderForecast: function(viewId) {

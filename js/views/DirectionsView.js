@@ -9,6 +9,7 @@ function(globals, utils, facade, Backbone, Mustache, tmpl_directions) {
         el: utils.$('#directions'),
 
         events: {
+            'click a.btn-map'       : 'handleMappingFuelSite',
             'click a.text-to-speech': 'handleDirectionTextToSpeech'
         },
 
@@ -18,6 +19,9 @@ function(globals, utils, facade, Backbone, Mustache, tmpl_directions) {
 
             // cache $content
             this.$content = this.$el.find(':jqmData(role=content)');
+
+            // cache fuelSiteModel
+            this.fuelSiteModel = null;
 
             // cache google helpers
             this.LatLng     = google.maps.LatLng;
@@ -30,8 +34,9 @@ function(globals, utils, facade, Backbone, Mustache, tmpl_directions) {
             this.$el.on('pageshow', this.pageShow);
         },
 
-        requestDirections: function(fuelSiteModel) {
-            var deferred = utils.Deferred();
+        requestDirections: function() {
+            var deferred      = utils.Deferred(),
+                fuelSiteModel = this.fuelSiteModel.toJSON();
 
             // update request object
             utils._.extend(this.request, {
@@ -76,6 +81,11 @@ function(globals, utils, facade, Backbone, Mustache, tmpl_directions) {
         /*
          * Event Handlers
         */
+        handleMappingFuelSite: function(evt) {
+            evt.preventDefault();
+            facade.publish('fuelsites', 'delegate', 'map', this.fuelSiteModel.cid);
+        },
+
         handleDirectionTextToSpeech: function(evt) {
             evt.preventDefault();
             var $e = utils.$(evt.target).closest('a').find('.ui-block-b');

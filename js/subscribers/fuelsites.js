@@ -11,8 +11,8 @@ function(facade, controller) {
     subscribe = facade.subscribeTo('fuelsites', controller);
 
     //
-    subscribe('navigate',         'navigate');
-    subscribe('selectedFuelSite', 'showFuelSite');
+    subscribe('navigate', 'navigate');
+    subscribe('delegate', 'navigate');
 
 
     /*
