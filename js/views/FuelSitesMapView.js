@@ -50,6 +50,10 @@ function(globals, utils, facade, Backbone, Mustache, InfoBubbleView, InfoLabelVi
             // cache map
             this.map = new google.maps.Map(this.$content.get(0), this.options);
 
+            // cache mapMarkers & mapDirections
+            this.mapMarkers    = [];
+            this.mapDirections = null;
+
             // cache infoBubbleView
             this.infoBubbleView = new InfoBubbleView({
                 'map': this.map
@@ -64,7 +68,7 @@ function(globals, utils, facade, Backbone, Mustache, InfoBubbleView, InfoLabelVi
         },
 
         pageShow: function() {
-            var height, icon;
+            var height, icon, marker;
 
             // render $criteria
             this.$criteria.html(this.tmpl_criteria(
@@ -78,21 +82,43 @@ function(globals, utils, facade, Backbone, Mustache, InfoBubbleView, InfoLabelVi
             // resize map to cover $content
             google.maps.event.trigger(this.map, 'resize');
 
+            // clear previous map markers
+            utils._.each(this.mapMarkers, function(view) {
+                if (view.label) {
+                    view.label.remove();
+                }
+                view.marker.setMap(null);
+            });
+
+            // clear previous mapMarkers
+            this.mapMarkers.length = 0;
+
             // center the map
             this.map.setCenter(this.options.center);
 
             // mark current position
             icon = globals.fuelsites.constants.MARKER_PATH + globals.BRANDS.USER_LOCATION;
-            new google.maps.Marker({
+            marker = new google.maps.Marker({
                 'map'     : this.map,
                 'position': this.options.center,
                 'zIndex'  : -10,
                 'icon'    : new google.maps.MarkerImage(icon,null,null,null,new google.maps.Size(26, 26))
             });
+
+            // keep track of marker
+            this.mapMarkers.push({'marker':marker});
         },
 
         render: function(fuelsites) {
-            console.log('FuelSitesMapView render', fuelsites);
+            // remove previous polylines
+            if (this.mapDirections) this.mapDirections.setMap(null);
+
+            // set map center
+            this.map.setZoom(this.options.zoom);
+            this.map.setCenter(this.options.center);
+
+
+            // render fuelsites
             fuelsites.each(function(fuelsite, i) {
                 var self, latLng, ppg, icon, marker, label;
 
@@ -127,12 +153,43 @@ function(globals, utils, facade, Backbone, Mustache, InfoBubbleView, InfoLabelVi
                 label = new InfoLabelView({'map': this.map});
                 label.render(i, marker, ppg);
 
+                // keep track of marker & label
+                this.mapMarkers.push({
+                    'label' : label,
+                    'marker': marker
+                });
+
                 // marker event listener
                 google.maps.event.addListener(marker, 'click', function() {
                     self.handleMarkerSelection(marker, fuelsite);
-                    // possibly dealloc memory by label.destroy()
                 });
             }, this);
+
+
+            // display polyline path for single fuelsite
+            if (fuelsites.length && fuelsites.length < 2) {
+                var directionsService = new google.maps.DirectionsService(),
+                    directionsDisplay = new google.maps.DirectionsRenderer({'suppressMarkers': true}),
+                    location = fuelsites.first().get('location'),
+                    request  = {
+                        'travelMode' : google.maps.TravelMode.DRIVING,
+                        'destination': new google.maps.LatLng(location.latitude, location.longitude),
+                        'origin'     : new google.maps.LatLng(this.model.get('latitude'), this.model.get('longitude'))
+                    };
+
+                // keep track of mapDirections
+                this.mapDirections = directionsDisplay;
+
+                // center the map
+                directionsDisplay.setMap(this.map);
+
+                // display polyline path for route
+                directionsService.route(request, function(result, status) {
+                    if (status === google.maps.DirectionsStatus.OK) {
+                        directionsDisplay.setDirections(result);
+                    }
+                });
+            }
         },
 
         /*

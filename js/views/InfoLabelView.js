@@ -13,7 +13,7 @@ function(globals, utils) {
         utils.extend(InfoLabelView, _super);
 
         function InfoLabelView(options) {
-            var span, div;
+            var textPosition, span, div;
 
             // call super
             InfoLabelView.__super__.constructor.apply(this, arguments);
@@ -25,9 +25,11 @@ function(globals, utils) {
             // Initialization
             this.setValues(options);
 
+
             // label styling
-            div.style.cssText  = 'position: absolute; display: none';
-            span.style.cssText = 'position: relative; left: -50%; top: -26px'          +
+            div.style.cssText  = 'position: absolute; display: none;';
+            span.style.cssText = 'position: relative; left: -50%;'                     +
+                                 'top:' + (utils.isRetina ? ' -16px;' : ' -26px;')     +
                                  'white-space: nowrap;color:#333;'                     +
                                  'padding: 2px;font-family: Arial; font-weight: bold;' +
                                  'font-size: 10px;';
@@ -63,9 +65,13 @@ function(globals, utils) {
             this.div_.parentNode.removeChild(this.div_);
 
             // stop updating position/text since label is removed from the map
-            for(i=0; i < this.listeners_.length; i++) {
+            for(var i=0; i < this.listeners_.length; i++) {
                 google.maps.event.removeListener(this.listeners_[i]);
             }
+        };
+
+        InfoLabelView.prototype.remove = function() {
+            this.onRemove();
         };
 
         InfoLabelView.prototype.draw = function() {
