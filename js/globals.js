@@ -168,7 +168,7 @@ define(function(require) {
         'SORT_BY'        : globals.DEFAULT.SORT_BY,
         'FILTER_TODAY'   : 'no',
         'PAGE_NUMBER'    : 0,
-        'PAGE_SIZE'      : 10,
+        'PAGE_SIZE'      : 0,
         'BRAND'          : 'All',
         'UPDATED_RESULT' : globals.DEFAULT.EMPTY_STRING,
         'LIMIT_RESULT'   : globals.DEFAULT.EMPTY_STRING,
@@ -197,6 +197,7 @@ define(function(require) {
         'VIEW_MODE': globals.SEARCH_DETAILS.VIEW_MODE,
         'SEARCH_BY_ADDRESS'         : 'enterLocation',
         'SEARCH_BY_CURRENT_LOCATION': 'currentLocation',
+        'DEFAULT_PAGE_SIZE'  : 0,
         'DEFAULT_SEARCH_YES' : 'YES',
         'DEFAULT_SEARCH_NO'  : 'NO',
         'NAME_SEARCH_BY'     : 'searchBy',
@@ -372,11 +373,12 @@ define(function(require) {
     */
     globals.fuelsites = {};
     globals.fuelsites.constants = {
-        'WEBSERVICE'   : globals.WEBSERVICE.FUEL_SITE,
-        'VIEW_MODE'    : globals.SEARCH_DETAILS.VIEW_MODE, // fuelsites is default view_mode for search details
-        'DEFAULT_BRAND': globals.SEARCH_DETAILS.BRAND,     // fuelsites has the default brand
-        'IMG_PATH'     : 'img/',
-        'MARKER_PATH'  : 'img/map_marker/',
+        'WEBSERVICE'         : globals.WEBSERVICE.FUEL_SITE,
+        'VIEW_MODE'          : globals.SEARCH_DETAILS.VIEW_MODE, // fuelsites is default view_mode for search details
+        'DEFAULT_BRAND'      : globals.SEARCH_DETAILS.BRAND,     // fuelsites has the default brand
+        'PAGE_SIZE_INCREMENT': 10,
+        'IMG_PATH'           : 'img/',
+        'MARKER_PATH'        : 'img/map_marker/',
     };
     globals.fuelsites.configuration = {
         'sortBy': {
@@ -426,6 +428,7 @@ define(function(require) {
     globals.favorites = {};
     globals.favorites.constants = {
         VIEW_MODE         : 'favorites',
+        DEFAULT_PAGE_SIZE : 0,
         CLASSNAME_EDITABLE: 'ui-editable-favorite',
         CONFIRM_MESSAGE   : 'Are you sure you want to remove this favorite?'
     };

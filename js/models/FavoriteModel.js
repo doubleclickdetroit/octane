@@ -16,6 +16,10 @@ function(globals, utils, Backbone, FavoritesDatabaseManager) {
             FavoriteModel.__super__.constructor.apply(this, arguments);
         }
 
+        FavoriteModel.prototype.defaults = {
+            'pageSize': globals.favorites.constants.DEFAULT_PAGE_SIZE
+        };
+
         FavoriteModel.prototype.sync = function(method, model, options) {
             var manager = FavoritesDatabaseManager.getInstance();
             options.callback = options.callback || null;

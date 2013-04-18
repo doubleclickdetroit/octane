@@ -57,6 +57,7 @@ function(globals, utils, facade, Backbone, Mustache, tmpl) {
             facade.publish('search', 'beforeRender', {
                 'favoritesName': null,
                 'viewMode'     : globals.search.constants.VIEW_MODE,
+                'pageSize'     : globals.search.constants.DEFAULT_PAGE_SIZE,
                 'setDefault'   : globals.search.constants.DEFAULT_SEARCH_NO
             });
         },
