@@ -900,6 +900,9 @@ i.ui-logo[data-brand='WAWA']             { background-image: url(../img/brand_lo
     padding-top   : 5px;
     padding-bottom: 5px;
 }
+#fuelStationsList {
+    margin-bottom: 5px;
+}
 
 
 /*********************************************
