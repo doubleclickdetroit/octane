@@ -10,6 +10,7 @@ function(facade, controller) {
     subscribe('speak',   'textToSpeech');
     subscribe('alert',   'alert');
     subscribe('confirm', 'confirm');
+    subscribe('window',  'window');
 
 
     return {

@@ -137,7 +137,7 @@ function(globals, utils, facade, Backbone, Mustache, FuelSiteView, tmpl_header, 
         },
 
         handleBannderAdClick: function() {
-            console.log('handleBannderAdLeadGeneration', this);
+            facade.publish('app', 'window', globals.WEBSERVICE.LEAD_GEN.URL);
         },
 
         handleBannderAdShow: function() {

@@ -46,6 +46,10 @@ function(globals, utils, AppRouter, AppView, AppModel) {
             appView.displayConfirm.apply(null, arguments);
         };
 
+        AppController.prototype.window = function(url) {
+            appView.displayWindow(url);
+        };
+
         AppController.prototype.textToSpeech = function(text) {
             // assign tts plugin
             // tts.stop();

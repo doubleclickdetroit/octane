@@ -144,6 +144,10 @@ define(function(require) {
         'PAGE_SIZE'   : '/pageSize/',
         'BRAND'       : '?brand='
     };
+    // Lean Generation
+    globals.WEBSERVICE.LEAD_GEN = {
+        'URL': 'http://onlineservices.stagefull.cs1.force.com/MobileLeadCapture'
+    };
     // Feedback
     globals.WEBSERVICE.FEEDBACK = {
     	'URL'     : globals.WEBSERVICE.ROOT_URL + '/feedback',

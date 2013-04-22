@@ -103,6 +103,11 @@ function(globals, utils, facade, Backbone) {
             }
         },
 
+        displayWindow: function(url) {
+            console.log('displayWindow '+url);
+            window.open(url, '_blank', 'location=no');
+        },
+
         promptToRateIt: function () {
             var self = this;
 
