@@ -14,8 +14,11 @@ function(globals, utils, facade, Backbone, Mustache, FuelSiteView, tmpl_header, 
         tmpl_dialog  : Mustache.compile(tmpl_dialog),
 
         events: {
-            'click .btn-save': 'displaySaveDialog',
-            'click .btn-sort': 'displaySortDialog',
+
+            'click .btn-save' : 'displaySaveDialog',
+            'click .btn-sort' : 'displaySortDialog',
+            'touchmove'               : 'handleBannderAdHide',
+            'click #ui-banner'        : 'handleBannderAdClick',
             'click #btn-loadFuelSites': 'handleLoadAdditionalFuelSites'
         },
 
@@ -24,7 +27,7 @@ function(globals, utils, facade, Backbone, Mustache, FuelSiteView, tmpl_header, 
             this.constructor.__super__.initialize.apply(this, arguments);
 
             // set context for methods
-            utils._.bindAll(this, 'pageInit');
+            utils._.bindAll(this, 'pageInit', 'handleBannderAdShow');
 
             // cache criteriaModel
             this.criteriaModel = options.criteriaModel;
@@ -34,6 +37,7 @@ function(globals, utils, facade, Backbone, Mustache, FuelSiteView, tmpl_header, 
 
             // jQM Events
             this.$el.one('pageshow', this.pageInit); // initial pageshow
+            this.$el.on('pageshow', this.handleBannderAdShow);
 
             // create page
             this.pageCreate();
@@ -42,6 +46,7 @@ function(globals, utils, facade, Backbone, Mustache, FuelSiteView, tmpl_header, 
             this.$criteria = this.$el.find('.searchtext');
             this.$list     = this.$el.find('#fuelStationsList');
             this.$btnLoad  = this.$el.find('#btn-loadFuelSites');
+            this.$banner   = this.$el.find('#ui-banner');
         },
 
         pageCreate: function () {
@@ -128,8 +133,21 @@ function(globals, utils, facade, Backbone, Mustache, FuelSiteView, tmpl_header, 
 
         handleLoadAdditionalFuelSites: function(evt) {
             evt.preventDefault();
-            console.log('handleLoadAdditionalFuelSites');
             facade.publish('criteria', 'update', {'pageSize': this.collection.length});
+        },
+
+        handleBannderAdClick: function() {
+            console.log('handleBannderAdLeadGeneration', this);
+        },
+
+        handleBannderAdShow: function() {
+            var self = this;
+            setTimeout(function() { self.$banner.slideDown('fast'); }, 50);
+        },
+
+        handleBannderAdHide: function() {
+            var self = this;
+            setTimeout(function() { self.$banner.slideUp('fast'); }, 50);
         }
     });
 
