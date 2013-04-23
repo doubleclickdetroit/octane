@@ -1,5 +1,5 @@
-define([ 'globals', 'utils', 'facade', 'backbone', 'mustache', 'views/InfoBubbleView', 'views/InfoLabelView', 'text!tmpl/fuelsites/header', 'text!tmpl/fuelsites/criteria' ],
-function(globals, utils, facade, Backbone, Mustache, InfoBubbleView, InfoLabelView, tmpl_header, tmpl_criteria) {
+define([ 'globals', 'utils', 'facade', 'backbone', 'mustache', 'views/InfoBubbleView', 'views/MarkerView', 'text!tmpl/fuelsites/header', 'text!tmpl/fuelsites/criteria' ],
+function(globals, utils, facade, Backbone, Mustache, InfoBubbleView, MarkerView, tmpl_header, tmpl_criteria) {
 
     'use strict';
 
@@ -83,11 +83,8 @@ function(globals, utils, facade, Backbone, Mustache, InfoBubbleView, InfoLabelVi
             google.maps.event.trigger(this.map, 'resize');
 
             // clear previous map markers
-            utils._.each(this.mapMarkers, function(view) {
-                if (view.label) {
-                    view.label.remove();
-                }
-                view.marker.setMap(null);
+            utils._.each(this.mapMarkers, function(marker) {
+                marker.setMap(null);
             });
 
             // clear previous mapMarkers
@@ -106,7 +103,7 @@ function(globals, utils, facade, Backbone, Mustache, InfoBubbleView, InfoLabelVi
             });
 
             // keep track of marker
-            this.mapMarkers.push({'marker':marker});
+            this.mapMarkers.push(marker);
         },
 
         render: function(fuelsites) {
@@ -140,24 +137,19 @@ function(globals, utils, facade, Backbone, Mustache, InfoBubbleView, InfoLabelVi
                        utils.fileType;
 
                 // place fuelsite marker
-                marker = new google.maps.Marker({
-                    'map'     : this.map,
-                    'position': latLng,
-                    'zIndex'  : i+10,
-                    'shape'   : globals.fuelsites.configuration.marker.shape,
-                    'title'   : ppg,
-                    'icon'    : new google.maps.MarkerImage(icon, null, null, null, new google.maps.Size(40, 43))
+                marker = new MarkerView({
+                    'map'              : this.map,
+                    'position'         : latLng,
+                    'labelContent'     : ppg,
+                    'labelInBackground': false,
+                    'labelClass'       : 'fuelsite-label',
+                    'labelAnchor'      : new google.maps.Point(13, 20),
+                    'shape'            : globals.fuelsites.configuration.marker.shape,
+                    'icon'             : new google.maps.MarkerImage(icon, null, null, null, new google.maps.Size(40, 43))
                 });
 
-                // overlay labelview
-                label = new InfoLabelView({'map': this.map});
-                label.render(i, marker, ppg);
-
-                // keep track of marker & label
-                this.mapMarkers.push({
-                    'label' : label,
-                    'marker': marker
-                });
+                // keep track of marker
+                this.mapMarkers.push(marker);
 
                 // marker event listener
                 google.maps.event.addListener(marker, 'click', function() {

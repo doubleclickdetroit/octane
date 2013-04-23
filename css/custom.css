@@ -937,6 +937,18 @@ i.ui-logo[data-brand='WAWA']             { background-image: url(../img/brand_lo
 
 
 /*********************************************
+ * FuelSite Map - Page
+*********************************************/
+#fuelsitesMap .fuelsite-label {
+    white-space: nowrap;
+    font-family: Arial;
+    font-weight: bold;
+    font-size  : 10px;
+    color      : #333;
+}
+
+
+/*********************************************
  * Forecast - Page
 *********************************************/
 #forecast div[data-indicator] {
