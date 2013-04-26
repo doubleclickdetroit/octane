@@ -29,8 +29,8 @@ function(globals, utils, facade, Backbone, Mustache, InfoBubbleView, MarkerView,
                 'mapTypeId': google.maps.MapTypeId.ROADMAP
             };
 
-            // cache viewModel
-            this.viewModel = options.viewModel;
+            // cache fuelSitesList
+            this.fuelSitesList = null
 
             // model events
             this.listenTo(this.model, 'change', function() {
@@ -73,11 +73,9 @@ function(globals, utils, facade, Backbone, Mustache, InfoBubbleView, MarkerView,
         },
 
         pageBeforeShow: function() {
-            var fuelsites = this.viewModel.get('fuelsites');
-
             // toggle navbar & criteria
-            this.$navbar[fuelsites.length && fuelsites.length < 2 ? 'hide' : 'show']();
-            this.$criteria[fuelsites.length && fuelsites.length < 2 ? 'hide' : 'show']();
+            this.$navbar[this.fuelSitesList.length && this.fuelSitesList.length < 2 ? 'hide' : 'show']();
+            this.$criteria[this.fuelSitesList.length && this.fuelSitesList.length < 2 ? 'hide' : 'show']();
             this.$el.css('paddingTop', 0);
         },
 
@@ -121,7 +119,7 @@ function(globals, utils, facade, Backbone, Mustache, InfoBubbleView, MarkerView,
         },
 
         render: function() {
-            var fuelsites = this.viewModel.get('fuelsites');
+            var fuelsites = this.fuelSitesList;
 
             // remove previous polylines
             if (this.mapDirections) {
@@ -134,7 +132,7 @@ function(globals, utils, facade, Backbone, Mustache, InfoBubbleView, MarkerView,
 
 
             // render fuelsites
-            fuelsites.each(function(fuelsite, i) {
+            this.fuelSitesList.each(function(fuelsite, i) {
                 var self, latLng, ppg, icon, marker, label;
 
                 // set context
@@ -177,10 +175,10 @@ function(globals, utils, facade, Backbone, Mustache, InfoBubbleView, MarkerView,
 
 
             // display polyline path for single fuelsite
-            if (fuelsites.length && fuelsites.length < 2) {
+            if (this.fuelSitesList.length && this.fuelSitesList.length < 2) {
                 var directionsService = new google.maps.DirectionsService(),
                     directionsDisplay = new google.maps.DirectionsRenderer({'suppressMarkers': true}),
-                    location = fuelsites.first().get('location'),
+                    location = this.fuelSitesList.first().get('location'),
                     request  = {
                         'travelMode' : google.maps.TravelMode.DRIVING,
                         'destination': new google.maps.LatLng(location.latitude, location.longitude),

@@ -1,5 +1,5 @@
-define([ 'globals', 'utils', 'backbone', 'views/FuelSitesMapView', 'views/DirectionsView', 'views/FuelSitesView', 'collections/FuelSitesCollection', 'models/SearchDetailsModel', 'models/BackboneModel' ],
-function(globals, utils, Backbone, FuelSitesMapView, DirectionsView, FuelSitesView, FuelSitesCollection, SearchDetailsModel, BackboneModel) {
+define([ 'globals', 'utils', 'backbone', 'views/FuelSitesMapView', 'views/DirectionsView', 'views/FuelSitesView', 'collections/FuelSitesCollection', 'models/SearchDetailsModel' ],
+function(globals, utils, Backbone, FuelSitesMapView, DirectionsView, FuelSitesView, FuelSitesCollection, SearchDetailsModel) {
 
     'use strict';
 
@@ -16,7 +16,6 @@ function(globals, utils, Backbone, FuelSitesMapView, DirectionsView, FuelSitesVi
         function FuelSitesController() {
             // cache searchDetailsModel
             searchCriteriaModel   = SearchDetailsModel.getInstance();
-            fuelSitesMapViewModel = new BackboneModel();
 
             // listen for events
             searchCriteriaModel.on('change',       this.indexFuelSites, this);
@@ -29,8 +28,7 @@ function(globals, utils, Backbone, FuelSitesMapView, DirectionsView, FuelSitesVi
             fuelSitesCollection = new FuelSitesCollection();
 
             fuelSitesMapView = new FuelSitesMapView({
-                model    : searchCriteriaModel,
-                viewModel: fuelSitesMapViewModel
+                model: searchCriteriaModel
             });
 
             directionsView = new DirectionsView({
@@ -85,7 +83,8 @@ function(globals, utils, Backbone, FuelSitesMapView, DirectionsView, FuelSitesVi
             var fuelsite  = siteId ? fuelSitesCollection.get(siteId).toJSON() : null,
                 fuelsites = fuelsite ? fuelSitesCollection.clone().reset(fuelsite) : fuelSitesCollection;
 
-            fuelSitesMapViewModel.set({'fuelsites': fuelsites});
+            // set fuelSitesMapView fuelSitesList
+            fuelSitesMapView.fuelSitesList = fuelsites;
 
             utils.changePage(fuelSitesMapView.$el);
             fuelSitesMapView.render();
