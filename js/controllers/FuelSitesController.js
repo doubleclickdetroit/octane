@@ -1,5 +1,5 @@
-define([ 'globals', 'utils', 'backbone', 'views/FuelSitesMapView', 'views/DirectionsView', 'views/FuelSitesView', 'collections/FuelSitesCollection', 'models/SearchDetailsModel' ],
-function(globals, utils, Backbone, FuelSitesMapView, DirectionsView, FuelSitesView, FuelSitesCollection, SearchDetailsModel) {
+define([ 'globals', 'utils', 'backbone', 'views/FuelSitesMapView', 'views/DirectionsView', 'views/FuelSitesView', 'collections/FuelSitesCollection', 'models/SearchDetailsModel', 'models/BackboneModel' ],
+function(globals, utils, Backbone, FuelSitesMapView, DirectionsView, FuelSitesView, FuelSitesCollection, SearchDetailsModel, BackboneModel) {
 
     'use strict';
 
@@ -7,7 +7,7 @@ function(globals, utils, Backbone, FuelSitesMapView, DirectionsView, FuelSitesVi
     var FuelSitesController;
     FuelSitesController = (function() {
 
-        var searchCriteriaModel, fuelSitesCollection, fuelSitesView, fuelSitesMapView, directionsView;
+        var searchCriteriaModel, fuelSitesMapViewModel, fuelSitesCollection, fuelSitesView, fuelSitesMapView, directionsView;
 
 
         /***********************************************************************
@@ -15,7 +15,8 @@ function(globals, utils, Backbone, FuelSitesMapView, DirectionsView, FuelSitesVi
         ***********************************************************************/
         function FuelSitesController() {
             // cache searchDetailsModel
-            searchCriteriaModel = SearchDetailsModel.getInstance();
+            searchCriteriaModel   = SearchDetailsModel.getInstance();
+            fuelSitesMapViewModel = new BackboneModel();
 
             // listen for events
             searchCriteriaModel.on('change',       this.indexFuelSites, this);
@@ -28,7 +29,8 @@ function(globals, utils, Backbone, FuelSitesMapView, DirectionsView, FuelSitesVi
             fuelSitesCollection = new FuelSitesCollection();
 
             fuelSitesMapView = new FuelSitesMapView({
-                model: searchCriteriaModel
+                model    : searchCriteriaModel,
+                viewModel: fuelSitesMapViewModel
             });
 
             directionsView = new DirectionsView({
@@ -83,8 +85,10 @@ function(globals, utils, Backbone, FuelSitesMapView, DirectionsView, FuelSitesVi
             var fuelsite  = siteId ? fuelSitesCollection.get(siteId).toJSON() : null,
                 fuelsites = fuelsite ? fuelSitesCollection.clone().reset(fuelsite) : fuelSitesCollection;
 
+            fuelSitesMapViewModel.set({'fuelsites': fuelsites});
+
             utils.changePage(fuelSitesMapView.$el);
-            fuelSitesMapView.render(fuelsites);
+            fuelSitesMapView.render();
         };
 
         FuelSitesController.prototype.loadingBegin = function(checkView) {

@@ -16,18 +16,21 @@ function(globals, utils, facade, Backbone, Mustache, InfoBubbleView, MarkerView,
         // cache templates
         tmpl_criteria: Mustache.compile(tmpl_criteria),
 
-        initialize: function() {
+        initialize: function(options) {
             // call super
             this.constructor.__super__.initialize.apply(this, arguments);
 
             // set context
-            utils._.bindAll(this, 'render', 'pageShow');
+            utils._.bindAll(this, 'render', 'pageShow', 'pageBeforeShow');
 
             // cache map options
             this.options = {
                 'zoom'     : 10,
                 'mapTypeId': google.maps.MapTypeId.ROADMAP
             };
+
+            // cache viewModel
+            this.viewModel = options.viewModel;
 
             // model events
             this.listenTo(this.model, 'change', function() {
@@ -39,11 +42,13 @@ function(globals, utils, facade, Backbone, Mustache, InfoBubbleView, MarkerView,
 
             // jQM events
             this.$el.on('pageshow', this.pageShow);
+            this.$el.on('pagebeforeshow', this.pageBeforeShow);
 
             // create page
             this.pageCreate();
 
             // cache $header & content
+            this.$navbar   = this.$el.find(':jqmData(role=navbar)');
             this.$criteria = this.$el.find('.searchtext');
             this.$content  = this.$el.find(':jqmData(role=content)');
 
@@ -67,6 +72,15 @@ function(globals, utils, facade, Backbone, Mustache, InfoBubbleView, MarkerView,
             }));
         },
 
+        pageBeforeShow: function() {
+            var fuelsites = this.viewModel.get('fuelsites');
+
+            // toggle navbar & criteria
+            this.$navbar[fuelsites.length && fuelsites.length < 2 ? 'hide' : 'show']();
+            this.$criteria[fuelsites.length && fuelsites.length < 2 ? 'hide' : 'show']();
+            this.$el.css('paddingTop', 0);
+        },
+
         pageShow: function() {
             var height, icon, marker;
 
@@ -76,7 +90,7 @@ function(globals, utils, facade, Backbone, Mustache, InfoBubbleView, MarkerView,
             ));
 
             // set $content height
-            height = utils.$(window).height() - this.$content.offset().top,
+            height = utils.$(window).height() - this.$content.offset().top;
             this.$content.height(height);
 
             // resize map to cover $content
@@ -106,9 +120,13 @@ function(globals, utils, facade, Backbone, Mustache, InfoBubbleView, MarkerView,
             this.mapMarkers.push(marker);
         },
 
-        render: function(fuelsites) {
+        render: function() {
+            var fuelsites = this.viewModel.get('fuelsites');
+
             // remove previous polylines
-            if (this.mapDirections) this.mapDirections.setMap(null);
+            if (this.mapDirections) {
+                this.mapDirections.setMap(null);
+            }
 
             // set map center
             this.map.setZoom(this.options.zoom);
