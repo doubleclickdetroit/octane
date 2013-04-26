@@ -13,6 +13,7 @@ function(utils, facade, Backbone) {
         routes: {
             'fuelsites(/)(:viewId)(/)(:siteId)': 'renderFuelSites',
             'forecast(/)(:viewId)'             : 'renderForecast',
+            'directions/:siteId'               : 'renderFuelSite',
             'favorites'                        : 'renderFavorites',
             'settings'                         : 'renderSettings',
             'info'                             : 'renderInfo',
@@ -34,6 +35,10 @@ function(utils, facade, Backbone) {
 
         renderForecast: function(viewId) {
             facade.publish('forecast', 'navigate', viewId);
+        },
+
+        renderFuelSite: function(siteId) {
+            facade.publish('fuelsites', 'navigate', 'fuelsite', siteId);
         },
 
         renderFavorites: function() {

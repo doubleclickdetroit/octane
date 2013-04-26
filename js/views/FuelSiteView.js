@@ -9,10 +9,6 @@ function(globals, utils, facade, Backbone, Mustache, tmpl ) {
 
         tagName: 'li',
 
-        events: {
-            'click a': 'handleSelectedFuelsite'
-        },
-
         initialize: function() {
             // call super
             this.constructor.__super__.initialize.apply(this, arguments);
@@ -21,17 +17,10 @@ function(globals, utils, facade, Backbone, Mustache, tmpl ) {
         },
 
         render: function() {
-            var fuelsite = this.model.hasChanged() ? this.model.toJSON() : false;
+            var model    = utils._.extend(this.model.toJSON(), {'id':this.model.cid}),
+                fuelsite = this.model.hasChanged() ? model : false;
             this.$el.html(Mustache.render(tmpl, {'fuelsite': fuelsite}));
             return this;
-        },
-
-        /*
-         * Event Handlers
-        */
-        handleSelectedFuelsite: function(evt) {
-            evt.preventDefault();
-            facade.publish('fuelsites', 'delegate', 'fuelsite', this.model.cid);
         }
     });
 

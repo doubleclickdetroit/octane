@@ -63,13 +63,14 @@ function(globals, utils, Backbone, FuelSitesMapView, DirectionsView, FuelSitesVi
         };
 
         FuelSitesController.prototype.showFuelSite = function(siteId) {
-            var fuelSiteModel = fuelSitesCollection.get(siteId);
-            utils.changePage(directionsView.$el, null, null, true); // update hash
-
-            this.loadingBegin(); // show indicator before requeset
-
             // set directionsView fuelSiteModel
-            directionsView.fuelSiteModel = fuelSiteModel;
+            directionsView.fuelSiteModel = fuelSitesCollection.get(siteId);
+
+            // change page
+            utils.changePage(directionsView.$el);
+
+            // show indicator before requeset
+            this.loadingBegin();
 
             // request directions
             utils.when(directionsView.requestDirections())

@@ -9,13 +9,16 @@ function(globals, utils, facade, Backbone, Mustache, tmpl_directions) {
         el: utils.$('#directions'),
 
         events: {
-            'click a.btn-map'       : 'handleMappingFuelSite',
             'click a.text-to-speech': 'handleDirectionTextToSpeech'
         },
 
         initialize: function() {
             // set context
             utils._.bindAll(this, 'render', 'pageShow');
+
+            // cache map button
+            this.$mapBtn = this.$el.find('a.btn-map');
+            this.$mapBtn.data('orig-href', this.$mapBtn.attr('href'));
 
             // cache $content
             this.$content = this.$el.find(':jqmData(role=content)');
@@ -75,17 +78,14 @@ function(globals, utils, facade, Backbone, Mustache, tmpl_directions) {
          * jQM Events
         */
         pageShow: function() {
+            var mapPath = this.$mapBtn.data('orig-href') +'/'+ this.fuelSiteModel.cid;
             this.$content.empty();
+            this.$mapBtn.attr('href', mapPath);
         },
 
         /*
          * Event Handlers
         */
-        handleMappingFuelSite: function(evt) {
-            evt.preventDefault();
-            facade.publish('fuelsites', 'delegate', 'map', this.fuelSiteModel.cid);
-        },
-
         handleDirectionTextToSpeech: function(evt) {
             evt.preventDefault();
             var $e = utils.$(evt.target).closest('a').find('.ui-block-b');
