@@ -383,6 +383,8 @@ define(function(require) {
         'PAGE_SIZE_INCREMENT': 10,
         'IMG_PATH'           : 'img/',
         'MARKER_PATH'        : 'img/map_marker/',
+        'TITLE_FUELSITE'     : 'Directions',
+        'TITLE_FUELSITES'    : 'Fuel Sites'
     };
     globals.fuelsites.configuration = {
         'sortBy': {

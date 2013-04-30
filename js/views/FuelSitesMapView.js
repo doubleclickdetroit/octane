@@ -49,6 +49,7 @@ function(globals, utils, facade, Backbone, Mustache, InfoBubbleView, MarkerView,
 
             // cache $header & content
             this.$navbar   = this.$el.find(':jqmData(role=navbar)');
+            this.$titlebar = this.$el.find(':jqmData(role=header) h3');
             this.$criteria = this.$el.find('.searchtext');
             this.$content  = this.$el.find(':jqmData(role=content)');
 
@@ -74,8 +75,17 @@ function(globals, utils, facade, Backbone, Mustache, InfoBubbleView, MarkerView,
 
         pageBeforeShow: function() {
             // toggle navbar & criteria
-            this.$navbar[this.fuelSitesList.length && this.fuelSitesList.length < 2 ? 'hide' : 'show']();
-            this.$criteria[this.fuelSitesList.length && this.fuelSitesList.length < 2 ? 'hide' : 'show']();
+            var CONSTANTS   = globals.fuelsites.constants,
+                is_fuelsite = this.fuelSitesList.length && this.fuelSitesList.length < 2;
+
+            // set appropriate title
+            this.$titlebar.text(is_fuelsite ? CONSTANTS.TITLE_FUELSITE : CONSTANTS.TITLE_FUELSITES);
+
+            // toggle elements
+            this.$navbar[is_fuelsite ? 'hide' : 'show']();
+            this.$criteria[is_fuelsite ? 'hide' : 'show']();
+
+            // reset padding jQM auto-adds so pageShow can re-evaluate it
             this.$el.css('paddingTop', 0);
         },
 
