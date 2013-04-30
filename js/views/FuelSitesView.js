@@ -45,7 +45,7 @@ function(globals, utils, facade, Backbone, Mustache, FuelSiteView, tmpl_header, 
             // cache $criteria & $list
             this.$criteria = this.$el.find('.searchtext');
             this.$list     = this.$el.find('#fuelStationsList');
-            this.$btnLoad  = this.$el.find('#btn-loadFuelSites');
+            this.$btnLoad  = this.$el.find('.ui-loadFuelSites');
             this.$banner   = this.$el.find('#ui-banner');
         },
 
@@ -64,7 +64,7 @@ function(globals, utils, facade, Backbone, Mustache, FuelSiteView, tmpl_header, 
             this.$list.empty();
 
             // toggle load more fuelsites button
-            this.$btnLoad.parent()[this.collection.isAllFuelSites ? 'hide' : 'show']();
+            this.$btnLoad[this.collection.isAllFuelSites ? 'hide' : 'show']();
 
             // handle empty collection
             if (this.collection.isEmpty()) {

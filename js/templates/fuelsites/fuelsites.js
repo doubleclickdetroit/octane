@@ -2,4 +2,6 @@
 
 <br>
 
-<button id="btn-loadFuelSites" data-icon="arrow-d">Load more</button>
+<div class="ui-loadFuelSites" style="display: none;">
+  <button id="btn-loadFuelSites" data-icon="arrow-d">Load more</button>
+</div>
